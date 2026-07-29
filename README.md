@@ -20,7 +20,15 @@ Each playbook contains:
 - Minimum evidence
 - Release gate
 
-[Browse all 22 playbooks](index.md).
+## Playbooks
+
+| Architectural Foundations | Operational Integrity |
+|---|---|
+| [Trust boundaries and threat modelling](playbooks/01-trust-boundaries-and-threat-modelling.md)<br>[Least privilege](playbooks/02-least-privilege.md)<br>[Strong identity and authentication architecture](playbooks/03-strong-identity-and-authentication-architecture.md)<br>[Attack surface minimisation](playbooks/04-attack-surface-minimisation.md)<br>[Defence in depth](playbooks/05-defence-in-depth.md)<br>[Open design](playbooks/06-open-design.md) | [Life-cycle management](playbooks/07-life-cycle-management.md)<br>[User-centric design](playbooks/08-user-centric-design.md)<br>[Secure coding and verification practices](playbooks/09-secure-coding-and-verification-practices.md)<br>[Logging, monitoring and alerting](playbooks/10-logging-monitoring-and-alerting.md)<br>[Configuration and change management](playbooks/11-configuration-and-change-management.md)<br>[Incident response and recovery](playbooks/12-incident-response-and-recovery.md)<br>[Vulnerability and patch management](playbooks/13-vulnerability-and-patch-management.md)<br>[Supply-chain controls](playbooks/14-supply-chain-controls.md) |
+
+| Default Hardening | Guided Protection |
+|---|---|
+| [Minimisation of default services](playbooks/15-minimisation-of-default-services.md)<br>[Restrictive initial access](playbooks/16-restrictive-initial-access.md)<br>[Secure communication by default](playbooks/17-secure-communication-by-default.md)<br>[Unique device identity and secrets by default](playbooks/18-unique-device-identity-and-secrets-by-default.md) | [Mandatory security onboarding](playbooks/19-mandatory-security-onboarding.md)<br>[Automated maintenance and updates](playbooks/20-automated-maintenance-and-updates.md)<br>[Transparent security posture](playbooks/21-transparent-security-posture.md)<br>[Secure recovery and ownership life cycle](playbooks/22-secure-recovery-and-ownership-life-cycle.md) |
 
 ## Categories
 
