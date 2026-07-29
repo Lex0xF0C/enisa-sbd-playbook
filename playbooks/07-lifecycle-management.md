@@ -37,7 +37,7 @@ Ensure security is maintained throughout the product’s full lifecycle, from re
 ### Learn from deployed products
 
 - Collect evidence on how products are deployed and used, such as customer feedback, support cases, vulnerability reports, incident findings and privacy-preserving telemetry where appropriate.
-- Review findings and update the product context, risk assessment, threat model and secure defaults as necessary.
+- Review findings, including the results of root-cause analyses where applicable, and update the product context, risk assessment, threat model and secure defaults as necessary.
 
 ### Plan secure decommissioning and disposal
 
@@ -52,7 +52,7 @@ Ensure security is maintained throughout the product’s full lifecycle, from re
 - Vulnerability management log: intake, triage, prioritisation, disposition, owner, dates (ticket board or spreadsheet).
 - SBOM: SBOM generated in a machine-readable, widely adopted standard format (e.g. SPDX or CycloneDX) and stored with the release.
 - Monitoring and Logging: Security logging baseline + sample logs showing admin/auth/update events.
-- Field feedback record: Summary of relevant operational evidence reviewed, deviations from deployment assumptions identified, and resulting actions.
+- Field feedback record: summary of relevant operational evidence reviewed, deviations from deployment assumptions identified and resulting actions
 - Decommissioning checklist: data wipe/reset, credential/key revocation, and customer guidance.
 
 ## Release gate
