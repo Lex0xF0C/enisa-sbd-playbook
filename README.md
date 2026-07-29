@@ -24,7 +24,7 @@ Each playbook contains:
 
 
 ### Secure by Design
-Secure by Design focuses on incorporating security principles from the earliest stages of development and throughout the product lifecycle.
+Secure by Design embeds protective measures into products during development, rather than adding them retrospectively. 
 - **Architectural Foundations** — structural design choices that make a product inherently difficult to compromise or exploit.
 - **Operational Integrity** — human and procedural practices that maintain product security throughout development, deployment, operation, and retirement.
 
@@ -34,9 +34,9 @@ Secure by Design focuses on incorporating security principles from the earliest 
 
 ### Secure by Default
 
-Secure by Default focuses on the product’s security configuration as presented to the user, ensuring the most secure configuration is applied automatically.
+Secure by Default ensures that products ship with the most secure configuration reasonably possible. 
 
-- **Default Hardening** — the factory-shipped state of the product, with unnecessary features disabled and restrictive settings applied.
+- **Default Hardening** — the factory-shipped state of the software, ensuring that the initial configuration is as restrictive as possible. 
 - **Guided Protection** — mandatory setup steps, automation, and clear feedback that help users maintain a secure state.
 
 | Default Hardening | Guided Protection |
