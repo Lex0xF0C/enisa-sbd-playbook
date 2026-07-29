@@ -36,8 +36,8 @@ Ensure that security is maintained throughout the product’s full life cycle, f
 
 ### Learn from deployed products
 
-- Collect evidence on how products are deployed and used, such as customer feedback, support cases, vulnerability reports, incident findings and privacy-preserving telemetry where appropriate.
-- Review findings and update the product context, risk assessment, threat model and secure defaults as necessary.
+-	Collect evidence on how products are deployed and used, such as customer feedback, support cases, vulnerability reports, incident findings and privacy-preserving telemetry where appropriate.
+-	Review findings, including the results of root-cause analyses where applicable, and update the product context, risk assessment, threat model and secure defaults as necessary.
 
 ### Plan secure decommissioning and disposal
 
