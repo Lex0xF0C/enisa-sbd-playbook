@@ -1,0 +1,80 @@
+# Secure by Design and Default Playbooks
+
+A practical collection of 22 Secure by Design and Secure by Default playbooks for SMEs, based on the ENISA *Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default for SMEs*.
+
+## About
+
+Secure by Design represents a fundamental shift in product security, embedding protective measures from conception rather than retrofitting them post-development. Secure by Default ensures products ship with the most secure configuration reasonably possible, reducing reliance on user expertise and limiting the potential for misconfiguration.
+
+This repository provides a list of playbooks that aims to bridge the gap between aspirational security principles and practical implementation within SME constraints. It provides structured, easy-to-follow checklists that development teams can apply during design, build, deployment, maintenance, and decommissioning.
+
+The guidance is intended as a practical starting point rather than an exhaustive or prescriptive implementation framework. Its application should be adapted to the product’s intended use, context and associated risks, as well as applicable requirements. It does not provide legal guidance.
+
+## Playbook structure
+
+Each playbook contains:
+
+- Principle
+- Objective
+- Checklist
+- Minimum evidence
+- Release gate
+
+[Browse all 22 playbooks](index.md).
+
+## Categories
+
+### Secure by Design
+
+Secure by Design focuses on incorporating security principles from the earliest stages of development and throughout the product lifecycle.
+
+- **Architectural Foundations** — structural design choices that make a product inherently difficult to compromise or exploit.
+- **Operational Integrity** — human and procedural practices that maintain product security throughout development, deployment, operation, and retirement.
+
+### Secure by Default
+
+Secure by Default focuses on the product’s security configuration as presented to the user, ensuring the most secure configuration is applied automatically.
+
+- **Default Hardening** — the factory-shipped state of the product, with unnecessary features disabled and restrictive settings applied.
+- **Guided Protection** — mandatory setup steps, automation, and clear feedback that help users maintain a secure state.
+
+
+## Progressive adoption
+
+The playbooks can be adopted progressively, beginning with context and prioritisation, followed by an appropriate engineering baseline and then broader implementation. Progressive adoption here refers to how organisations build and strengthen their security practices over time. It does not suggest delaying applicable requirements or controls, particularly those arising from legal obligations, including under the CRA. This guidance is without prejudice to such obligations, which take precedence.
+
+| Stage | Example playbooks | Focus |
+|---|---|---|
+| **1. Establish context and priorities** | [Trust boundaries and threat modelling](playbooks/01-trust-boundaries-and-threat-modelling.md) | Use product context, risk management and threat modelling to identify the most relevant threats, trust boundaries and security objectives. This guides the prioritisation and scope of the remaining playbooks.  |
+| **2. Establish a foundational engineering baseline**  |- [Secure coding and verification practices](playbooks/09-secure-coding-and-verification-practices.md)<br>- [Logging, monitoring and alerting](playbooks/10-logging-monitoring-and-alerting.md)<br>- [Vulnerability and patch management](playbooks/13-vulnerability-and-patch-management.md)<br>- [Supply-chain controls](playbooks/14-supply-chain-controls.md)<br>- [Restrictive initial access](playbooks/16-restrictive-initial-access.md)<br>- [Secure communication by default](playbooks/17-secure-communication-by-default.md)<br>- [Unique device identity and secrets by default](playbooks/18-unique-device-identity-and-secrets-by-default.md)<br>- [Automated maintenance and updates](playbooks/20-automated-maintenance-and-updates.md) | Establish a baseline based on the product context, security objectives, risks and identified threats. Supplement the core engineering controls with the Secure by Default playbooks relevant to the product. Other playbooks should also be prioritised where necessary to address the product context or identified risks and threats.|
+| **3. Broaden and strengthen implementation**  | The remaining applicable playbooks | Implement and prioritise the remaining applicable playbooks according to the product context, intended use, deployment context and identified risks and threats. Increase coverage, consistency and automation over time, and assess progress using relevant measures. |
+
+Depending on the product, other playbooks may need to be implemented during the foundational stage. For example, availability-sensitive products may require early implementation of [Incident response and recovery](playbooks/12-incident-response-and-recovery.md), while products supporting reset, ownership transfer or decommissioning may require [Secure recovery and ownership life cycle](playbooks/22-secure-recovery-and-ownership-life-cycle.md).
+
+Progressive adoption may also apply within an individual playbook. Organisations can begin with checklist items addressing priority risks and applicable requirements, and strengthen coverage, evidence and automation over time.
+
+The sequence is illustrative. Playbooks addressed later are not inherently less important, and applicable security or regulatory requirements may not be deferred.
+
+## Intended audience
+
+This guidance is intended for:
+
+- Software developers and engineers
+- Technical product managers
+- SME security leads
+- System architects
+
+It is particularly relevant to SME manufacturers developing products with digital elements.
+
+## Intended outcomes
+
+Applying these playbooks is intended to contribute to:
+
+- fewer recurring and preventable vulnerabilities;
+- products delivered with safer default configurations and reduced unnecessary exposure;
+- earlier identification and treatment of security risks;
+- stronger visibility and protection of dependencies, build processes, releases and updates;
+- faster detection, remediation and communication of vulnerabilities; and
+- reduced likelihood and impact of cybersecurity incidents throughout the product lifecycle.
+
+These outcomes benefit users and operators through safer and more resilient products. Manufacturers benefit through more consistent security decisions, while customers and integrators benefit through clearer and more traceable security evidence.
