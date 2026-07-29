@@ -1,0 +1,2194 @@
+{  
+  "dataset_version": "0.1",
+  "status": "unofficial-machine-processable-representation",
+  "playbooks": [
+    {
+      "id": "pb-01",
+      "title": "Trust boundaries and threat modelling",
+      "category": "architectural-foundations",
+      "principle_type": "secure by design",
+      "principle": "Secure architectures make trust explicit rather than assumed. Trust boundaries define where data, identities and execution contexts cross from a more trusted domain to a less trusted one (or vice versa).",
+      "objective": "Ensure that the system’s architecture and data flows are understood, trust assumptions are explicit and the highest-risk attack paths are identified early, so that security controls and secure defaults are designed in, not retrofitted.",
+      "checklist": [
+        {
+          "id": "pb-01-check-01",
+          "heading": "Draw the system (one diagram)",
+          "items": [
+            "Include users/admins, device/app, back-end services, APIs, data stores, third parties.",
+            "Show key data flows and entry points (APIs, admin UI, OTA/update channel, local ports)."
+          ]
+        },
+        {
+          "id": "pb-01-check-02",
+          "heading": "Mark trust boundaries and privileged paths",
+          "items": [
+            "Identify where trust changes (internet–back end, tenant–tenant, device–cloud, user–admin).",
+            "Highlight high-privilege flows (auth, key management, updates, admin actions)."
+          ]
+        },
+        {
+          "id": "pb-01-check-03",
+          "heading": "List critical assets",
+          "items": [
+            "For instance, list credentials/keys, customer / personally identifiable information, payment tokens, device control functions, availability, audit logs, data, source code and the IDE."
+          ]
+        },
+        {
+          "id": "pb-01-check-04",
+          "heading": "Identify and prioritise top threats",
+          "items": [
+            "Map threats to the relevant entry/exit points, data flows, assets and trust boundaries, for example account takeover, malicious updates, API authorisation bypass, man-in-the-middle attacks and the tampering with, replay of or injection of fabricated or stale data and commands.",
+            "Assign a high, medium or low priority using a documented method appropriate to the product, such as assessing impact, likelihood, plausibility, exploitability and exposure."
+          ]
+        },
+        {
+          "id": "pb-01-check-05",
+          "heading": "Define mitigations, secure defaults and verification",
+          "items": [
+            "For each top threat: required controls and default configuration (deny by default, authn/authz, segmentation, signed updates, rate limits).",
+            "Map each control to a verification method (tests, CI checks, config validation).",
+            "Define refresh triggers (new interface, auth change, new sensitive data, new critical dependency, major architecture change)."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-01-evidence-01",
+          "text": "One architecture/data-flow diagram with trust boundaries and entry points (stored in repo/wiki)"
+        },
+        {
+          "id": "pb-01-evidence-02",
+          "text": "Top threats list (e.g. the top 5 to 10 threat scenarios) with H/M/L priority and owners"
+        },
+        {
+          "id": "pb-01-evidence-03",
+          "text": "Control/default mapping for each top threat (what control, where enforced, how verified)"
+        },
+        {
+          "id": "pb-01-evidence-04",
+          "text": "Verification evidence: CI outputs or test results for key negative tests (unauthorised calls fail)"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-01-gate-01",
+          "text": "Diagram updated for this release (components, flows, dependencies reflect reality)"
+        },
+        {
+          "id": "pb-01-gate-02",
+          "text": "Trust boundaries and privileged paths clearly marked"
+        },
+        {
+          "id": "pb-01-gate-03",
+          "text": "Top threat scenarios reviewed; high risks have mitigations or documented exceptions"
+        },
+        {
+          "id": "pb-01-gate-04",
+          "text": "Secure defaults confirmed for new/exposed interfaces (deny by default, least privilege)"
+        },
+        {
+          "id": "pb-01-gate-05",
+          "text": "Verification in place: at least one negative test per critical boundary / privileged path (unauthorised access is denied)"
+        },
+        {
+          "id": "pb-01-gate-06",
+          "text": "Threat model refresh triggered if any of the following are relevant: new API/interface, auth model change, new sensitive data, major dependency/supplier change, OTA/update changes, major architecture change."
+        }
+      ]
+    },
+    {
+      "id": "pb-02",
+      "title": "Least privilege",
+      "category": "architectural-foundations",
+      "principle_type": "secure by design",
+      "principle": "Every user, service and process operates with the feasible minimum permissions needed to do its job – no more and for no longer than necessary.",
+      "objective": "Reduces unauthorised access, limits blast radius, blocks lateral movement and prevents permission creep.",
+      "checklist": [
+        {
+          "id": "pb-02-check-01",
+          "heading": "Define minimum viable permissions for each role/service",
+          "items": [
+            "List key roles (user, support, admin) and key services (API, provisioning, updates).",
+            "For each, define allowed actions (read/write/admin) and resources (APIs, tables, buckets)."
+          ]
+        },
+        {
+          "id": "pb-02-check-02",
+          "heading": "Use unique identities (no shared admin)",
+          "items": [
+            "One identity per service (service account/workload identity) , applicable to both web services and services running on a device.",
+            "No shared admin users/keys; separate dev/test/prod identities."
+          ]
+        },
+        {
+          "id": "pb-02-check-03",
+          "heading": "Default-deny and explicit allow lists",
+          "items": [
+            "Deny by default; allow only required API methods, data access and network paths.",
+            "Restrict service-to-service access to specific interfaces."
+          ]
+        },
+        {
+          "id": "pb-02-check-04",
+          "heading": "Time-bound admin access (JIT) + attribution",
+          "items": [
+            "Named accounts + MFA for admins (all human users if possible).",
+            "Temporary elevation for privileged actions; break-glass is separate and monitored."
+          ]
+        },
+        {
+          "id": "pb-02-check-05",
+          "heading": "Automate privilege hygiene",
+          "items": [
+            "Monthly (or at each release), flag broad privileges and unused permissions/tokens; remove or time-limit exceptions."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-02-evidence-01",
+          "text": "Access model exists: for example, a short table “Role/Service, allowed actions, resources” stored in repo/wiki and kept current."
+        },
+        {
+          "id": "pb-02-evidence-02",
+          "text": "No shared admin:  IAM inventory shows unique service identities; no reused production admin keys."
+        },
+        {
+          "id": "pb-02-evidence-03",
+          "text": "Deny works: automated negative tests prove unauthorised API/data access is blocked for each critical service."
+        },
+        {
+          "id": "pb-02-evidence-04",
+          "text": "Admins are accountable: logs show who performed privileged actions; elevation expires automatically."
+        },
+        {
+          "id": "pb-02-evidence-05",
+          "text": "Creep is controlled: recurring report flags unused/broad permissions; removals/exceptions are tracked, with owner and expiry."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-02-gate-01",
+          "text": "Unique service identities; no shared production admin keys"
+        },
+        {
+          "id": "pb-02-gate-02",
+          "text": "Default-deny posture; only required paths enabled"
+        },
+        {
+          "id": "pb-02-gate-03",
+          "text": "Admin access uses MFA and is time bound and logged"
+        },
+        {
+          "id": "pb-02-gate-04",
+          "text": "Automated authorisation tests run verifying correct access restrictions for critical privileged functions"
+        },
+        {
+          "id": "pb-02-gate-05",
+          "text": "Privilege review run; exceptions owned and time limited"
+        }
+      ]
+    },
+    {
+      "id": "pb-03",
+      "title": "Strong identity and authentication architecture",
+      "category": "architectural-foundations",
+      "principle_type": "secure by design",
+      "principle": "Design identity and authentication as a core part of the architecture. Use authoritative identity mechanisms for users, devices, services and administrators across interfaces.",
+      "objective": "Prevent impersonation and unauthorised access.",
+      "checklist": [
+        {
+          "id": "pb-03-check-01",
+          "heading": "Define authoritative identity sources",
+          "items": [
+            "Identify and document the authoritative identity source (i.e. a system that acts as the single source of truth for creating, authentication/authorisation, and revoking identities) for users, devices, services and administrators."
+          ]
+        },
+        {
+          "id": "pb-03-check-02",
+          "heading": "Use unique identities for all actors",
+          "items": [
+            "Assign a unique identity to each user, device, service and administrator, prohibiting shared accounts/credentials, especially for administrative and service access."
+          ]
+        },
+        {
+          "id": "pb-03-check-03",
+          "heading": "Apply authentication across all interfaces",
+          "items": [
+            "Enforce authentication/authorisation on all access paths, including user interfaces, APIs, device-to-cloud communication and management interfaces."
+          ]
+        },
+        {
+          "id": "pb-03-check-04",
+          "heading": "Strengthen authentication for high-risk access",
+          "items": [
+            "Require stronger authentication for privileged actions and sensitive operations (e.g. MFA, device binding, or cryptographic credentials)."
+          ]
+        },
+        {
+          "id": "pb-03-check-05",
+          "heading": "Manage sessions and credentials securely",
+          "items": [
+            "Ensure that sessions are time limited, bound to identity and invalidated on logout or credential change.",
+            "Rotate, revoke and expire credentials automatically when no longer needed or when compromise is suspected."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-03-evidence-01",
+          "text": "Authoritative identity sources defined: a diagram or table exists showing the identity source for users, devices, services and administrators."
+        },
+        {
+          "id": "pb-03-evidence-02",
+          "text": "No shared identities: identity inventory shows unique identities, no shared production accounts or credentials."
+        },
+        {
+          "id": "pb-03-evidence-03",
+          "text": "Authentication enforced: configuration or test evidence shows that all interfaces enforce authentication or are explicitly defined as public with appropriate protections applied. Network location or reachability alone is not treated as authentication, unless explicitly justified by the product context and risk assessment and supported by appropriate compensating controls."
+        },
+        {
+          "id": "pb-03-evidence-04",
+          "text": "Strong auth for privileged access: policy or configuration shows that MFA or equivalent is enforced for administrative or sensitive actions."
+        },
+        {
+          "id": "pb-03-evidence-05",
+          "text": "Sessions and credentials controlled: configuration or logs show session expiry, revocation on logout or credential change, and credential rotation or expiry in place."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-03-gate-01",
+          "text": "Authoritative identity sources defined and documented"
+        },
+        {
+          "id": "pb-03-gate-02",
+          "text": "Unique identities enforced; no shared production accounts or credentials"
+        },
+        {
+          "id": "pb-03-gate-03",
+          "text": "Authentication required on all access paths (UI, APIs, device-to-cloud, management interfaces)"
+        },
+        {
+          "id": "pb-03-gate-04",
+          "text": "Strong authentication enforced for privileged or sensitive actions"
+        },
+        {
+          "id": "pb-03-gate-05",
+          "text": "Sessions and credentials are time limited, revocable and expire automatically"
+        }
+      ]
+    },
+    {
+      "id": "pb-04",
+      "title": "Attack surface minimisation",
+      "category": "architectural-foundations",
+      "principle_type": "secure by design",
+      "principle": "Expose only what is strictly necessary. Remove or disable all unnecessary code, services, interfaces, protocols and dependencies by default.",
+      "objective": "Reduce the likelihood and impact of compromise by eliminating unnecessary entry points and limiting attacker options.",
+      "checklist": [
+        {
+          "id": "pb-04-check-01",
+          "heading": "List exposed interfaces",
+          "items": [
+            "Identify all externally reachable APIs, ports, local interfaces (HMI), protocols, admin endpoints and update channels.",
+            "Remove or disable anything without a clear, current justification."
+          ]
+        },
+        {
+          "id": "pb-04-check-02",
+          "heading": "Enforce default deny",
+          "items": [
+            "Close all ports, APIs and interfaces by default.",
+            "Explicitly allow only what is required for production."
+          ]
+        },
+        {
+          "id": "pb-04-check-03",
+          "heading": "Remove development and diagnostic functionality",
+          "items": [
+            "Remove debuggers, test endpoints and debug modes from production builds.",
+            "Remove development features."
+          ]
+        },
+        {
+          "id": "pb-04-check-04",
+          "heading": "Minimise dependencies",
+          "items": [
+            "Remove unused libraries, SDKs and optional components from final builds. Remaining libraries should be verified for authenticity and integrity.",
+            "Use the smallest possible operating system, runtime or firmware configuration that supports the product’s intended function."
+          ]
+        },
+        {
+          "id": "pb-04-check-05",
+          "heading": "Continuously monitor for legacy exposure",
+          "items": [
+            "Continuously review exposed interfaces and dependencies.",
+            "Update/remove deprecated APIs, old protocols and unused resources."
+          ]
+        },
+        {
+          "id": "pb-04-check-06",
+          "heading": "Minimise data collection, processing and retention",
+          "items": [
+            "Collect, retain and store only the personal or sensitive data necessary for the product’s intended purpose and securely delete it when no longer required."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-04-evidence-01",
+          "text": "Exposure inventory exists: a maintained list of externally reachable interfaces (APIs, ports, protocols, admin interfaces, update channels) is stored in the repo or product documentation."
+        },
+        {
+          "id": "pb-04-evidence-02",
+          "text": "Default deny enforced: network rules, gateway configuration or device settings show that only explicitly required interfaces are enabled in production."
+        },
+        {
+          "id": "pb-04-evidence-03",
+          "text": "Minimal build verified: build configuration, manifest, package list or firmware contents show that only required components are included."
+        },
+        {
+          "id": "pb-04-evidence-04",
+          "text": "No dev or diagnostic tooling shipped that might enable exploitation: inspection of production artefacts confirms absence (or verification that they cannot impact security) of shells, debuggers, compilers, test interfaces and diagnostic utilities."
+        },
+        {
+          "id": "pb-04-evidence-05",
+          "text": "No legacy exposure: release notes, ticket or checklist entry confirms that exposed interfaces and dependencies were reviewed and any unused or legacy elements removed."
+        },
+        {
+          "id": "pb-04-evidence-06",
+          "text": "Data inventory and retention record: data inventory with purposes, retention periods and deletion methods is kept."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-04-gate-01",
+          "text": "Exposed interfaces reviewed; only required APIs, ports, protocols and management interfaces enabled"
+        },
+        {
+          "id": "pb-04-gate-02",
+          "text": "Default-deny posture confirmed; no unintended network paths or interfaces exposed"
+        },
+        {
+          "id": "pb-04-gate-03",
+          "text": "Production build is minimal; unused libraries, services and optional components removed"
+        },
+        {
+          "id": "pb-04-gate-04",
+          "text": "No development or diagnostic tools present in production unless there is evidence that it cannot impact security"
+        },
+        {
+          "id": "pb-04-gate-05",
+          "text": "Attack surface review completed for this release; deprecated or legacy interfaces updates/removed"
+        },
+        {
+          "id": "pb-04-gate-06",
+          "text": "Unnecessary data processing has been removed and required deletion mechanisms verified"
+        }
+      ]
+    },
+    {
+      "id": "pb-05",
+      "title": "Defence in depth",
+      "category": "architectural-foundations",
+      "principle_type": "secure by design",
+      "principle": "Apply multiple layers of security so that the failure or bypass of a single control does not result in full compromise.",
+      "objective": "Reduce the impact of security failures by layering independent controls that slow attackers, increase detection and prevent single points of compromise.",
+      "checklist": [
+        {
+          "id": "pb-05-check-01",
+          "heading": "Layer controls around critical assets",
+          "items": [
+            "Identify the most sensitive assets (e.g. credentials, control functions, customer data).",
+            "Ensure that more than one independent control protects each asset.",
+            "Where critical data or commands cross trust boundaries, consider integrity and freshness controls that remain effective if another protection layer, such as transport security, is bypassed."
+          ]
+        },
+        {
+          "id": "pb-05-check-02",
+          "heading": "Assume control failure and design for containment",
+          "items": [
+            "Design systems so that bypass of one control does not grant unrestricted access."
+          ]
+        },
+        {
+          "id": "pb-05-check-03",
+          "heading": "Enable detection at multiple layers",
+          "items": [
+            "Generate security-relevant logs at key layers (identity, network, application, data).",
+            "Ensure that failed and suspicious actions raise alerts and are not silently blocked."
+          ]
+        },
+        {
+          "id": "pb-05-check-04",
+          "heading": "Use diverse and independent controls",
+          "items": [
+            "Avoid relying on multiple controls that share the same technology, identity source or trust assumption."
+          ]
+        },
+        {
+          "id": "pb-05-check-05",
+          "heading": "Slow attackers and enable response",
+          "items": [
+            "Apply controls that increase attacker effort and time (rate limits, step-up authentication, staged access).",
+            "Ensure that response mechanisms exist to contain or isolate compromised components when alerts are triggered."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-05-evidence-01",
+          "text": "Layered protection mapped: a simple table or diagram showing critical assets and the multiple security controls protecting each (stored in repo/wiki)."
+        },
+        {
+          "id": "pb-05-evidence-02",
+          "text": "Independent controls confirmed: configuration or design notes showing that layered controls do not rely on the same identity source or enforcement point."
+        },
+        {
+          "id": "pb-05-evidence-03",
+          "text": "Multilayer logging enabled: log configuration or sample logs showing security events recorded across controls."
+        },
+        {
+          "id": "pb-05-evidence-04",
+          "text": "Alerts and response defined: alert rules or playbook reference showing how suspicious activity is detected and the associated containment or response action."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-05-gate-01",
+          "text": "Critical assets have more than one security control applied and the layering is documented."
+        },
+        {
+          "id": "pb-05-gate-02",
+          "text": "Layered controls are independent; no single identity source or enforcement point is a single point of failure."
+        },
+        {
+          "id": "pb-05-gate-03",
+          "text": "Security-relevant events are logged at multiple layers"
+        },
+        {
+          "id": "pb-05-gate-04",
+          "text": "Alerts are in place for suspicious activity and a response action exists"
+        }
+      ]
+    },
+    {
+      "id": "pb-06",
+      "title": "Open design",
+      "category": "architectural-foundations",
+      "principle_type": "secure by design",
+      "principle": "Systems should not depend on secrecy of design or hidden behaviour for protection. Security controls should remain effective even if an adversary understands how the system operates.",
+      "objective": "Ensure that the product’s security does not depend on the secrecy of its design or implementation details (‘security through obscurity’). Open design makes security properties reviewable, testable and maintainable.",
+      "checklist": [
+        {
+          "id": "pb-06-check-01",
+          "heading": "Document security-relevant design decisions",
+          "items": [
+            "Keep a short security design note covering trust boundaries, auth model, cryptographic usage, update mechanism, logging/audit approach and secure defaults.",
+            "Record the rationale for ‘why this control/protocol/library’."
+          ]
+        },
+        {
+          "id": "pb-06-check-02",
+          "heading": "Prefer open standards and proven building blocks",
+          "items": [
+            "Use standard, widely reviewed protocols and libraries (e.g. TLS, OAuth/OIDC, JWT with clear constraints, signed updates).",
+            "Avoid proprietary crypto, “home-grown” protocols, and undocumented encodings for security-critical flows."
+          ]
+        },
+        {
+          "id": "pb-06-check-03",
+          "heading": "Make interfaces and security expectations explicit",
+          "items": [
+            "Document APIs, authentication/authorisation requirements, error handling, rate limits and supported configurations.",
+            "Provide a secure configuration guide (outlining what must be enabled and disabled in production)."
+          ]
+        },
+        {
+          "id": "pb-06-check-04",
+          "heading": "Enable review and disclosure",
+          "items": [
+            "Establish a vulnerability disclosure channel (security contact, intake process, basic triage/response targets).",
+            "Encourage internal peer review for security-sensitive changes (to auth, updates, crypto, boundary-crossing interfaces)."
+          ]
+        },
+        {
+          "id": "pb-06-check-05",
+          "heading": "Maintain transparency of components and changes",
+          "items": [
+            "Maintain, publish and sign an SBOM (at least for customer-facing builds) and track third-party components.",
+            "Keep a security changelog / release notes for security-impacting fixes and default-setting changes."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-06-evidence-01",
+          "text": "Security design note (1–3 pages), covering boundaries, auth, crypto choices, update path, logging, secure defaults"
+        },
+        {
+          "id": "pb-06-evidence-02",
+          "text": "API + security requirements documentation (authn/authz, rate limits, data-handling expectations)"
+        },
+        {
+          "id": "pb-06-evidence-03",
+          "text": "Secure configuration guide (production hardening defaults, required settings)"
+        },
+        {
+          "id": "pb-06-evidence-04",
+          "text": "Vulnerability disclosure process (public email / web page or customer-facing channel; triage ownership defined)"
+        },
+        {
+          "id": "pb-06-evidence-05",
+          "text": "SBOM (exported file or tool output) + dependency -tracking approach"
+        },
+        {
+          "id": "pb-06-evidence-06",
+          "text": "Security-sensitive PR review rule (CODEOWNERS file, repo policy or checklist evidence)"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-06-gate-01",
+          "text": "Security design note updated for any architectural/security-relevant change (auth, crypto, update path, trust boundaries)"
+        },
+        {
+          "id": "pb-06-gate-02",
+          "text": "No custom/proprietary crypto or undocumented security-critical protocols introduced"
+        },
+        {
+          "id": "pb-06-gate-03",
+          "text": "API/security documentation updated (auth requirements, scopes/roles, rate limits, secure defaults)"
+        },
+        {
+          "id": "pb-06-gate-04",
+          "text": "Secure configuration guide updated; defaults validated for new/exposed interfaces"
+        },
+        {
+          "id": "pb-06-gate-05",
+          "text": "SBOM generated for the release and stored/published per policy"
+        },
+        {
+          "id": "pb-06-gate-06",
+          "text": "Vulnerability disclosure channel tested (contact works) and ownership/triage defined"
+        }
+      ]
+    },
+    {
+      "id": "pb-07",
+      "title": "Life-cycle management",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Security responsibilities extend beyond initial development. Components must be maintained, updated and eventually retired in a controlled manner.",
+      "objective": "Ensure that security is maintained throughout the product’s full life cycle, from requirements and design through to deployment, maintenance and end of life, so that security does not degrade over time.",
+      "checklist": [
+        {
+          "id": "pb-07-check-01",
+          "heading": "Define support commitments and life-cycle states",
+          "items": [
+            "Publish (internally or externally) life-cycle states: active, maintenance, end of sale, end of support, end of life.",
+            "Define minimum support windows and internal guidelines for vulnerability triage and patch release timelines (e.g. critical vulnerabilities triaged in 48 hours; fixes released within X days where feasible)."
+          ]
+        },
+        {
+          "id": "pb-07-check-02",
+          "heading": "Make the product updatable and recoverable",
+          "items": [
+            "Implement a secure and transactional update mechanism (authenticated updates, integrity protected, rollback/recovery plan).",
+            "Ensure safe failure modes (do not brick devices; provide fallback/rollback where practical).",
+            "During maintenance or recovery modes, restrict functionality and privileges to the minimum necessary to support update and recovery operations."
+          ]
+        },
+        {
+          "id": "pb-07-check-03",
+          "heading": "Operate vulnerability and patch management",
+          "items": [
+            "Track vulnerabilities from third-party components, internal findings and customer reports.",
+            "Maintain an SBOM (at least for each release) and a dependency update cadence.",
+            "Triage, prioritise and document risk decisions (fix, mitigate, accept with expiry date)."
+          ]
+        },
+        {
+          "id": "pb-07-check-04",
+          "heading": "Monitor, log and handle incidents",
+          "items": [
+            "Enable security-relevant logging (auth events, admin actions, update events, boundary-crossing requests).",
+            "Define minimum incident response steps, for instance detection, triage, containment, remediation, customer communication"
+          ]
+        },
+        {
+          "id": "pb-07-check-05",
+          "heading": "Learn from deployed products",
+          "items": [
+            "Collect evidence on how products are deployed and used, such as customer feedback, support cases, vulnerability reports, incident findings and privacy-preserving telemetry where appropriate.",
+            "Review findings, including the results of root-cause analyses where applicable, and update the product context, risk assessment, threat model and secure defaults as necessary."
+          ]
+        },
+        {
+          "id": "pb-07-check-06",
+          "heading": "Plan secure decommissioning and disposal",
+          "items": [
+            "Provide data erasure mechanisms and guidance (factory reset, key revocation, account deprovisioning).",
+            "Revoke credentials/keys when devices/users/services are deactivated.",
+            "Ensure that end-of-life guidance includes what security updates cease and what customers must do."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-07-evidence-01",
+          "text": "Life-cycle policy: lifecycle states + support window + patch SLAs (1 page)."
+        },
+        {
+          "id": "pb-07-evidence-02",
+          "text": "Update/release process: secure update approach and rollback/recovery notes"
+        },
+        {
+          "id": "pb-07-evidence-03",
+          "text": "Vulnerability management log: intake, triage, prioritisation, disposition, owner, dates (ticket board or spreadsheet)"
+        },
+        {
+          "id": "pb-07-evidence-04",
+          "text": "SBOM: SBOM generated in a machine-readable, widely adopted standard format (e.g. SPDX or CycloneDX) and stored with the release"
+        },
+        {
+          "id": "pb-07-evidence-05",
+          "text": "Monitoring and logging: security logging baseline + sample logs showing admin/auth/update events"
+        },
+        {
+          "id": "pb-07-evidence-06",
+          "text": "Field feedback record: summary of relevant operational evidence reviewed, deviations from deployment assumptions identified and resulting actions"
+        },
+        {
+          "id": "pb-07-evidence-07",
+          "text": "Decommissioning checklist: data wipe/reset, credential/key revocation and customer guidance"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-07-gate-01",
+          "text": "Support status and life-cycle state for this release are clear (active, maintenance, etc.)"
+        },
+        {
+          "id": "pb-07-gate-02",
+          "text": "Secure update path validated (integrity/authentication checks, rollback/recovery documented)"
+        },
+        {
+          "id": "pb-07-gate-03",
+          "text": "Vulnerability triage completed for known issues (including third-party dependencies); decisions recorded (fix/mitigate/accept with expiry)"
+        },
+        {
+          "id": "pb-07-gate-04",
+          "text": "SBOM generated (or dependency inventory updated) and stored for the release"
+        },
+        {
+          "id": "pb-07-gate-05",
+          "text": "Security logging verified for critical events (authentication, admin actions, updates)"
+        },
+        {
+          "id": "pb-07-gate-06",
+          "text": "Decommissioning actions defined for components introduced/changed (e.g. reset, wipe, key revocation)"
+        },
+        {
+          "id": "pb-07-gate-07",
+          "text": "Any accepted residual security risk has an owner and review/expiry date"
+        }
+      ]
+    },
+    {
+      "id": "pb-08",
+      "title": "User-centric design",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Security mechanisms must be usable and understandable even for everyday users.",
+      "objective": "Ensure that security controls and secure defaults are usable, understandable and aligned with real user workflows, so that security outcomes do not depend on expert behaviour.",
+      "checklist": [
+        {
+          "id": "pb-08-check-01",
+          "heading": "Design secure defaults that require minimal user action",
+          "items": [
+            "Ship with the safest practical settings enabled (e.g. least exposure, secure communications, logging enabled).",
+            "Avoid optional security for critical protections; make insecure modes explicit and gated."
+          ]
+        },
+        {
+          "id": "pb-08-check-02",
+          "heading": "Make set-up and onboarding safe and simple",
+          "items": [
+            "Provide a guided first-run experience with clear security steps (e.g. change initial credentials, pair securely, enable updates).",
+            "Minimise manual configuration for sensitive settings; prefer automated secure provisioning."
+          ]
+        },
+        {
+          "id": "pb-08-check-03",
+          "heading": "Use clear, actionable security messaging",
+          "items": [
+            "Write user-facing warnings and error messages that explain what happened, the impact and what to do next.",
+            "Avoid vague messages (‘failed’) or blame-the-user language; include remediation steps."
+          ]
+        },
+        {
+          "id": "pb-08-check-04",
+          "heading": "Provide least-friction access management",
+          "items": [
+            "Prefer role-based access and simple permission models that match user roles (e.g. admin, operator, viewer).",
+            "Support safer auth options where feasible (e.g. MFA for admins, device identity, short-lived tokens).",
+            "Remove/limit insecure recovery paths; make account recovery robust."
+          ]
+        },
+        {
+          "id": "pb-08-check-05",
+          "heading": "Validate usability to prevent insecure workarounds",
+          "items": [
+            "Run quick usability checks on key security flows (onboarding, password reset, admin tasks, updates).",
+            "Use support tickets and pseudonymised telemetry (where appropriate) to detect confusion and misconfiguration trends."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-08-evidence-01",
+          "text": "Secure defaults list (what ships enabled and disabled, with rationale)"
+        },
+        {
+          "id": "pb-08-evidence-02",
+          "text": "Onboarding / security set-up guide (short, step-by-step, including credentials and update steps)"
+        },
+        {
+          "id": "pb-08-evidence-03",
+          "text": "Roles/permissions model (roles defined + what each can do)"
+        },
+        {
+          "id": "pb-08-evidence-04",
+          "text": "User-facing security message catalogue (examples of warnings / error messages and text outlining required remediation measures)"
+        },
+        {
+          "id": "pb-08-evidence-05",
+          "text": "Usability validation notes (at least three to five users or internal proxies) covering the top security flows, plus resulting fixes"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-08-gate-01",
+          "text": "Secure defaults reviewed and validated (no critical protections disabled by default)"
+        },
+        {
+          "id": "pb-08-gate-02",
+          "text": "No default admin credentials active; onboarding enforces safe initial set-up"
+        },
+        {
+          "id": "pb-08-gate-03",
+          "text": "Admin/security-critical actions have clear UX (confirmations, guidance and safe recovery paths)"
+        },
+        {
+          "id": "pb-08-gate-04",
+          "text": "Roles and permissions match real user workflows; privilege escalation is explicit and auditable"
+        },
+        {
+          "id": "pb-08-gate-05",
+          "text": "Security warnings / error messages are actionable (what, why, how to fix) and documented"
+        },
+        {
+          "id": "pb-08-gate-06",
+          "text": "Basic usability check completed for key security flows (onboarding, admin tasks, recovery, updates); issues tracked/fixed or accepted with owner + date"
+        }
+      ]
+    },
+    {
+      "id": "pb-09",
+      "title": "Secure coding and verification practices",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Developers should follow established secure coding standards to prevent common vulnerabilities.",
+      "objective": "Reduce common, high-impact vulnerabilities by eliminating relevant weakness classes through architectural and technology choices, where feasible, and by standardising how remaining risks are addressed in code, review and testing.",
+      "checklist": [
+        {
+          "id": "pb-09-check-01",
+          "heading": "Eliminate vulnerability classes by construction",
+          "items": [
+            "Prefer architectural and technology choices that prevent relevant vulnerability classes from arising, such as memory-safe languages for buffer overflows, parameterised data-access APIs for SQL injection and frameworks with context-aware output encoding for cross-site scripting.",
+            "Where elimination is not feasible, identify the remaining vulnerability classes and apply appropriate coding, review, testing and containment controls."
+          ]
+        },
+        {
+          "id": "pb-09-check-02",
+          "heading": "Adopt a secure coding baseline (language/framework specific)",
+          "items": [
+            "Define must-follow rules for your stack (e.g. on input handling, auth checks, error handling, crypto usage, logging).",
+            "Ban unsafe patterns (e.g. string-built SQL, eval-like functions, disabling TLS verification)."
+          ]
+        },
+        {
+          "id": "pb-09-check-03",
+          "heading": "Validate inputs and encode outputs",
+          "items": [
+            "Centralise validation (schemas, allow lists, length/range checks).",
+            "Encode output by context (HTML/JSON/SQL); avoid mixing data and commands."
+          ]
+        },
+        {
+          "id": "pb-09-check-04",
+          "heading": "Use safe dependency and secrets practices",
+          "items": [
+            "Pin and regularly update dependencies; remove unused packages.",
+            "Secrets (e.g. API keys, tokens, credentials) must never be stored in source code or committed to source repositories. Secure secret management solutions should be used instead.",
+            "Generate and store an SBOM for each release (or a dependency inventory at minimum)."
+          ]
+        },
+        {
+          "id": "pb-09-check-05",
+          "heading": "Make security-sensitive changes reviewable",
+          "items": [
+            "Clearly define and document roles for each stakeholder involved in the CI/CD pipeline (e.g. developer, support, administrator, integrator, CI runner).",
+            "Protect critical branches to prevent direct commits and history rewriting.",
+            "Prohibit force push on protected branches to prevent history rewriting and preserve auditability.",
+            "Require peer review for changes touching authn/authz, boundary-crossing APIs, crypto, update mechanisms or deserialisation and for any new external exposure.",
+            "Use PR checklists and CODEOWNERS files for sensitive areas.",
+            "Apply the same review requirements to AI-generated or AI-modified code as to human-written code."
+          ]
+        },
+        {
+          "id": "pb-09-check-06",
+          "heading": "Automate detection in CI/CD",
+          "items": [
+            "Run SAST and dependency scanning on each PR; fail builds on critical findings.",
+            "Add targeted unit/integration negative tests (unauthorised access denied; injection attempts fail).",
+            "Add basic fuzzing or property-based testing for high-risk parsers/inputs if feasible.",
+            "AI-generated or AI-modified code should go through the same SAST, dependency and secrets checks as human-written code."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-09-evidence-01",
+          "text": "Design evidence: record of relevant vulnerability classes considered and the architectural or technology choices used to eliminate them by construction"
+        },
+        {
+          "id": "pb-09-evidence-02",
+          "text": "Secure coding standards (one or two pages or a repo file) for your stack and a banned patterns list"
+        },
+        {
+          "id": "pb-09-evidence-03",
+          "text": "PR checklist / CODEOWNERS file for security-sensitive modules"
+        },
+        {
+          "id": "pb-09-evidence-04",
+          "text": "CI pipeline evidence: SAST and dependency scan results for the release"
+        },
+        {
+          "id": "pb-09-evidence-05",
+          "text": "Secrets controls: proof that secrets are not in repo (pre-commit secret scanning results) and secrets manager usage"
+        },
+        {
+          "id": "pb-09-evidence-06",
+          "text": "Test evidence: at least a small suite of negative tests for critical endpoints/inputs"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-09-gate-01",
+          "text": "Relevant vulnerability classes have been eliminated by construction where feasible; where not feasible, appropriate preventive and verification controls are in place."
+        },
+        {
+          "id": "pb-09-gate-02",
+          "text": "A secure coding baseline exists for the stack and is referenced in the repo"
+        },
+        {
+          "id": "pb-09-gate-03",
+          "text": "SAST and dependency scanning run in CI; critical issues fixed or covered by a documented exception (with owner and expiry)"
+        },
+        {
+          "id": "pb-09-gate-04",
+          "text": "Secret scanning enabled; no secrets committed; rotation performed if exposure occurred"
+        },
+        {
+          "id": "pb-09-gate-05",
+          "text": "Security-sensitive changes were peer reviewed (auth/authz, crypto, parsers, external interfaces)"
+        },
+        {
+          "id": "pb-09-gate-06",
+          "text": "Negative tests run on critical endpoints (unauthorised access denied; injection attempts fail)"
+        },
+        {
+          "id": "pb-09-gate-07",
+          "text": "Dependencies reviewed for high/ critical vulns; patch/mitigation plan recorded for any accepted risk"
+        }
+      ]
+    },
+    {
+      "id": "pb-10",
+      "title": "Logging, monitoring and alerting",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Systems should generate appropriate security-relevant logs, retain them for a defined period and protect them from tampering, so that they can support investigation and compliance needs.",
+      "objective": "Provide sufficient visibility to detect misuse, investigate incidents and maintain system integrity over time. The focus is on a small set of high-signal security events, reliable log retention and actionable alerts that do not overwhelm teams.",
+      "checklist": [
+        {
+          "id": "pb-10-check-01",
+          "heading": "Define the “must-log” security events",
+          "items": [
+            "Authentication: login success/failure; MFA events; token issuance/refresh/revocation.",
+            "Authorisation: access denied, privilege or role changes, admin actions.",
+            "Boundary events: external API calls, device onboarding or pairing, OTA/update events.",
+            "Data or security changes: configuration changes, key or secret changes, user or service enabled or disabled.",
+            "Do not log personal or secret data by default. In general, log only the bare minimum required to understand events in default log level"
+          ]
+        },
+        {
+          "id": "pb-10-check-02",
+          "heading": "Standardise access and audit log structure and attribution",
+          "items": [
+            "For access and authorisation logging, use consistent fields capturing who (actor), what (action or event type) and when (timestamp), with additional contextual fields as appropriate.",
+            "Ensure that admin actions are attributable to a named identity (no shared accounts)."
+          ]
+        },
+        {
+          "id": "pb-10-check-03",
+          "heading": "Centralise collection and protect log integrity",
+          "items": [
+            "Central log store (SIEM/log platform or managed logging).",
+            "Separate logs based on type and/or service.",
+            "Restrict access to logs; separate duties and apply write-only permissions where feasible.",
+            "Set retention targets (e.g. 30 days or 90 days, longer for archival material if required). Plan storage accordingly.",
+            "Ensure time sync (NTP) across systems."
+          ]
+        },
+        {
+          "id": "pb-10-check-04",
+          "heading": "Implement actionable monitoring and alerts",
+          "items": [
+            "Start with a small alert set (high confidence, high impact): repeated auth failures, new admin creation, privilege escalation, unusual API error spikes, updates failing, disabled logging, access to sensitive endpoints from new locations.",
+            "Tune alerts to reduce noise (rate thresholds, suppression windows, environment filters)."
+          ]
+        },
+        {
+          "id": "pb-10-check-05",
+          "heading": "Practice incident triage and response",
+          "items": [
+            "Define on-call duties / ownership for security alerts.",
+            "Document a minimal triage playbook covering: validate, scope, contain, remediate and communicate.",
+            "Carry out a quarterly tabletop exercise or dry run for one common scenario (account takeover or API key leak)."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-10-evidence-01",
+          "text": "Logging baseline: list of must-log events and required fields (one page)"
+        },
+        {
+          "id": "pb-10-evidence-02",
+          "text": "Central logging proof: screenshot/export/config showing logs from key components arriving centrally"
+        },
+        {
+          "id": "pb-10-evidence-03",
+          "text": "Retention setting: configured retention is in place and there is an access-control policy for logs"
+        },
+        {
+          "id": "pb-10-evidence-04",
+          "text": "Alert catalogue: list of enabled alerts with thresholds and owners (initial set can consist of around 5 to 10 alerts)"
+        },
+        {
+          "id": "pb-10-evidence-05",
+          "text": "Triage runbook: one-page steps and escalation contacts, plus one recent test (tabletop note)"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-10-gate-01",
+          "text": "Must-log security events implemented for new/changed components (auth, admin, updates, boundary events)"
+        },
+        {
+          "id": "pb-10-gate-02",
+          "text": "Logs include attribution fields (actor, request/session ID, source) and are centralised"
+        },
+        {
+          "id": "pb-10-gate-03",
+          "text": "Log access restricted, retention configured, time sync verified"
+        },
+        {
+          "id": "pb-10-gate-04",
+          "text": "High-signal alerts enabled and assigned an owner (at least brute force events, new admin / role change, key/secret change, update failures)"
+        },
+        {
+          "id": "pb-10-gate-05",
+          "text": "Triage runbook exists and has been tested recently (tabletop exercise or test alert)"
+        },
+        {
+          "id": "pb-10-gate-06",
+          "text": "Logging/alerting exceptions are documented, with owner and review/expiry date"
+        }
+      ]
+    },
+    {
+      "id": "pb-11",
+      "title": "Configuration and change management",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Secure operation requires configurations to be controlled, consistent and auditable. Baseline hardening standards should be defined and applied through repeatable mechanisms such as templates and infrastructure as code to reduce drift.",
+      "objective": "Prevent security regressions and outages by ensuring that system configuration is controlled, reviewable and reproducible and that changes are assessed for risk before reaching production. The priority is to eliminate ‘silent drift’, tighten defaults and make rollbacks reliable.",
+      "checklist": [
+        {
+          "id": "pb-11-check-01",
+          "heading": "Version and review configuration (treat it as code)",
+          "items": [
+            "Store environment config, infrastructure templates and policies in version control.",
+            "Require peer review for changes affecting exposure, identity/access, secrets, networking, logging and updates."
+          ]
+        },
+        {
+          "id": "pb-11-check-02",
+          "heading": "Harden defaults and prevent drift",
+          "items": [
+            "Establish secure baseline configurations (deny by default where possible).",
+            "Use automated checks to detect drift between desired and actual config (at least for critical settings)."
+          ]
+        },
+        {
+          "id": "pb-11-check-03",
+          "heading": "Separate environments and limit privilege",
+          "items": [
+            "Strict separation for dev/test/prod (accounts, projects, networks, credentials).",
+            "Restrict who can deploy to prod; remove direct manual changes where feasible."
+          ]
+        },
+        {
+          "id": "pb-11-check-04",
+          "heading": "Implement change gating and rollback",
+          "items": [
+            "Use CI/CD gates for config and infra changes (linting, policy checks, approval).",
+            "Require a rollback plan for each production change (including config-only changes).",
+            "Keep break-glass changes rare, logged and post-reviewed."
+          ]
+        },
+        {
+          "id": "pb-11-check-05",
+          "heading": "Track and assess security-impacting changes",
+          "items": [
+            "Tag changes that affect external exposure, authentication/authorisation, crypto, update mechanisms, data classification or third-party integrations.",
+            "Ensure that a lightweight threat/risk review is triggered when these tags apply."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-11-evidence-01",
+          "text": "Config versioned: repo location(s) for IaC, config, policies; PR review history"
+        },
+        {
+          "id": "pb-11-evidence-02",
+          "text": "Baseline config: documented secure defaults and key settings (one page)"
+        },
+        {
+          "id": "pb-11-evidence-03",
+          "text": "Drift detection: a scheduled job/report or tool output for critical config items"
+        },
+        {
+          "id": "pb-11-evidence-04",
+          "text": "Deployment controls: proof that prod changes go through CI/CD (or change tickets) and are attributable"
+        },
+        {
+          "id": "pb-11-evidence-05",
+          "text": "Rollback proof: last rollback test result or documented rollback procedure"
+        },
+        {
+          "id": "pb-11-evidence-06",
+          "text": "Change log: record of security-impacting changes and associated approvals"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-11-gate-01",
+          "text": "Production config/IaC changes are versioned and peer-reviewed (no untracked manual edits)"
+        },
+        {
+          "id": "pb-11-gate-02",
+          "text": "Secure baseline defaults applied; new components inherit baseline (network, IAM, logging)"
+        },
+        {
+          "id": "pb-11-gate-03",
+          "text": "Dev/test/prod separated (accounts, projects, credentials); least privilege enforced for deployers"
+        },
+        {
+          "id": "pb-11-gate-04",
+          "text": "CI/CD gates applied to config changes (policy checks, linting); approvals recorded"
+        },
+        {
+          "id": "pb-11-gate-05",
+          "text": "Rollback plan exists for this release; rollback procedure tested recently or validated"
+        },
+        {
+          "id": "pb-11-gate-06",
+          "text": "Security-impacting changes tagged and reviewed (exposure, IAM, secrets, crypto, updates, integrations)"
+        },
+        {
+          "id": "pb-11-gate-07",
+          "text": "Exceptions (emergency changes) logged and post-reviewed, with owner and expiry date"
+        }
+      ]
+    },
+    {
+      "id": "pb-12",
+      "title": "Incident response and recovery",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Developers must be prepared to respond quickly and effectively to security incidents that affect their products in the field, including vulnerabilities, compromised code, malicious updates and misuse of product functionality.",
+      "objective": "Detect, contain and recover from security incidents quickly while limiting customer impact and preventing recurrence. The priority is a clear playbook, defined ownership, fast triage and reliable restore/rollback, supported by the minimum logging and backup evidence needed to act decisively.",
+      "checklist": [
+        {
+          "id": "pb-12-check-01",
+          "heading": "Define roles, escalation and decision authority",
+          "items": [
+            "Name an incident lead and backups. Define escalation thresholds, when senior management should be informed and who can approve customer communications, access elevation and emergency changes.",
+            "Maintain an on-call/escalation contact list (internal + key suppliers)."
+          ]
+        },
+        {
+          "id": "pb-12-check-02",
+          "heading": "Create a minimal incident runbook",
+          "items": [
+            "Steps: detect, triage, contain, eradicate, recover, lessons learned.",
+            "Include checklists for common scenarios (account takeover, leaked API key, ransomware/supply-chain alert, compromised device fleet)."
+          ]
+        },
+        {
+          "id": "pb-12-check-03",
+          "heading": "Prepare containment controls",
+          "items": [
+            "Make sure that it is possible to revoke/rotate credentials and keys quickly.",
+            "Make sure that it is possible to disable accounts, block IPs, quarantine services/devices and roll back releases / config changes.",
+            "Ensure that break-glass access exists, is logged and is time bound."
+          ]
+        },
+        {
+          "id": "pb-12-check-04",
+          "heading": "Ensure recovery capability",
+          "items": [
+            "Backups are automated, tested and protected (immutability where feasible).",
+            "Restore procedures are documented for critical systems (data, configs, secrets, device firmware if applicable).",
+            "Define RTO/RPO targets appropriate to the business."
+          ]
+        },
+        {
+          "id": "pb-12-check-05",
+          "heading": "Exercise and improve",
+          "items": [
+            "Run a lightweight tabletop exercise (30–60 minutes) quarterly on one realistic scenario.",
+            "Record and review incidents, near misses and exercise findings. Track actions to closure and update risk assessments, threat models, runbooks, detections and controls as appropriate."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-12-evidence-01",
+          "text": "Defined roles: incident-response contact list + roles (owner, backups and escalation paths established)."
+        },
+        {
+          "id": "pb-12-evidence-02",
+          "text": "Runbooks: one-page incident runbook and at least one scenario checklist."
+        },
+        {
+          "id": "pb-12-evidence-03",
+          "text": "Containment proof: documented steps and permissions to revoke keys, disable accounts and roll back deployments."
+        },
+        {
+          "id": "pb-12-evidence-04",
+          "text": "Backup/restore proof: backup configuration and one recent restore test result (or evidence of a successful restore)."
+        },
+        {
+          "id": "pb-12-evidence-05",
+          "text": "Post-incident, near-miss or tabletop notes showing findings, actions and resulting improvements."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-12-gate-01",
+          "text": "IR roles and escalation contacts are current"
+        },
+        {
+          "id": "pb-12-gate-02",
+          "text": "Incident runbook exists and covers detect/triage/contain/recover with at least one common scenario"
+        },
+        {
+          "id": "pb-12-gate-03",
+          "text": "Containment actions are ready"
+        },
+        {
+          "id": "pb-12-gate-04",
+          "text": "Backups enabled for critical data/config; restore procedure documented and tested recently"
+        },
+        {
+          "id": "pb-12-gate-05",
+          "text": "Post-incident, near-miss or tabletop notes exist and are updated"
+        }
+      ]
+    },
+    {
+      "id": "pb-13",
+      "title": "Vulnerability and patch management",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Manufacturers should establish practical, repeatable vulnerability and patch management processes and prioritise remediation according to risk. Manufacturers need a simple way for customers and researchers to report issues and an internal process to triage findings quickly and decide what needs urgent action.",
+      "objective": "Identify, prioritise and remediate vulnerabilities fast enough to reduce real-world exposure, across your code, dependencies, infrastructure and (if applicable) devices/firmware. The focus is a simple intake-to-fix workflow, clear SLAs and an update mechanism that makes patching reliable.",
+      "checklist": [
+        {
+          "id": "pb-13-check-01",
+          "heading": "Establish intake channels (do not miss issues)",
+          "items": [
+            "Sources: dependency scanning, SAST/DAST results, advisories, customer reports, security emails, etc.",
+            "Assign a single owner for triage and tracking."
+          ]
+        },
+        {
+          "id": "pb-13-check-02",
+          "heading": "Triage and prioritise consistently",
+          "items": [
+            "Use a lightweight severity approach (e.g. critical, high, medium or low) plus ‘internet-exposed’ and ‘known exploited’ flags.",
+            "Ensure awareness of applicable incident and vulnerability reporting timelines.",
+            "Decide quickly: fix now, mitigate, accept (time bound) or defer (with rationale)."
+          ]
+        },
+        {
+          "id": "pb-13-check-03",
+          "heading": "Patch dependencies and third parties proactively",
+          "items": [
+            "Maintain a regular cadence (e.g. weekly or monthly) for dependency updates.",
+            "Pin versions, remove unused dependencies and track transitive dependencies."
+          ]
+        },
+        {
+          "id": "pb-13-check-04",
+          "heading": "Fix, test and release with a secure process",
+          "items": [
+            "Ensure that fixes are reviewed and tested; verify no regressions in authn/authz, input validation or critical workflows.",
+            "For devices/IoT: ensure secure OTA/update path and safe rollback where feasible."
+          ]
+        },
+        {
+          "id": "pb-13-check-05",
+          "heading": "Communicate, learn and close the loop",
+          "items": [
+            "Track affected versions, customers/environments and mitigation guidance.",
+            "Publish security release notes or advisories as appropriate.",
+            "Verify rollout completion and update the risk register.",
+            "Establish an escalation process to assess applicable regulatory reporting obligations.",
+            "Where proportionate, publish machine-readable advisories (e.g. CSAF), including structured information on whether specific products or versions are affected, such as through VEX.",
+            "Analyse significant or recurring vulnerabilities, field reports, incidents and exploitation patterns to identify root causes. Feed the findings back into the risk assessment, security requirements and development practices."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-13-evidence-01",
+          "text": "Vulnerability tracking board / register: issue, severity, affected components/versions, owner, status, target date"
+        },
+        {
+          "id": "pb-13-evidence-02",
+          "text": "Defined SLAs: for example, critical triage ≤ XX hours; remediation/release target ≤ X days (specify numbers that are realistic for you)"
+        },
+        {
+          "id": "pb-13-evidence-03",
+          "text": "Scanning evidence: CI outputs for dependency scanning and SAST (and DAST if applicable)"
+        },
+        {
+          "id": "pb-13-evidence-04",
+          "text": "Proactive dependency patches: SBOM or dependency inventory for each release (at minimum for shipped artefacts)"
+        },
+        {
+          "id": "pb-13-evidence-05",
+          "text": "Patch release record: link from vulnerability ticket → PR(s) → tests → release version → rollout confirmation"
+        },
+        {
+          "id": "pb-13-evidence-06",
+          "text": "Exception log: accepted risks, with owner and expiry/review date, and compensating controls (if any)"
+        },
+        {
+          "id": "pb-13-evidence-07",
+          "text": "Field feedback and improvement record: recurring security issues or attack patterns, root causes identified where applicable, and the resulting risk, design or backlog actions."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-13-gate-01",
+          "text": "Dependency and SAST scans executed for the release; critical and high findings addressed or documented exception (with owner and expiry date)"
+        },
+        {
+          "id": "pb-13-gate-02",
+          "text": "SBOM (or dependency inventory) generated/updated and stored for the release"
+        },
+        {
+          "id": "pb-13-gate-03",
+          "text": "Known vulnerabilities affecting shipped components are triaged with severity information, owner and target date"
+        },
+        {
+          "id": "pb-13-gate-04",
+          "text": "Patch process validated: fix reviewed, tests passed, and release notes updated as needed"
+        },
+        {
+          "id": "pb-13-gate-05",
+          "text": "For internet-exposed components: mitigations or patches for critical- and high-severity issues are in place before release"
+        },
+        {
+          "id": "pb-13-gate-06",
+          "text": "OTA/update (if applicable) validated for secure delivery; rollback/recovery documented"
+        },
+        {
+          "id": "pb-13-gate-07",
+          "text": "Accepted residual risk is time bound and tracked to closure or review date"
+        }
+      ]
+    },
+    {
+      "id": "pb-14",
+      "title": "Supply-chain controls",
+      "category": "operational-integrity",
+      "principle_type": "secure by design",
+      "principle": "Developers should protect product integrity without excessive process overhead, focusing on the points where a compromise would have the largest impact: code repositories, build systems, signing keys and the channels used to distribute updates.",
+      "objective": "Reduce the risk of compromise through third parties (software components, libraries, build tools, CI/CD, contractors, hosting providers and hardware/firmware suppliers) by establishing minimum, repeatable controls that improve visibility, integrity and accountability across what you buy, build and ship.",
+      "checklist": [
+        {
+          "id": "pb-14-check-01",
+          "heading": "Know what you depend on (inventory + SBOM)",
+          "items": [
+            "Maintain an inventory of critical suppliers and third-party components, including externally sourced AI/ML models where relevant.",
+            "Generate an SBOM per release (or minimum: dependency manifest snapshot) to improve visibility and response speed."
+          ]
+        },
+        {
+          "id": "pb-14-check-02",
+          "heading": "Control what enters your codebase",
+          "items": [
+            "Pin dependency versions; require review for new dependencies and major upgrades. Pinning and lock files improve build repeatability but do not establish that the pinned component is trustworthy. New and updated dependencies still require appropriate review and security checks.",
+            "Run dependency scanning in CI; block builds on critical- or high where feasible (or require explicit exception).",
+            "Where proportionate, obtain dependencies through approved repositories or controlled registries and apply integrity, malware and policy checks before use.",
+            "For externally sourced AI/ML models, record their source and version, verify their integrity and provenance, and assess relevant security risks before integration."
+          ]
+        },
+        {
+          "id": "pb-14-check-03",
+          "heading": "Harden the build and release pipeline (integrity of artefacts)",
+          "items": [
+            "Restrict CI/CD permissions (least privilege), protect secrets and separate build and deploy roles.",
+            "Sign release artefacts and, where proportionate, generate verifiable provenance describing how and from which inputs they were built.",
+            "For higher-risk products, use isolated and ephemeral build environments, consider restricting build-time network access to approved sources and consider hermetic builds where feasible."
+          ]
+        },
+        {
+          "id": "pb-14-check-04",
+          "heading": "Set minimum supplier expectations (lightweight due diligence)",
+          "items": [
+            "For critical suppliers, require a security contact / VDP, patch timelines and confirmation of secure development practices.",
+            "Use a short questionnaire aligned with a recognised baseline (e.g. OWASP SCVS) rather than bespoke questions."
+          ]
+        },
+        {
+          "id": "pb-14-check-05",
+          "heading": "Plan for supplier failure",
+          "items": [
+            "Identify single points of failure (key providers/components) and define fallbacks (alternate package source, vendor substitution plan, rapid disable/mitigation).",
+            "Ensure that contracts and SLAs cover vulnerability notification and support windows (where possible)."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-14-evidence-01",
+          "text": "Supplier + component inventory (top vendors, critical libraries/tools, hosting/build services), including externally sourced AI/ML models where relevant"
+        },
+        {
+          "id": "pb-14-evidence-02",
+          "text": "SBOM (or dependency inventory) per release, stored with the release artefacts"
+        },
+        {
+          "id": "pb-14-evidence-03",
+          "text": "CI results showing dependency scanning (and ideally secret scanning) executed on PRs/releases"
+        },
+        {
+          "id": "pb-14-evidence-04",
+          "text": "Release integrity evidence: artefact signing and restricted CI/CD access (configs/screenshots/logs)"
+        },
+        {
+          "id": "pb-14-evidence-05",
+          "text": "Supplier baseline checks for critical suppliers (a completed questionnaire or SCVS-aligned checklist)"
+        },
+        {
+          "id": "pb-14-evidence-06",
+          "text": "Exception log for accepted supply-chain risks (with owners and expiry dates)"
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-14-gate-01",
+          "text": "SBOM (or dependency inventory) generated and stored for this release"
+        },
+        {
+          "id": "pb-14-gate-02",
+          "text": "Dependency scanning executed; critical- or high-severity issues fixed or covered by a documented exception (with owner and expiry date)"
+        },
+        {
+          "id": "pb-14-gate-03",
+          "text": "New dependencies/suppliers reviewed and approved (recorded in PR/ticket)"
+        },
+        {
+          "id": "pb-14-gate-04",
+          "text": "CI/CD and build secrets are protected; build/deploy permissions are least privilege and attributable"
+        },
+        {
+          "id": "pb-14-gate-05",
+          "text": "Release artefacts signed (and provenance captured where feasible / per chosen SLSA  target)"
+        },
+        {
+          "id": "pb-14-gate-06",
+          "text": "Critical suppliers meet baseline expectations (security contact, vulnerability notification, support/patch commitments)"
+        },
+        {
+          "id": "pb-14-gate-07",
+          "text": "Supply-chain risk exceptions recorded, with owner and review/expiry date"
+        }
+      ]
+    },
+    {
+      "id": "pb-15",
+      "title": "Minimisation of default services",
+      "category": "default-hardening",
+      "principle_type": "secure by default",
+      "principle": "Disable non-essential features and services by default. Only the functionality required for the core operation of the product should be enabled by default.",
+      "objective": "Reduce the attack surface and ensure that products start in a hardened state, without relying on users to disable specific functionality.",
+      "checklist": [
+        {
+          "id": "pb-15-check-01",
+          "heading": "Define core functionality",
+          "items": [
+            "Identify the minimum set of features and services required for the product to operate."
+          ]
+        },
+        {
+          "id": "pb-15-check-02",
+          "heading": "Disable non-essential features and services by default",
+          "items": [
+            "Ensure that optional features and services are disabled by default."
+          ]
+        },
+        {
+          "id": "pb-15-check-03",
+          "heading": "Require explicit opt-in for additional functionality",
+          "items": [
+            "Ensure that non-essential features and services can be enabled only through deliberate user action."
+          ]
+        },
+        {
+          "id": "pb-15-check-04",
+          "heading": "Explain security implications on enablement",
+          "items": [
+            "Inform users of security risks when enabling optional features and services.",
+            "Avoid enabling additional features and services without clear acknowledgement."
+          ]
+        },
+        {
+          "id": "pb-15-check-05",
+          "heading": "Review defaults on change",
+          "items": [
+            "Reassess default-enabled features and services when new features are introduced."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-15-evidence-01",
+          "text": "Core features and services defined: documentation or configuration identifying which features and services are required by default."
+        },
+        {
+          "id": "pb-15-evidence-02",
+          "text": "Non-essential features and services disabled: default configuration or build artefacts show optional features and services and modules are off."
+        },
+        {
+          "id": "pb-15-evidence-03",
+          "text": "Explicit opt-in required: configuration or documentation shows how additional features and services must be manually enabled."
+        },
+        {
+          "id": "pb-15-evidence-04",
+          "text": "Security implications disclosed: documentation, UI text or configuration prompts show that users are informed of security implications when enabling non-essential features and services."
+        },
+        {
+          "id": "pb-15-evidence-05",
+          "text": "Defaults reviewed for this release: release notes, checklist or ticket confirms that default settings have been reviewed after changes."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-15-gate-01",
+          "text": "Only core functionality is enabled by default"
+        },
+        {
+          "id": "pb-15-gate-02",
+          "text": "Optional features and services are disabled unless explicitly enabled by the user"
+        },
+        {
+          "id": "pb-15-gate-03",
+          "text": "Users are informed of security implications when enabling non-essential features and services"
+        },
+        {
+          "id": "pb-15-gate-04",
+          "text": "No new features or services are enabled by default without review"
+        },
+        {
+          "id": "pb-15-gate-05",
+          "text": "Default configuration has been reviewed and confirmed for this release"
+        }
+      ]
+    },
+    {
+      "id": "pb-16",
+      "title": "Restrictive initial access",
+      "category": "default-hardening",
+      "principle_type": "secure by default",
+      "principle": "Ship systems in the most restrictive access state possible. Eliminate shared or default credentials and require a secure access set-up before any privileged or sensitive operations are allowed.",
+      "objective": "To prevent immediate compromise after deployment by ensuring that attackers cannot gain access through default or weak initial access.",
+      "checklist": [
+        {
+          "id": "pb-16-check-01",
+          "heading": "Eliminate shared default credentials",
+          "items": [
+            "Do not ship products with universal usernames or passwords (e.g. ‘admin/admin’ or ‘root/root’)."
+          ]
+        },
+        {
+          "id": "pb-16-check-02",
+          "heading": "Require unique credentials for each device or instance",
+          "items": [
+            "Ensure that each device or instance has unique credentials generated at manufacture, provisioning or first boot."
+          ]
+        },
+        {
+          "id": "pb-16-check-03",
+          "heading": "Enforce a secure initial set-up",
+          "items": [
+            "Require a credential change, key provisioning or account creation before allowing privileged or sensitive access."
+          ]
+        },
+        {
+          "id": "pb-16-check-04",
+          "heading": "Restrict initial permissions",
+          "items": [
+            "Grant the minimum permissions required for initial operation.",
+            "Avoid granting full administrative access by default."
+          ]
+        },
+        {
+          "id": "pb-16-check-05",
+          "heading": "Protect initial access paths",
+          "items": [
+            "Ensure that first-boot, onboarding and recovery interfaces are authenticated and not unnecessarily exposed."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-16-evidence-01",
+          "text": "No default credentials shipped: build configuration or documentation confirms that no shared or hard-coded credentials exist."
+        },
+        {
+          "id": "pb-16-evidence-02",
+          "text": "Unique credentials enforced: provisioning records, configuration or device inventory shows per-device or per-instance credentials."
+        },
+        {
+          "id": "pb-16-evidence-03",
+          "text": "Secure set-up required: configuration or test evidence shows credential change or secure set-up is mandatory before privileged or sensitive access."
+        },
+        {
+          "id": "pb-16-evidence-04",
+          "text": "Initial permissions restricted: access model or configuration shows limited permissions at first use."
+        },
+        {
+          "id": "pb-16-evidence-05",
+          "text": "Initial access paths controlled: configuration or test evidence shows that onboarding and recovery interfaces are protected."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-16-gate-01",
+          "text": "No shared or default credentials present in production builds"
+        },
+        {
+          "id": "pb-16-gate-02",
+          "text": "Unique credentials generated for each device or instance"
+        },
+        {
+          "id": "pb-16-gate-03",
+          "text": "Secure set-up enforced before privileged or sensitive access"
+        },
+        {
+          "id": "pb-16-gate-04",
+          "text": "Initial permissions are restrictive by default"
+        },
+        {
+          "id": "pb-16-gate-05",
+          "text": "Initial access and onboarding paths are protected and reviewed"
+        }
+      ]
+    },
+    {
+      "id": "pb-17",
+      "title": "Secure communication by default",
+      "category": "default-hardening",
+      "principle_type": "secure by default",
+      "principle": "Enforce secure communication from the start. All external communications must be encrypted and authenticated by default, with no support for insecure or plain-text protocols for convenience.",
+      "objective": "Protect data in transit and prevent interception, tampering or impersonation by ensuring that communications are always secure, without relying on user configuration or later hardening.",
+      "checklist": [
+        {
+          "id": "pb-17-check-01",
+          "heading": "Protect external communications by default",
+          "items": [
+            "Require encrypted communication for all external interfaces from first use.",
+            "Where data or commands pass through intermediaries, assess whether transport protection alone is sufficient or whether additional end-to-end authenticity, integrity and freshness controls are required."
+          ]
+        },
+        {
+          "id": "pb-17-check-02",
+          "heading": "Disable insecure and plain-text protocols",
+          "items": [
+            "Do not allow unencrypted or weak protocols (e.g. HTTP or Telnet) to be used by default or even as fallbacks."
+          ]
+        },
+        {
+          "id": "pb-17-check-03",
+          "heading": "Authenticate communicating endpoints",
+          "items": [
+            "Ensure that external endpoints authenticate each other where appropriate, for example for device-to-cloud, service-to-service and administrative access."
+          ]
+        },
+        {
+          "id": "pb-17-check-04",
+          "heading": "Enforce secure protocol versions and configurations",
+          "items": [
+            "Use modern, secure protocol versions and configurations by default.",
+            "Explicitly disable weak ciphers, legacy versions and insecure negotiation modes."
+          ]
+        },
+        {
+          "id": "pb-17-check-05",
+          "heading": "Fail securely on connection errors",
+          "items": [
+            "Ensure that communication failures result in denied connections rather than downgrading to insecure protocols or configurations."
+          ]
+        },
+        {
+          "id": "pb-17-check-06",
+          "heading": "Plan for cryptographic change",
+          "items": [
+            "Design cryptographic mechanisms so that algorithms, keys, certificates and trust anchors can be replaced or migrated without substantially redesigning the product, where feasible.",
+            "Assess whether the product’s support lifetime, data confidentiality requirements and deployment constraints require preparation for migration to post-quantum cryptography."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-17-evidence-01",
+          "text": "Secure protocols enforced by default: configuration or test evidence shows that encrypted and authenticated communication is required from first connection."
+        },
+        {
+          "id": "pb-17-evidence-02",
+          "text": "Insecure protocols disabled: configuration confirms that plain-text or legacy protocols are not enabled or available."
+        },
+        {
+          "id": "pb-17-evidence-03",
+          "text": "Endpoint authentication in place: configuration or test evidence shows that mutual or appropriate endpoint authentication takes place for external communications."
+        },
+        {
+          "id": "pb-17-evidence-04",
+          "text": "Strong protocol configuration applied: configuration shows that only approved protocol versions and cryptographic settings are enabled."
+        },
+        {
+          "id": "pb-17-evidence-05",
+          "text": "No insecure fallback: test evidence shows that connection attempts fail securely rather than downgrading security."
+        },
+        {
+          "id": "pb-17-evidence-06",
+          "text": "Cryptographic migration note: identification of critical cryptographic mechanisms and how algorithms, keys, certificates and trust anchors are to be updated or replaced."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-17-gate-01",
+          "text": "External communications are encrypted and authenticated from first connection"
+        },
+        {
+          "id": "pb-17-gate-02",
+          "text": "Insecure or plain-text protocols are disabled and unavailable"
+        },
+        {
+          "id": "pb-17-gate-03",
+          "text": "Only approved secure protocol versions and configurations are enabled"
+        },
+        {
+          "id": "pb-17-gate-04",
+          "text": "Endpoint authentication enforced where required"
+        },
+        {
+          "id": "pb-17-gate-05",
+          "text": "Connection failures do not result in insecure fallback"
+        },
+        {
+          "id": "pb-17-gate-06",
+          "text": "Cryptographic mechanisms can be replaced or migrated where required by the product’s risk assessment and support lifetime."
+        }
+      ]
+    },
+    {
+      "id": "pb-18",
+      "title": "Unique device identity and secrets by default",
+      "category": "default-hardening",
+      "principle_type": "secure by default",
+      "principle": "Ship each product instance with a unique cryptographic identity and secrets by default if it uses any private/secret value. Do not use shared credentials, keys or certificates across devices or installations.",
+      "objective": "Prevent large-scale compromise by ensuring that a breach of one device or a leaked secret cannot be reused to attack other devices, customers or the wider installed base.",
+      "checklist": [
+        {
+          "id": "pb-18-check-01",
+          "heading": "Generate unique identities per device or instance",
+          "items": [
+            "Assign a unique device identity (e.g. key pair or certificate) to every device or installation."
+          ]
+        },
+        {
+          "id": "pb-18-check-02",
+          "heading": "Eliminate shared or hard-coded secrets",
+          "items": [
+            "Do not use shared credentials, default keys or embedded secrets across products."
+          ]
+        },
+        {
+          "id": "pb-18-check-03",
+          "heading": "Protect secrets against extraction",
+          "items": [
+            "Store device identities and per-device secrets using platform-appropriate controls that protect against extraction, tampering or unauthorised replacement (e.g. secure storage, hardware-backed protection or restricted access)."
+          ]
+        },
+        {
+          "id": "pb-18-check-04",
+          "heading": "Use unique secrets for security-critical functions",
+          "items": [
+            "Ensure that security-critical functions like authentication, secure communications and update verification rely on per-device secrets, not shared material."
+          ]
+        },
+        {
+          "id": "pb-18-check-05",
+          "heading": "Support revocation and replacement",
+          "items": [
+            "Ensure that device identities and secrets can be revoked and rotated if compromise is suspected."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-18-evidence-01",
+          "text": "Unique device identities issued: device inventory or provisioning records show a unique identity (e.g. key pair or certificate) for each device or instance."
+        },
+        {
+          "id": "pb-18-evidence-02",
+          "text": "No shared secrets present: build artefacts or configuration confirms that no shared credentials or hard-coded secrets exist."
+        },
+        {
+          "id": "pb-18-evidence-03",
+          "text": "Secrets protected at rest: documentation or configuration shows that secrets are stored using appropriate protection mechanisms."
+        },
+        {
+          "id": "pb-18-evidence-04",
+          "text": "Security functions use unique secrets: configuration or design notes show that authentication, communication and update processes rely on per-device secrets."
+        },
+        {
+          "id": "pb-18-evidence-05",
+          "text": "Revocation supported: documentation or configuration shows that device identities or secrets can be revoked or replaced."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-18-gate-01",
+          "text": "Unique cryptographic identity generated for each device or instance"
+        },
+        {
+          "id": "pb-18-gate-02",
+          "text": "No shared or default secrets present in production builds"
+        },
+        {
+          "id": "pb-18-gate-03",
+          "text": "Secrets are protected against extraction"
+        },
+        {
+          "id": "pb-18-gate-04",
+          "text": "Security-critical functions use per-device secrets"
+        },
+        {
+          "id": "pb-18-gate-05",
+          "text": "Identity and secret revocation or replacement is supported"
+        }
+      ]
+    },
+    {
+      "id": "pb-19",
+      "title": "Mandatory security onboarding",
+      "category": "guided-protection",
+      "principle_type": "secure by default",
+      "principle": "Require critical security controls to be configured during initial set-up. Do not allow products to enter an operational state until essential security steps are completed.",
+      "objective": "Ensure that systems start in a secure state by preventing or limiting use before baseline security controls, such as strong authentication or encryption, are configured.",
+      "checklist": [
+        {
+          "id": "pb-19-check-01",
+          "heading": "Identify mandatory security steps",
+          "items": [
+            "Define the minimum security controls required before the product can be used (e.g. MFA, encryption keys, admin account set-up)."
+          ]
+        },
+        {
+          "id": "pb-19-check-02",
+          "heading": "Enforce security set-up during first use",
+          "items": [
+            "Integrate mandatory security steps into the initial set-up or onboarding flow.",
+            "Do not allow users to skip or defer required security configuration."
+          ]
+        },
+        {
+          "id": "pb-19-check-03",
+          "heading": "Block operation until onboarding is complete",
+          "items": [
+            "Prevent normal operation, privileged actions and external connectivity until mandatory security steps are completed."
+          ]
+        },
+        {
+          "id": "pb-19-check-04",
+          "heading": "Provide clear, guided configuration",
+          "items": [
+            "Guide users through security set-up with clear instructions and sensible defaults.",
+            "Avoid requiring expert knowledge to complete onboarding securely."
+          ]
+        },
+        {
+          "id": "pb-19-check-05",
+          "heading": "Re-trigger onboarding when security is incomplete",
+          "items": [
+            "Re-enforce onboarding if critical security settings are removed, reset or left unconfigured."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-19-evidence-01",
+          "text": "Mandatory security steps defined: documentation identifies which security controls must be completed during onboarding."
+        },
+        {
+          "id": "pb-19-evidence-02",
+          "text": "Onboarding enforces a security set-up: configuration, screenshots or test evidence shows that critical security steps cannot be skipped."
+        },
+        {
+          "id": "pb-19-evidence-03",
+          "text": "Operation blocked pre-onboarding: configuration, screenshots or test evidence shows that the product cannot enter normal operation before onboarding is complete."
+        },
+        {
+          "id": "pb-19-evidence-04",
+          "text": "Guided set-up is provided: screenshots, configuration flows or documentation shows that clear user guidance is provided on security set-up."
+        },
+        {
+          "id": "pb-19-evidence-05",
+          "text": "Onboarding is re-enforced on incomplete security configuration: configuration, screenshots or test evidence shows that onboarding is re-triggered if required security settings are missing."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-19-gate-01",
+          "text": "Mandatory security steps are defined and enforced during initial set-up"
+        },
+        {
+          "id": "pb-19-gate-02",
+          "text": "Users cannot bypass or skip critical security configuration"
+        },
+        {
+          "id": "pb-19-gate-03",
+          "text": "Product cannot enter normal operation before onboarding completion"
+        },
+        {
+          "id": "pb-19-gate-04",
+          "text": "Security onboarding provides clear guidance and secure defaults"
+        },
+        {
+          "id": "pb-19-gate-05",
+          "text": "Onboarding is re-enforced if critical security settings are removed"
+        }
+      ]
+    },
+    {
+      "id": "pb-20",
+      "title": "Automated maintenance and updates",
+      "category": "guided-protection",
+      "principle_type": "secure by default",
+      "principle": "Manufacturers should provide secure update mechanisms that minimise user and operational effort. Security updates should be enabled by default, while allowing authorised users or operators to approve or schedule installation where the deployment requires controlled updates.",
+      "objective": "Ensure that vulnerabilities are addressed quickly and the device is left vulnerable for as little time as possible.",
+      "checklist": [
+        {
+          "id": "pb-20-check-01",
+          "heading": "Enable managed security updates by default",
+          "items": [
+            "Enable security updates by default, ensuring that the product automatically checks for updates, informs the user and supports timely installation, with escalation where updates are repeatedly deferred.",
+            "Where unattended installation could affect safety, availability or operational continuity, support staged rollout, maintenance windows and authorised operator approval."
+          ]
+        },
+        {
+          "id": "pb-20-check-02",
+          "heading": "Separate security updates from feature changes",
+          "items": [
+            "Ensure that critical security updates can be delivered independently of optional feature/functional updates."
+          ]
+        },
+        {
+          "id": "pb-20-check-03",
+          "heading": "Verify the authenticity and integrity of updates",
+          "items": [
+            "Ensure that updates are cryptographically verified before installation."
+          ]
+        },
+        {
+          "id": "pb-20-check-04",
+          "heading": "Apply updates safely",
+          "items": [
+            "Design updates to minimise disruption and avoid leaving the system in an insecure or unusable state if the update fails.",
+            "Support staged rollout, maintenance windows, operator approval and rollback where required by safety, availability or operational-continuity considerations."
+          ]
+        },
+        {
+          "id": "pb-20-check-05",
+          "heading": "Inform users of update activity",
+          "items": [
+            "Notify users when security updates are applied or when action is required, without requiring them to manage the update process manually."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-20-evidence-01",
+          "text": "Automatic updates enabled: default configuration shows that security updates are enabled out of the box."
+        },
+        {
+          "id": "pb-20-evidence-02",
+          "text": "Security updates decoupled: configuration or release notes show that security fixes can be delivered independently of optional feature/functional updates."
+        },
+        {
+          "id": "pb-20-evidence-03",
+          "text": "Update verification enforced: configuration or design notes show that updates are authenticated and integrity-checked."
+        },
+        {
+          "id": "pb-20-evidence-04",
+          "text": "Safe update mechanism in place: documentation or test evidence shows that updates can be applied without significantly disrupting basic operation."
+        },
+        {
+          "id": "pb-20-evidence-05",
+          "text": "Update strategy: documentation or test evidence shows that the update process supports controlled approval, staging and rollback where required by the deployment context."
+        },
+        {
+          "id": "pb-20-evidence-06",
+          "text": "User notification supported: logs, UI messages or documentation shows that users are informed of update activity or status."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-20-gate-01",
+          "text": "Security update functionality is enabled by default, with an installation approach appropriate to the product’s deployment context"
+        },
+        {
+          "id": "pb-20-gate-02",
+          "text": "Security updates can be delivered independently of features"
+        },
+        {
+          "id": "pb-20-gate-03",
+          "text": "Updates are cryptographically verified before installation"
+        },
+        {
+          "id": "pb-20-gate-04",
+          "text": "Failed updates do not leave the system insecure or unusable"
+        },
+        {
+          "id": "pb-20-gate-05",
+          "text": "Users are informed of update status without manual intervention"
+        }
+      ]
+    },
+    {
+      "id": "pb-21",
+      "title": "Transparent security posture",
+      "category": "guided-protection",
+      "principle_type": "secure by default",
+      "principle": "Make the system’s security posture visible and understandable. Clearly inform users when security protections are weakened and provide a simple path to return to a secure baseline.",
+      "objective": "Reduce risk arising from accidental or uninformed misconfiguration by ensuring that users understand the security state of the system and can easily correct insecure settings.",
+      "checklist": [
+        {
+          "id": "pb-21-check-01",
+          "heading": "Define security states and baseline",
+          "items": [
+            "Define the secure baseline and any degraded or unsupported security states.",
+            "Document which configurations cause a transition between states."
+          ]
+        },
+        {
+          "id": "pb-21-check-02",
+          "heading": "Expose current security status",
+          "items": [
+            "Indicate clearly whether the system is operating in a secure or degraded security state."
+          ]
+        },
+        {
+          "id": "pb-21-check-03",
+          "heading": "Warn on changes that reduce security",
+          "items": [
+            "Show clear warnings when users disable security features or apply configurations that increase risk."
+          ]
+        },
+        {
+          "id": "pb-21-check-04",
+          "heading": "Explain impact in plain language",
+          "items": [
+            "Explain to the user the security implications of a change in non-technical terms."
+          ]
+        },
+        {
+          "id": "pb-21-check-05",
+          "heading": "Provide a simple path to recovery",
+          "items": [
+            "Offer the user a simple interaction path to return to the secure baseline."
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-21-evidence-01",
+          "text": "Security states defined: documentation identifies the secure baseline and degraded or insecure states, including the configuration changes that trigger such states."
+        },
+        {
+          "id": "pb-21-evidence-02",
+          "text": "Security status visible: screenshot, CLI output or documentation clearly shows the current security state."
+        },
+        {
+          "id": "pb-21-evidence-03",
+          "text": "Warnings triggered on risk increase: screenshots, prompts or test evidence shows warnings when users apply security-reducing changes."
+        },
+        {
+          "id": "pb-21-evidence-04",
+          "text": "Impact explained clearly: warning messages, screenshots or documentation demonstrates that security implications are described in plain, non-technical language."
+        },
+        {
+          "id": "pb-21-evidence-05",
+          "text": "Baseline restore available: screenshots, commands or configuration shows a simple action exists to return to the secure baseline."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-21-gate-01",
+          "text": "Secure baseline and degraded security states are defined and documented"
+        },
+        {
+          "id": "pb-21-gate-02",
+          "text": "Current security state is clearly visible to the user"
+        },
+        {
+          "id": "pb-21-gate-03",
+          "text": "Users are warned when security protections are reduced"
+        },
+        {
+          "id": "pb-21-gate-04",
+          "text": "Security impact is explained in clear, non-technical language"
+        },
+        {
+          "id": "pb-21-gate-05",
+          "text": "A simple action can be taken to restore the secure baseline"
+        }
+      ]
+    },
+    {
+      "id": "pb-22",
+      "title": "Secure recovery and ownership life cycle",
+      "category": "guided-protection",
+      "principle_type": "secure by default",
+      "principle": "Provide secure, guided recovery and ownership transfer mechanisms by default. Recovery, reset and transfer processes must be easy for users, operators and administrators to follow, while remaining resistant to abuse, account takeover and social engineering.",
+      "objective": "To enable users and administrators to recover access, reset systems or transfer ownership safely.",
+      "checklist": [
+        {
+          "id": "pb-22-check-01",
+          "heading": "Define supported recovery and transfer actions",
+          "items": [
+            "Identify supported recovery actions such as credential reset, account recovery, secure factory reset and ownership transfer, clearly defining who is allowed to initiate each action and under what conditions"
+          ]
+        },
+        {
+          "id": "pb-22-check-02",
+          "heading": "Verify identity before recovery or transfer",
+          "items": [
+            "Require strong identity verification before allowing recovery, reset or ownership transfer actions."
+          ]
+        },
+        {
+          "id": "pb-22-check-03",
+          "heading": "Protect recovery paths from abuse",
+          "items": [
+            "Ensure that recovery mechanisms cannot be used to bypass normal authentication or authorisation controls.",
+            "Apply monitoring and rate limiting to recovery and reset workflows."
+          ]
+        },
+        {
+          "id": "pb-22-check-04",
+          "heading": "Ensure secure reset and ownership transfer",
+          "items": [
+            "Ensure that factory reset and ownership transfer fully remove previous user access, credentials and secrets."
+          ]
+        },
+        {
+          "id": "pb-22-check-05",
+          "heading": "Provide guided, secure workflows",
+          "items": [
+            "Offer clear recovery and transfer processes that reduce user error"
+          ]
+        }
+      ],
+      "minimum_evidence": [
+        {
+          "id": "pb-22-evidence-01",
+          "text": "Recovery and transfer actions are defined: documentation identifies supported recovery, reset and ownership transfer processes."
+        },
+        {
+          "id": "pb-22-evidence-02",
+          "text": "Strong verification is enforced: configuration or test evidence shows that recovery and transfer actions require a verified identity."
+        },
+        {
+          "id": "pb-22-evidence-03",
+          "text": "Abuse protections are applied: configuration, logs or test evidence shows that rate limiting and monitoring of recovery workflows are in place."
+        },
+        {
+          "id": "pb-22-evidence-04",
+          "text": "Secure reset and transfer is verified: test evidence confirms that factory reset and ownership transfer remove prior credentials and access."
+        },
+        {
+          "id": "pb-22-evidence-05",
+          "text": "Guided workflows are available: screenshots, CLI commands or documentation demonstrates that recovery and transfer processes are guided."
+        }
+      ],
+      "release_gates": [
+        {
+          "id": "pb-22-gate-01",
+          "text": "Supported recovery and ownership transfer actions are defined"
+        },
+        {
+          "id": "pb-22-gate-02",
+          "text": "Recovery and transfer actions require strong identity verification"
+        },
+        {
+          "id": "pb-22-gate-03",
+          "text": "Recovery mechanisms cannot bypass normal access controls"
+        },
+        {
+          "id": "pb-22-gate-04",
+          "text": "Factory reset and ownership transfer fully remove prior access"
+        },
+        {
+          "id": "pb-22-gate-05",
+          "text": "Clear guidance is provided on recovery and transfer workflows"
+        }
+      ]
+    }
+  ]
+}
