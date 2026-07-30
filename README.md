@@ -44,6 +44,16 @@ Secure by Default ensures that products ship with the most secure configuration 
 | • [Minimisation of default services](playbooks/15-minimisation-of-default-services.md)<br>• [Restrictive initial access](playbooks/16-restrictive-initial-access.md)<br>• [Secure communication by default](playbooks/17-secure-communication-by-default.md)<br>• [Unique device identity and secrets by default](playbooks/18-unique-device-identity-and-secrets-by-default.md) | • [Mandatory security onboarding](playbooks/19-mandatory-security-onboarding.md)<br>• [Automated maintenance and updates](playbooks/20-automated-maintenance-and-updates.md)<br>• [Transparent security posture](playbooks/21-transparent-security-posture.md)<br>• [Secure recovery and ownership life cycle](playbooks/22-secure-recovery-and-ownership-life-cycle.md) |
 
 
+### How the playbooks fit together
+
+Figure 1 shows the relationships between the product life cycle, Secure by Design and Secure by Default principles, and risk management activities.
+
+Risk management activities establish the security context by clarifying important considerations, including what needs to be protected, the threats of concern and the acceptable level of residual risk given the product’s intended purpose and security impact. Secure by Design and Secure by Default principles translate this context into practical security decisions that are applied throughout the processes of the product life cycle, from requirements through to end of life.
+
+![Secure by design and default across a product’s life cycle](assets/images/figure-1.png)
+
+*Figure 1: Secure by design and default across a product’s life cycle.*
+
 ## Progressive adoption
 
 The playbooks can be adopted progressively, beginning with context and prioritisation, followed by an appropriate engineering baseline and then broader implementation. Progressive adoption here refers to how organisations build and strengthen their security practices over time. It does not suggest delaying applicable requirements or controls, particularly those arising from legal obligations, including under the CRA. This guidance is without prejudice to such obligations, which take precedence.
