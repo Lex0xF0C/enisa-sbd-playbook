@@ -1,6 +1,7 @@
 # ENISA Secure by Design and Default Playbooks
 
-A practical collection of 22 Secure by Design and Secure by Default playbooks for SMEs, based on the ENISA *Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default for SMEs*.
+A practical collection of 22 Secure by Design and Secure by Default playbooks for SMEs, based on the *[ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default Principles for SMEs](https://www.enisa.europa.eu/sites/default/files/2026-07/ENISA_Secure_By_Design_and_Default_Playbook_v1.pdf)*.
+
 
 ## About
 
