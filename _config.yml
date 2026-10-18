@@ -1,0 +1,6 @@
+title: enisa-sbd-playbook-ja
+description: ENISA が公開している「ENISA Secure by Design and Default Playbook」について、試行的に日本語への訳出を実施したものです
+theme: jekyll-theme-slate
+lang: ja
+plugins:
+  - jekyll-sitemap
