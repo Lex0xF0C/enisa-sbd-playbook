@@ -1,69 +1,75 @@
-# Secure coding and verification practices
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Secure coding and verification practices」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# セキュアコーディングと検証の実践 (Secure coding and verification practices)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Developers should follow established secure coding standards to prevent common vulnerabilities.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+開発者は、一般的な脆弱性を防ぐために、確立されたセキュアコーディング標準に従うべきです。
 
-Reduce common, high-impact vulnerabilities by eliminating relevant weakness classes through architectural and technology choices, where feasible, and by standardising how remaining risks are addressed in code, review and testing.
+## 目的 (Objective)
 
-## Checklist
+可能な場合はアーキテクチャと技術の選択を通じて該当する脆弱性クラス (weakness class) を排除し、残るリスクへのコード、レビュー、テストでの対処方法を標準化することで、一般的で影響の大きい脆弱性を減らします。
 
-### Eliminate vulnerability classes by construction
+## チェックリスト (Checklist)
 
-- Prefer architectural and technology choices that prevent relevant vulnerability classes from arising, such as memory-safe languages for buffer overflows, parameterised data-access APIs for SQL injection and frameworks with context-aware output encoding for cross-site scripting.
-- Where elimination is not feasible, identify the remaining vulnerability classes and apply appropriate coding, review, testing and containment controls.
+### 構造的に脆弱性クラスを排除する
 
-### Adopt a secure coding baseline (language/framework specific)
+- 該当する脆弱性クラスの発生自体を防ぐアーキテクチャと技術の選択を優先すること。例: バッファオーバーフローに対するメモリ安全な言語、SQL インジェクションに対するパラメータ化されたデータアクセス API、クロスサイトスクリプティングに対するコンテキストを考慮した出力エンコーディングを備えたフレームワーク。
+- 排除が実現不可能な場合は、残る脆弱性クラスを特定し、適切なコーディング、レビュー、テスト、封じ込めの対策を適用すること。
 
-- Define must-follow rules for your stack (e.g. on input handling, auth checks, error handling, crypto usage, logging).
-- Ban unsafe patterns (e.g. string-built SQL, eval-like functions, disabling TLS verification).
+### セキュアコーディングのベースラインを採用する（言語／フレームワーク固有）
 
-### Validate inputs and encode outputs
+- 利用する技術スタックについて、必ず守るべきルールを定義すること（例: 入力の取り扱い、認証チェック、エラー処理、暗号の利用、ログ記録）。
+- 安全でないパターンを禁止すること（例: 文字列連結で組み立てた SQL、eval に類する関数、TLS 検証の無効化）。
 
-- Centralise validation (schemas, allow lists, length/range checks).
-- Encode output by context (HTML/JSON/SQL); avoid mixing data and commands.
+### 入力を検証し、出力をエンコードする
 
-### Use safe dependency and secrets practices
+- 検証を一元化すること（スキーマ、許可リスト、長さ／範囲のチェック）。
+- 出力はコンテキストに応じてエンコードすること（HTML／JSON／SQL）。データとコマンドを混在させないこと。
 
-- Pin and regularly update dependencies; remove unused packages.
-- Secrets (e.g. API keys, tokens, credentials) must never be stored in source code or committed to source repositories. Secure secret management solutions should be used instead.
-- Generate and store an SBOM for each release (or a dependency inventory at minimum).
+### 安全な依存関係とシークレットの扱いを実践する
 
-### Make security-sensitive changes reviewable
+- 依存関係をピン留めして定期的に更新し、未使用のパッケージを削除すること。
+- シークレット（例: API キー、トークン、認証情報）は、ソースコードに保存したり、ソースリポジトリにコミットしたりしてはなりません。代わりに、セキュアなシークレット管理ソリューションを使用すること。
+- リリースごとに SBOM（最低限、依存関係のインベントリ）を生成して保管すること。
 
-- Clearly define and document roles for each stakeholder involved in the CI/CD pipeline (e.g. developer, support, administrator, integrator, CI runner).
-- Protect critical branches to prevent direct commits and history rewriting.
-- Prohibit force push on protected branches to prevent history rewriting and preserve auditability.
-- Require peer review for changes touching authn/authz, boundary-crossing APIs, crypto, update mechanisms or deserialisation and for any new external exposure.
-- Use PR checklists and CODEOWNERS files for sensitive areas.
-- Apply the same review requirements to AI-generated or AI-modified code as to human-written code.
+### セキュリティ上重要な変更をレビュー可能にする
 
-### Automate detection in CI/CD
+- CI/CD パイプラインに関わる各関係者（例: 開発者、サポート、管理者、インテグレーター、CI ランナー）のロールを、明確に定義し文書化すること。
+- 重要なブランチを保護し、直接のコミットと履歴の書き換えを防ぐこと。
+- 保護されたブランチでの強制プッシュ (force push) を禁止し、履歴の書き換えを防いで監査可能性を維持すること。
+- 認証／認可、境界を越える API、暗号、アップデートの仕組み、デシリアライズに関わる変更、および新たな外部公開を伴うすべての変更に、ピアレビューを必須とすること。
+- 機微な領域には、PR チェックリストと CODEOWNERS ファイルを使用すること。
+- AI が生成または変更したコードにも、人間が書いたコードと同じレビュー要件を適用すること。
 
-- Run SAST and dependency scanning on each PR; fail builds on critical findings.
-- Add targeted unit/integration negative tests (unauthorised access denied; injection attempts fail).
-- Add basic fuzzing or property-based testing for high-risk parsers/inputs if feasible.
-- AI-generated or AI-modified code should go through the same SAST, dependency and secrets checks as human-written code.
+### CI/CD で検出を自動化する
 
-## Minimum evidence
+- PR ごとに SAST と依存関係スキャンを実行し、重大な検出結果があればビルドを失敗させること。
+- 的を絞ったユニット／統合のネガティブテストを追加すること（認可されていないアクセスが拒否される、インジェクションの試行が失敗する）。
+- 可能であれば、リスクの高いパーサー／入力に対して、基本的なファジングまたはプロパティベーステストを追加すること。
+- AI が生成または変更したコードにも、人間が書いたコードと同じ SAST、依存関係、シークレットのチェックを実施すること。
 
-- Design evidence: record of relevant vulnerability classes considered and the architectural or technology choices used to eliminate them by construction
-- Secure coding standards (one or two pages or a repo file) for your stack and a banned patterns list
-- PR checklist / CODEOWNERS file for security-sensitive modules
-- CI pipeline evidence: SAST and dependency scan results for the release
-- Secrets controls: proof that secrets are not in repo (pre-commit secret scanning results) and secrets manager usage
-- Test evidence: at least a small suite of negative tests for critical endpoints/inputs
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 設計上の証跡: 検討した該当脆弱性クラスと、それらを構造的に排除するために用いたアーキテクチャまたは技術の選択の記録
+- 利用する技術スタック向けのセキュアコーディング標準（1～2ページまたはリポジトリ内のファイル）と、禁止パターンの一覧
+- セキュリティ上重要なモジュール向けの PR チェックリスト／CODEOWNERS ファイル
+- CI パイプラインの証跡: リリースに対する SAST と依存関係スキャンの結果
+- シークレットの管理: シークレットがリポジトリに含まれていないことの証明（コミット前のシークレットスキャンの結果）と、シークレットマネージャーの利用
+- テストの証跡: 重要なエンドポイント／入力に対する、少なくとも小規模なネガティブテスト一式
 
-- [ ] Relevant vulnerability classes have been eliminated by construction where feasible; where not feasible, appropriate preventive and verification controls are in place.
-- [ ] A secure coding baseline exists for the stack and is referenced in the repo
-- [ ] SAST and dependency scanning run in CI; critical issues fixed or covered by a documented exception (with owner and expiry)
-- [ ] Secret scanning enabled; no secrets committed; rotation performed if exposure occurred
-- [ ] Security-sensitive changes were peer reviewed (auth/authz, crypto, parsers, external interfaces)
-- [ ] Negative tests run on critical endpoints (unauthorised access denied; injection attempts fail)
-- [ ] Dependencies reviewed for high/ critical vulns; patch/mitigation plan recorded for any accepted risk
+## リリースゲート (Release gate)
+
+- [ ] 該当する脆弱性クラスが、実現可能な範囲で構造的に排除されている。実現不可能な場合は、適切な予防的対策と検証の対策が講じられている。
+- [ ] 技術スタックに対するセキュアコーディングのベースラインが存在し、リポジトリ内で参照されている
+- [ ] SAST と依存関係スキャンが CI で実行されている。重大な問題は修正されているか、文書化された例外（担当者と有効期限付き）でカバーされている
+- [ ] シークレットスキャンが有効であり、シークレットがコミットされていない。露出が発生した場合はローテーションが実施されている
+- [ ] セキュリティ上重要な変更（認証／認可、暗号、パーサー、外部インターフェース）がピアレビューされている
+- [ ] 重要なエンドポイントでネガティブテストが実行されている（認可されていないアクセスが拒否される、インジェクションの試行が失敗する）
+- [ ] 依存関係について高／重大な脆弱性がレビューされ、受容されたリスクについてはパッチ／緩和の計画が記録されている
