@@ -1,6 +1,6 @@
 # ENISA Secure by Design and Default Playbooks 日本語訳
 
-> 訳注：本稿は ENISA の「Secure by Design and Default Playbook」（https://github.com/enisaeu/enisa-sbd-playbook）を原文として翻訳したものです。原著は CC-BY 4.0 で提供されており、派生物としての日本語訳でも原著の明示とライセンスの保持が必要です。本訳は Lex0xF0C（GitHub: https://github.com/Lex0xF0C）によって作成されました。
+> 訳注：本稿は ENISA の「Secure by Design and Default Playbook」（[https://github.com/enisaeu/enisa-sbd-playbook](https://github.com/enisaeu/enisa-sbd-playbook)）を原文として翻訳したものです。原著は CC-BY 4.0 で提供されており、派生物としての日本語訳でも原著の明示とライセンスの保持が必要です。本訳は Lex0xF0C（GitHub: https://github.com/Lex0xF0C）によって作成されました。
 
 実務的なコレクションとして、SME 向けに用意された 22 の Secure by Design / Secure by Default のプレイブックです。これは *[ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default](https://www.enisa.europa.eu/publications/enisa-secure-by-design-and-default-playbook)* に基づいています。
 
