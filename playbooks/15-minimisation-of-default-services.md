@@ -1,50 +1,56 @@
-# Minimisation of default services
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Minimisation of default services」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# デフォルトサービスの最小化 (Minimisation of default services)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Disable non-essential features and services by default. Only the functionality required for the core operation of the product should be enabled by default.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+必須でない機能とサービスは、デフォルトで無効にします。製品の中核的な動作に必要な機能のみを、デフォルトで有効にすべきです。
 
-Reduce the attack surface and ensure that products start in a hardened state, without relying on users to disable specific functionality.
+## 目的 (Objective)
 
-## Checklist
+攻撃対象領域を縮小し、ユーザーが特定の機能を無効にすることに頼らずに、製品がハードニングされた状態で起動するようにします。
 
-### Define core functionality
+## チェックリスト (Checklist)
 
-- Identify the minimum set of features and services required for the product to operate.
+### 中核機能を定義する
 
-### Disable non-essential features and services by default
+- 製品が動作するために必要な、最小限の機能とサービスの組を特定すること。
 
-- Ensure that optional features and services are disabled by default.
+### 必須でない機能とサービスをデフォルトで無効にする
 
-### Require explicit opt-in for additional functionality
+- オプションの機能とサービスが、デフォルトで無効になっていることを確保すること。
 
-- Ensure that non-essential features and services can be enabled only through deliberate user action.
+### 追加機能にはオプトインの明示を必須とする
 
-### Explain security implications on enablement
+- 必須でない機能とサービスが、ユーザーの意図的な操作によってのみ有効化できるようにすること。
 
-- Inform users of security risks when enabling optional features and services.
-- Avoid enabling additional features and services without clear acknowledgement.
+### 有効化時にセキュリティ上の影響を説明する
 
-### Review defaults on change
+- オプションの機能とサービスを有効にする際のセキュリティリスクを、ユーザーに知らせること。
+- 明確な了承なしに、追加の機能やサービスを有効にしないこと。
 
-- Reassess default-enabled features and services when new features are introduced.
+### 変更時にデフォルトを見直す
 
-## Minimum evidence
+- 新機能が導入されるときに、デフォルトで有効な機能とサービスを再評価すること。
 
-- Core features and services defined: documentation or configuration identifying which features and services are required by default.
-- Non-essential features and services disabled: default configuration or build artefacts show optional features and services and modules are off.
-- Explicit opt-in required: configuration or documentation shows how additional features and services must be manually enabled.
-- Security implications disclosed: documentation, UI text or configuration prompts show that users are informed of security implications when enabling non-essential features and services.
-- Defaults reviewed for this release: release notes, checklist or ticket confirms that default settings have been reviewed after changes.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 中核の機能とサービスが定義されている: ドキュメントまたは設定により、デフォルトで必要な機能とサービスが特定されている。
+- 必須でない機能とサービスが無効になっている: デフォルト設定またはビルドの成果物により、オプションの機能、サービス、モジュールがオフであることが示されている。
+- 明示的なオプトインが必須である: 設定またはドキュメントにより、追加の機能とサービスを手動で有効にしなければならない方法が示されている。
+- セキュリティ上の影響が開示されている: ドキュメント、UI の文言、または設定のプロンプトにより、必須でない機能とサービスを有効にする際にセキュリティ上の影響がユーザーに知らされていることが示されている。
+- 今回のリリースでデフォルトが見直されている: リリースノート、チェックリスト、またはチケットにより、変更後にデフォルト設定が見直されたことが確認できる。
 
-- [ ] Only core functionality is enabled by default
-- [ ] Optional features and services are disabled unless explicitly enabled by the user
-- [ ] Users are informed of security implications when enabling non-essential features and services
-- [ ] No new features or services are enabled by default without review
-- [ ] Default configuration has been reviewed and confirmed for this release
+## リリースゲート (Release gate)
+
+- [ ] デフォルトで有効なのは中核機能のみである
+- [ ] オプションの機能とサービスは、ユーザーが明示的に有効にしない限り無効である
+- [ ] 必須でない機能とサービスを有効にする際に、セキュリティ上の影響がユーザーに知らされる
+- [ ] レビューなしに、新しい機能やサービスがデフォルトで有効にされていない
+- [ ] デフォルト設定が、今回のリリースについてレビューされ、確認されている
