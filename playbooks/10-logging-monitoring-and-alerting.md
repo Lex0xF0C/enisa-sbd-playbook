@@ -1,62 +1,68 @@
-# Logging, monitoring and alerting
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Logging, monitoring and alerting」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# ログ記録、監視、アラート (Logging, monitoring and alerting)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Systems should generate appropriate security-relevant logs, retain them for a defined period and protect them from tampering, so that they can support investigation and compliance needs.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+システムは、適切なセキュリティ関連のログを生成し、定められた期間保持し、改ざんから保護すべきです。それにより、調査やコンプライアンスのニーズを支えられるようにします。
 
-Provide sufficient visibility to detect misuse, investigate incidents and maintain system integrity over time. The focus is on a small set of high-signal security events, reliable log retention and actionable alerts that do not overwhelm teams.
+## 目的 (Objective)
 
-## Checklist
+悪用の検知、インシデントの調査、システムの完全性の長期的な維持に十分な可視性を提供します。重点は、少数の高シグナルなセキュリティイベント、信頼できるログの保持、そしてチームを圧倒しない実行可能なアラートにあります。
 
-### Define the “must-log” security events
+## チェックリスト (Checklist)
 
-- Authentication: login success/failure; MFA events; token issuance/refresh/revocation.
-- Authorisation: access denied, privilege or role changes, admin actions.
-- Boundary events: external API calls, device onboarding or pairing, OTA/update events.
-- Data or security changes: configuration changes, key or secret changes, user or service enabled or disabled.
-- Do not log personal or secret data by default. In general, log only the bare minimum required to understand events in default log level
+### 「必ず記録する (must-log)」セキュリティイベントを定義する
 
-### Standardise access and audit log structure and attribution
+- 認証: ログインの成功／失敗、MFA イベント、トークンの発行／更新／失効。
+- 認可: アクセス拒否、権限やロールの変更、管理者操作。
+- 境界イベント: 外部 API 呼び出し、デバイスのオンボーディングやペアリング、OTA／アップデートのイベント。
+- データやセキュリティの変更: 設定変更、鍵やシークレットの変更、ユーザーやサービスの有効化／無効化。
+- デフォルトでは、個人データやシークレットデータをログに記録しないこと。一般に、デフォルトのログレベルでは、イベントを理解するために必要な最小限のものだけを記録すること。
 
-- For access and authorisation logging, use consistent fields capturing who (actor), what (action or event type) and when (timestamp), with additional contextual fields as appropriate.
-- Ensure that admin actions are attributable to a named identity (no shared accounts).
+### アクセスログと監査ログの構造および帰属を標準化する
 
-### Centralise collection and protect log integrity
+- アクセスおよび認可のログ記録では、誰が（主体）、何を（操作またはイベントの種類）、いつ（タイムスタンプ）を記録する一貫したフィールドを使用し、必要に応じて追加のコンテキストフィールドを加えること。
+- 管理者の操作が、記名のアイデンティティに帰属できるようにすること（共有アカウントは使わない）。
 
-- Central log store (SIEM/log platform or managed logging).
-- Separate logs based on type and/or service.
-- Restrict access to logs; separate duties and apply write-only permissions where feasible.
-- Set retention targets (e.g. 30 days or 90 days, longer for archival material if required). Plan storage accordingly.
-- Ensure time sync (NTP) across systems.
+### 収集を一元化し、ログの完全性を保護する
 
-### Implement actionable monitoring and alerts
+- 一元的なログストアを用意すること（SIEM／ログプラットフォーム、またはマネージドのログ記録）。
+- ログを、種類および／またはサービスごとに分離すること。
+- ログへのアクセスを制限し、職務を分離し、可能な場合は書き込み専用の権限を適用すること。
+- 保持期間の目標を設定すること（例: 30日または90日。必要に応じてアーカイブ用にはより長く）。それに応じてストレージを計画すること。
+- システム間で時刻同期 (NTP) を確保すること。
 
-- Start with a small alert set (high confidence, high impact): repeated auth failures, new admin creation, privilege escalation, unusual API error spikes, updates failing, disabled logging, access to sensitive endpoints from new locations.
-- Tune alerts to reduce noise (rate thresholds, suppression windows, environment filters).
+### 実行可能な監視とアラートを実装する
 
-### Practice incident triage and response
+- 少数のアラートから始めること（信頼度が高く、影響が大きいもの）: 認証失敗の繰り返し、新規管理者の作成、権限昇格、API エラーの異常な急増、アップデートの失敗、ログ記録の無効化、新しい場所からの機微なエンドポイントへのアクセス。
+- ノイズを減らすようにアラートを調整すること（レートのしきい値、抑制ウィンドウ、環境フィルター）。
 
-- Define on-call duties / ownership for security alerts.
-- Document a minimal triage playbook covering: validate, scope, contain, remediate and communicate.
-- Carry out a quarterly tabletop exercise or dry run for one common scenario (account takeover or API key leak).
+### インシデントのトリアージと対応を実践する
 
-## Minimum evidence
+- セキュリティアラートに対するオンコールの職務／責任を定義すること。
+- 最小限のトリアージ・プレイブックを文書化すること。内容は、確認、スコープの特定、封じ込め、是正、連絡。
+- 一般的なシナリオ（アカウント乗っ取りまたは API キーの漏えい）について、四半期ごとに机上演習 (tabletop exercise) またはドライランを実施すること。
 
-- Logging baseline: list of must-log events and required fields (one page)
-- Central logging proof: screenshot/export/config showing logs from key components arriving centrally
-- Retention setting: configured retention is in place and there is an access-control policy for logs
-- Alert catalogue: list of enabled alerts with thresholds and owners (initial set can consist of around 5 to 10 alerts)
-- Triage runbook: one-page steps and escalation contacts, plus one recent test (tabletop note)
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- ログ記録のベースライン: 必ず記録するイベントと必須フィールドの一覧（1ページ）
+- 一元的なログ記録の証明: 主要なコンポーネントからのログが一元的に届いていることを示すスクリーンショット／エクスポート／設定
+- 保持の設定: 設定された保持期間が適用されており、ログに対するアクセス制御ポリシーがある
+- アラートのカタログ: 有効なアラートの一覧（しきい値と担当者付き）（初期セットは5～10件程度でよい）
+- トリアージ・ランブック: 1ページの手順とエスカレーション先の連絡先、および直近のテスト1件（机上演習のメモ）
 
-- [ ] Must-log security events implemented for new/changed components (auth, admin, updates, boundary events)
-- [ ] Logs include attribution fields (actor, request/session ID, source) and are centralised
-- [ ] Log access restricted, retention configured, time sync verified
-- [ ] High-signal alerts enabled and assigned an owner (at least brute force events, new admin / role change, key/secret change, update failures)
-- [ ] Triage runbook exists and has been tested recently (tabletop exercise or test alert)
-- [ ] Logging/alerting exceptions are documented, with owner and review/expiry date
+## リリースゲート (Release gate)
+
+- [ ] 新規／変更されたコンポーネントについて、必ず記録するセキュリティイベントが実装されている（認証、管理者、アップデート、境界イベント）
+- [ ] ログに帰属フィールド（主体、リクエスト／セッション ID、送信元）が含まれ、一元化されている
+- [ ] ログへのアクセスが制限され、保持期間が設定され、時刻同期が検証されている
+- [ ] 高シグナルなアラートが有効化され、担当者が割り当てられている（少なくとも、ブルートフォースのイベント、新規管理者／ロール変更、鍵／シークレットの変更、アップデートの失敗）
+- [ ] トリアージ・ランブックが存在し、最近テストされている（机上演習またはテストアラート）
+- [ ] ログ記録／アラートの例外が文書化され、担当者とレビュー／有効期限の日付がある
