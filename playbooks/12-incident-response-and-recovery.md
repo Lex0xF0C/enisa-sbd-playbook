@@ -1,56 +1,62 @@
-# Incident response and recovery
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Incident response and recovery」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# インシデント対応と復旧 (Incident response and recovery)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Developers must be prepared to respond quickly and effectively to security incidents that affect their products in the field, including vulnerabilities, compromised code, malicious updates and misuse of product functionality.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+開発者は、脆弱性、侵害されたコード、悪意あるアップデート、製品機能の悪用など、フィールドにある自社製品に影響するセキュリティインシデントに、迅速かつ効果的に対応できるよう備えなければなりません。
 
-Detect, contain and recover from security incidents quickly while limiting customer impact and preventing recurrence. The priority is a clear playbook, defined ownership, fast triage and reliable restore/rollback, supported by the minimum logging and backup evidence needed to act decisively.
+## 目的 (Objective)
 
-## Checklist
+セキュリティインシデントを迅速に検知し、封じ込め、復旧しつつ、顧客への影響を抑え、再発を防ぎます。優先事項は、明確なプレイブック、定められた責任者、迅速なトリアージ、信頼できる復元／ロールバックであり、それらを、断固とした行動に必要な最小限のログとバックアップの証跡が支えます。
 
-### Define roles, escalation and decision authority
+## チェックリスト (Checklist)
 
-- Name an incident lead and backups. Define escalation thresholds, when senior management should be informed and who can approve customer communications, access elevation and emergency changes.
-- Maintain an on-call/escalation contact list (internal + key suppliers).
+### 役割、エスカレーション、意思決定権限を定義する
 
-### Create a minimal incident runbook
+- インシデントリーダーとその代理を指名すること。エスカレーションのしきい値、上級管理職に通知すべきとき、顧客向け連絡・アクセス権限の昇格・緊急変更を承認できる者を定義すること。
+- オンコール／エスカレーションの連絡先一覧（社内および主要サプライヤー）を維持すること。
 
-- Steps: detect, triage, contain, eradicate, recover, lessons learned.
-- Include checklists for common scenarios (account takeover, leaked API key, ransomware/supply-chain alert, compromised device fleet).
+### 最小限のインシデントランブックを作成する
 
-### Prepare containment controls
+- 手順: 検知、トリアージ、封じ込め、根絶 (eradicate)、復旧、教訓の抽出 (lessons learned)。
+- 一般的なシナリオ（アカウント乗っ取り、API キーの漏えい、ランサムウェア／サプライチェーンのアラート、侵害されたデバイス群）のチェックリストを含めること。
 
-- Make sure that it is possible to revoke/rotate credentials and keys quickly.
-- Make sure that it is possible to disable accounts, block IPs, quarantine services/devices and roll back releases / config changes.
-- Ensure that break-glass access exists, is logged and is time bound.
+### 封じ込めのための対策を準備する
 
-### Ensure recovery capability
+- 認証情報と鍵を迅速に失効／ローテーションできるようにしておくこと。
+- アカウントの無効化、IP のブロック、サービス／デバイスの隔離、リリース／構成変更のロールバックができるようにしておくこと。
+- ブレークグラスによるアクセスが存在し、ログに記録され、時間が限定されていることを確保すること。
 
-- Backups are automated, tested and protected (immutability where feasible).
-- Restore procedures are documented for critical systems (data, configs, secrets, device firmware if applicable).
-- Define RTO/RPO targets appropriate to the business.
+### 復旧能力を確保する
 
-### Exercise and improve
+- バックアップは、自動化され、テストされ、保護されていること（可能な場合は不変性 (immutability) を備える）。
+- 重要なシステム（データ、構成、シークレット、該当する場合はデバイスのファームウェア）について、復元手順が文書化されていること。
+- 事業に適した RTO／RPO の目標を定義すること。
 
-- Run a lightweight tabletop exercise (30–60 minutes) quarterly on one realistic scenario.
-- Record and review incidents, near misses and exercise findings. Track actions to closure and update risk assessments, threat models, runbooks, detections and controls as appropriate.
+### 演習と改善を行う
 
-## Minimum evidence
+- 現実的なシナリオ1つについて、軽量な机上演習（30～60分）を四半期ごとに実施すること。
+- インシデント、ニアミス、演習での発見事項を記録しレビューすること。対応事項は完了まで追跡し、必要に応じてリスクアセスメント、脅威モデル、ランブック、検知、対策を更新すること。
 
-- Defined roles: incident-response contact list + roles (owner, backups and escalation paths established).
-- Runbooks: one-page incident runbook and at least one scenario checklist.
-- Containment proof: documented steps and permissions to revoke keys, disable accounts and roll back deployments.
-- Backup/restore proof: backup configuration and one recent restore test result (or evidence of a successful restore).
-- Post-incident, near-miss or tabletop notes showing findings, actions and resulting improvements.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 定義された役割: インシデント対応の連絡先一覧と役割（責任者、代理、エスカレーション経路が確立されていること）。
+- ランブック: 1ページのインシデントランブックと、少なくとも1つのシナリオ別チェックリスト。
+- 封じ込めの証明: 鍵の失効、アカウントの無効化、デプロイのロールバックを行うための、文書化された手順と権限。
+- バックアップ／復元の証明: バックアップ設定と、直近の復元テスト結果1件（または復元に成功した証跡）。
+- インシデント後、ニアミス、または机上演習のメモ。発見事項、対応事項、その結果の改善を示すもの。
 
-- [ ] IR roles and escalation contacts are current
-- [ ] Incident runbook exists and covers detect/triage/contain/recover with at least one common scenario
-- [ ] Containment actions are ready
-- [ ] Backups enabled for critical data/config; restore procedure documented and tested recently
-- [ ] Post-incident, near-miss or tabletop notes exist and are updated
+## リリースゲート (Release gate)
+
+- [ ] インシデント対応 (IR) の役割とエスカレーション先の連絡先が最新である
+- [ ] インシデントランブックが存在し、検知／トリアージ／封じ込め／復旧を、少なくとも1つの一般的なシナリオとともにカバーしている
+- [ ] 封じ込めのアクションが実行可能な状態にある
+- [ ] 重要なデータ／構成に対してバックアップが有効であり、復元手順が文書化され、最近テストされている
+- [ ] インシデント後、ニアミス、または机上演習のメモが存在し、更新されている
