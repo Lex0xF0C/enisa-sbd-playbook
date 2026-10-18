@@ -1,60 +1,66 @@
-# Attack surface minimisation
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Attack surface minimisation」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 攻撃対象領域の最小化 (Attack surface minimisation)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Expose only what is strictly necessary. Remove or disable all unnecessary code, services, interfaces, protocols and dependencies by default.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+厳密に必要なものだけを公開します。不要なコード、サービス、インターフェース、プロトコル、依存関係は、デフォルトで削除または無効化します。
 
-Reduce the likelihood and impact of compromise by eliminating unnecessary entry points and limiting attacker options.
+## 目的 (Objective)
 
-## Checklist
+不要な入口を排除し、攻撃者の選択肢を制限することで、侵害の可能性と影響を低減します。
 
-### List exposed interfaces
+## チェックリスト (Checklist)
 
-- Identify all externally reachable APIs, ports, local interfaces (HMI), protocols, admin endpoints and update channels.
-- Remove or disable anything without a clear, current justification.
+### 公開されているインターフェースを一覧化する
 
-### Enforce default deny
+- 外部から到達可能なすべての API、ポート、ローカルインターフェース（HMI）、プロトコル、管理用エンドポイント、アップデートチャネルを特定すること。
+- 現時点で明確な正当性のないものは、削除または無効化すること。
 
-- Close all ports, APIs and interfaces by default.
-- Explicitly allow only what is required for production.
+### デフォルト拒否を徹底する
 
-### Remove development and diagnostic functionality
+- すべてのポート、API、インターフェースをデフォルトで閉じること。
+- 本番環境で必要なものだけを明示的に許可すること。
 
-- Remove debuggers, test endpoints and debug modes from production builds.
-- Remove development features.
+### 開発用・診断用の機能を削除する
 
-### Minimise dependencies
+- 本番ビルドから、デバッガ、テスト用エンドポイント、デバッグモードを削除すること。
+- 開発用機能を削除すること。
 
-- Remove unused libraries, SDKs and optional components from final builds. Remaining libraries should be verified for authenticity and integrity.
-- Use the smallest possible operating system, runtime or firmware configuration that supports the product’s intended function.
+### 依存関係を最小化する
 
-### Continuously monitor for legacy exposure
+- 最終ビルドから、未使用のライブラリ、SDK、オプションコンポーネントを削除すること。残るライブラリは、真正性と完全性を検証すること。
+- 製品の意図された機能をサポートする、可能な限り最小の OS、ランタイム、ファームウェア構成を使用すること。
 
-- Continuously review exposed interfaces and dependencies.
-- Update/remove deprecated APIs, old protocols and unused resources.
+### レガシーな露出を継続的に監視する
 
-### Minimise data collection, processing and retention
+- 公開インターフェースと依存関係を継続的にレビューすること。
+- 非推奨の API、古いプロトコル、未使用のリソースを更新または削除すること。
 
-- Collect, retain and store only the personal or sensitive data necessary for the product’s intended purpose and securely delete it when no longer required.
+### データの収集・処理・保持を最小化する
 
-## Minimum evidence
+- 製品の意図された目的に必要な個人データまたは機微データのみを収集・保持・保存し、不要になったら安全に削除すること。
 
-- Exposure inventory exists: a maintained list of externally reachable interfaces (APIs, ports, protocols, admin interfaces, update channels) is stored in the repo or product documentation.
-- Default deny enforced: network rules, gateway configuration or device settings show that only explicitly required interfaces are enabled in production.
-- Minimal build verified: build configuration, manifest, package list or firmware contents show that only required components are included.
-- No dev or diagnostic tooling shipped that might enable exploitation: inspection of production artefacts confirms absence (or verification that they cannot impact security) of shells, debuggers, compilers, test interfaces and diagnostic utilities.
-- No legacy exposure: release notes, ticket or checklist entry confirms that exposed interfaces and dependencies were reviewed and any unused or legacy elements removed.
-- Data inventory and retention record: data inventory with purposes, retention periods and deletion methods is kept.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 露出のインベントリが存在する: 外部から到達可能なインターフェース（API、ポート、プロトコル、管理インターフェース、アップデートチャネル）の一覧が、保守され、リポジトリまたは製品ドキュメントに保管されている。
+- デフォルト拒否が徹底されている: ネットワークルール、ゲートウェイ設定、デバイス設定により、本番環境では明示的に必要なインターフェースのみが有効であることが示されている。
+- 最小限のビルドが検証されている: ビルド設定、マニフェスト、パッケージ一覧、ファームウェアの内容により、必要なコンポーネントのみが含まれていることが示されている。
+- 悪用を可能にしうる開発用・診断用ツールが出荷されていない: 本番の成果物 (artefact) を検査し、シェル、デバッガ、コンパイラ、テスト用インターフェース、診断ユーティリティが存在しないこと（またはセキュリティに影響しえないことが検証されていること）を確認している。
+- レガシーな露出がない: リリースノート、チケット、またはチェックリストの記載により、公開インターフェースと依存関係がレビューされ、未使用またはレガシーな要素が削除されたことが確認できる。
+- データのインベントリと保持の記録: 目的、保持期間、削除方法を記載したデータインベントリが保管されている。
 
-- [ ] Exposed interfaces reviewed; only required APIs, ports, protocols and management interfaces enabled
-- [ ] Default-deny posture confirmed; no unintended network paths or interfaces exposed
-- [ ] Production build is minimal; unused libraries, services and optional components removed
-- [ ] No development or diagnostic tools present in production unless there is evidence that it cannot impact security
-- [ ] Attack surface review completed for this release; deprecated or legacy interfaces updates/removed
-- [ ] Unnecessary data processing has been removed and required deletion mechanisms verified
+## リリースゲート (Release gate)
+
+- [ ] 公開インターフェースがレビューされ、必要な API、ポート、プロトコル、管理インターフェースのみが有効になっている
+- [ ] デフォルト拒否の姿勢が確認され、意図しないネットワーク経路やインターフェースが公開されていない
+- [ ] 本番ビルドが最小限であり、未使用のライブラリ、サービス、オプションコンポーネントが削除されている
+- [ ] セキュリティに影響しえないという証拠がない限り、開発用・診断用ツールが本番に存在しない
+- [ ] 今回のリリースについて攻撃対象領域のレビューが完了し、非推奨またはレガシーなインターフェースが更新／削除されている
+- [ ] 不要なデータ処理が削除され、必要な削除の仕組みが検証されている
