@@ -1,58 +1,64 @@
-# Configuration and change management
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Configuration and change management」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 構成管理と変更管理 (Configuration and change management)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Secure operation requires configurations to be controlled, consistent and auditable. Baseline hardening standards should be defined and applied through repeatable mechanisms such as templates and infrastructure as code to reduce drift.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+安全な運用には、構成が管理され、一貫しており、監査可能であることが必要です。ベースラインのハードニング標準を定義し、ドリフトを減らすために、テンプレートやコードとしてのインフラ (infrastructure as code) などの反復可能な仕組みを通じて適用すべきです。
 
-Prevent security regressions and outages by ensuring that system configuration is controlled, reviewable and reproducible and that changes are assessed for risk before reaching production. The priority is to eliminate ‘silent drift’, tighten defaults and make rollbacks reliable.
+## 目的 (Objective)
 
-## Checklist
+システム構成が管理され、レビュー可能で、再現可能であり、変更が本番環境に到達する前にリスクが評価されることを確保して、セキュリティの退行や停止を防ぎます。優先事項は、「サイレントドリフト (silent drift)」の排除、デフォルトの強化、ロールバックの信頼性の確保です。
 
-### Version and review configuration (treat it as code)
+## チェックリスト (Checklist)
 
-- Store environment config, infrastructure templates and policies in version control.
-- Require peer review for changes affecting exposure, identity/access, secrets, networking, logging and updates.
+### 構成をバージョン管理しレビューする（コードとして扱う）
 
-### Harden defaults and prevent drift
+- 環境の構成、インフラのテンプレート、ポリシーをバージョン管理に保存すること。
+- 露出、アイデンティティ／アクセス、シークレット、ネットワーク、ログ記録、アップデートに影響する変更には、ピアレビューを必須とすること。
 
-- Establish secure baseline configurations (deny by default where possible).
-- Use automated checks to detect drift between desired and actual config (at least for critical settings).
+### デフォルトを強化し、ドリフトを防ぐ
 
-### Separate environments and limit privilege
+- セキュアなベースライン構成を確立すること（可能な限りデフォルト拒否）。
+- 望ましい構成と実際の構成とのドリフトを検出する自動チェックを使用すること（少なくとも重要な設定について）。
 
-- Strict separation for dev/test/prod (accounts, projects, networks, credentials).
-- Restrict who can deploy to prod; remove direct manual changes where feasible.
+### 環境を分離し、権限を制限する
 
-### Implement change gating and rollback
+- 開発／テスト／本番を厳格に分離すること（アカウント、プロジェクト、ネットワーク、認証情報）。
+- 本番へデプロイできる者を制限し、可能な場合は直接の手動変更を廃止すること。
 
-- Use CI/CD gates for config and infra changes (linting, policy checks, approval).
-- Require a rollback plan for each production change (including config-only changes).
-- Keep break-glass changes rare, logged and post-reviewed.
+### 変更のゲート制御とロールバックを実装する
 
-### Track and assess security-impacting changes
+- 構成およびインフラの変更に CI/CD のゲートを使用すること（リンティング、ポリシーチェック、承認）。
+- 本番へのすべての変更（構成のみの変更を含む）に、ロールバック計画を必須とすること。
+- ブレークグラスによる変更は、稀にとどめ、ログに記録し、事後レビューを行うこと。
 
-- Tag changes that affect external exposure, authentication/authorisation, crypto, update mechanisms, data classification or third-party integrations.
-- Ensure that a lightweight threat/risk review is triggered when these tags apply.
+### セキュリティに影響する変更を追跡し評価する
 
-## Minimum evidence
+- 外部への露出、認証／認可、暗号、アップデートの仕組み、データ分類、サードパーティとの統合に影響する変更にタグを付けること。
+- これらのタグが該当する場合に、軽量な脅威／リスクレビューが実施されるようにすること。
 
-- Config versioned: repo location(s) for IaC, config, policies; PR review history
-- Baseline config: documented secure defaults and key settings (one page)
-- Drift detection: a scheduled job/report or tool output for critical config items
-- Deployment controls: proof that prod changes go through CI/CD (or change tickets) and are attributable
-- Rollback proof: last rollback test result or documented rollback procedure
-- Change log: record of security-impacting changes and associated approvals
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 構成がバージョン管理されている: IaC、構成、ポリシーのリポジトリの場所と、PR のレビュー履歴
+- ベースライン構成: 文書化されたセキュアなデフォルトと主要な設定（1ページ）
+- ドリフト検出: 重要な構成項目に対する定期実行のジョブ／レポート、またはツールの出力
+- デプロイのコントロール: 本番への変更が CI/CD（または変更チケット）を経ており、帰属が明確であることの証明
+- ロールバックの証明: 直近のロールバックテストの結果、または文書化されたロールバック手順
+- 変更履歴: セキュリティに影響する変更と、それに関連する承認の記録
 
-- [ ] Production config/IaC changes are versioned and peer-reviewed (no untracked manual edits)
-- [ ] Secure baseline defaults applied; new components inherit baseline (network, IAM, logging)
-- [ ] Dev/test/prod separated (accounts, projects, credentials); least privilege enforced for deployers
-- [ ] CI/CD gates applied to config changes (policy checks, linting); approvals recorded
-- [ ] Rollback plan exists for this release; rollback procedure tested recently or validated
-- [ ] Security-impacting changes tagged and reviewed (exposure, IAM, secrets, crypto, updates, integrations)
-- [ ] Exceptions (emergency changes) logged and post-reviewed, with owner and expiry date
+## リリースゲート (Release gate)
+
+- [ ] 本番の構成／IaC の変更がバージョン管理され、ピアレビューされている（追跡されない手動編集がない）
+- [ ] セキュアなベースラインのデフォルトが適用され、新しいコンポーネントがベースラインを継承している（ネットワーク、IAM、ログ記録）
+- [ ] 開発／テスト／本番が分離され（アカウント、プロジェクト、認証情報）、デプロイ担当者に最小権限が適用されている
+- [ ] 構成変更に CI/CD のゲートが適用され（ポリシーチェック、リンティング）、承認が記録されている
+- [ ] 今回のリリースにロールバック計画が存在し、ロールバック手順が最近テストされているか、検証されている
+- [ ] セキュリティに影響する変更にタグが付けられ、レビューされている（露出、IAM、シークレット、暗号、アップデート、統合）
+- [ ] 例外（緊急変更）がログに記録され、事後レビューされており、担当者と有効期限の日付がある
