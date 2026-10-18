@@ -1,52 +1,58 @@
-# Automated maintenance and updates
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Automated maintenance and updates」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 自動化された保守とアップデート (Automated maintenance and updates)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Manufacturers should provide secure update mechanisms that minimise user and operational effort. Security updates should be enabled by default, while allowing authorised users or operators to approve or schedule installation where the deployment requires controlled updates.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+製造者は、ユーザーと運用の負担を最小限に抑える、セキュアなアップデートの仕組みを提供すべきです。セキュリティアップデートはデフォルトで有効にしつつ、デプロイ環境が管理されたアップデートを必要とする場合には、権限のあるユーザーまたはオペレーターがインストールを承認またはスケジュールできるようにします。
 
-Ensure that vulnerabilities are addressed quickly and the device is left vulnerable for as little time as possible.
+## 目的 (Objective)
 
-## Checklist
+脆弱性に迅速に対処し、デバイスが脆弱な状態に置かれる時間を可能な限り短くします。
 
-### Enable managed security updates by default
+## チェックリスト (Checklist)
 
-- Enable security updates by default, ensuring that the product automatically checks for updates, informs the user and supports timely installation, with escalation where updates are repeatedly deferred.
-- Where unattended installation could affect safety, availability or operational continuity, support staged rollout, maintenance windows and authorised operator approval.
+### 管理されたセキュリティアップデートをデフォルトで有効にする
 
-### Separate security updates from feature changes
+- セキュリティアップデートをデフォルトで有効にし、製品が自動的にアップデートを確認し、ユーザーに通知し、タイムリーなインストールをサポートするようにすること。アップデートが繰り返し先延ばしにされる場合は、エスカレーションを行う。
+- 無人でのインストールが、安全性、可用性、運用の継続性に影響しうる場合は、段階的な展開、メンテナンスウィンドウ、権限のあるオペレーターの承認をサポートすること。
 
-- Ensure that critical security updates can be delivered independently of optional feature/functional updates.
+### セキュリティアップデートと機能変更を分離する
 
-### Verify the authenticity and integrity of updates
+- 重要なセキュリティアップデートを、オプションの機能アップデートとは独立して配信できるようにすること。
 
-- Ensure that updates are cryptographically verified before installation.
+### アップデートの真正性と完全性を検証する
 
-### Apply updates safely
+- アップデートがインストール前に暗号的に検証されることを確保すること。
 
-- Design updates to minimise disruption and avoid leaving the system in an insecure or unusable state if the update fails.
-- Support staged rollout, maintenance windows, operator approval and rollback where required by safety, availability or operational-continuity considerations.
+### アップデートを安全に適用する
 
-### Inform users of update activity
+- 中断を最小限に抑え、アップデートが失敗した場合にシステムを安全でない状態や使用できない状態に置かないように、アップデートを設計すること。
+- 安全性、可用性、運用の継続性の考慮から必要な場合は、段階的な展開、メンテナンスウィンドウ、オペレーターの承認、ロールバックをサポートすること。
 
-- Notify users when security updates are applied or when action is required, without requiring them to manage the update process manually.
+### アップデートの活動をユーザーに知らせる
 
-## Minimum evidence
+- セキュリティアップデートが適用されたとき、または対応が必要なときに、ユーザーがアップデートプロセスを手動で管理しなくても済むように、ユーザーに通知すること。
 
-- Automatic updates enabled: default configuration shows that security updates are enabled out of the box.
-- Security updates decoupled: configuration or release notes show that security fixes can be delivered independently of optional feature/functional updates.
-- Update verification enforced: configuration or design notes show that updates are authenticated and integrity-checked.
-- Safe update mechanism in place: documentation or test evidence shows that updates can be applied without significantly disrupting basic operation.
-- Update strategy: documentation or test evidence shows that the update process supports controlled approval, staging and rollback where required by the deployment context.
-- User notification supported: logs, UI messages or documentation shows that users are informed of update activity or status.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 自動アップデートが有効である: デフォルト設定により、セキュリティアップデートが初期状態で有効であることが示されている。
+- セキュリティアップデートが分離されている: 設定またはリリースノートにより、セキュリティ修正をオプションの機能アップデートとは独立して配信できることが示されている。
+- アップデートの検証が強制されている: 設定または設計ノートにより、アップデートが認証され、完全性がチェックされることが示されている。
+- 安全なアップデートの仕組みがある: ドキュメントまたはテストの証跡により、基本的な動作を大きく妨げることなくアップデートを適用できることが示されている。
+- アップデートの戦略: ドキュメントまたはテストの証跡により、デプロイ環境から必要とされる場合に、アップデートのプロセスが管理された承認、段階的展開、ロールバックをサポートしていることが示されている。
+- ユーザーへの通知がサポートされている: ログ、UI メッセージ、またはドキュメントにより、アップデートの活動や状況がユーザーに知らされていることが示されている。
 
-- [ ] Security update functionality is enabled by default, with an installation approach appropriate to the product’s deployment context
-- [ ] Security updates can be delivered independently of features
-- [ ] Updates are cryptographically verified before installation
-- [ ] Failed updates do not leave the system insecure or unusable
-- [ ] Users are informed of update status without manual intervention
+## リリースゲート (Release gate)
+
+- [ ] セキュリティアップデートの機能がデフォルトで有効であり、製品のデプロイ環境に適したインストール方法が採られている
+- [ ] セキュリティアップデートを、機能とは独立して配信できる
+- [ ] アップデートがインストール前に暗号的に検証される
+- [ ] 失敗したアップデートが、システムを安全でない状態や使用できない状態にしない
+- [ ] ユーザーが、手動の操作なしにアップデートの状況を知らされる
