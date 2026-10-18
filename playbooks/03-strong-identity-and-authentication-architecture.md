@@ -1,50 +1,56 @@
-# Strong identity and authentication architecture
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Strong identity and authentication architecture」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 強固なアイデンティティと認証のアーキテクチャ (Strong identity and authentication architecture)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Design identity and authentication as a core part of the architecture. Use authoritative identity mechanisms for users, devices, services and administrators across interfaces.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+アイデンティティと認証を、アーキテクチャの中核として設計します。各インターフェースにわたり、ユーザー、デバイス、サービス、管理者に対して、信頼できる (authoritative) アイデンティティの仕組みを使用します。
 
-Prevent impersonation and unauthorised access.
+## 目的 (Objective)
 
-## Checklist
+なりすましと不正アクセスを防止します。
 
-### Define authoritative identity sources
+## チェックリスト (Checklist)
 
-- Identify and document the authoritative identity source (i.e. a system that acts as the single source of truth for creating, authentication/authorisation, and revoking identities) for users, devices, services and administrators.
+### 信頼できるアイデンティティソースを定義する
 
-### Use unique identities for all actors
+- ユーザー、デバイス、サービス、管理者のそれぞれについて、信頼できるアイデンティティソース (authoritative identity source) を特定し、文書化すること。これは、アイデンティティの作成、認証／認可、失効に関する唯一の正（single source of truth）として機能するシステムを指します。
 
-- Assign a unique identity to each user, device, service and administrator, prohibiting shared accounts/credentials, especially for administrative and service access.
+### すべての主体に一意のアイデンティティを使う
 
-### Apply authentication across all interfaces
+- ユーザー、デバイス、サービス、管理者のそれぞれに一意のアイデンティティを割り当て、特に管理用およびサービス用のアクセスについて、共有アカウント／認証情報を禁止すること。
 
-- Enforce authentication/authorisation on all access paths, including user interfaces, APIs, device-to-cloud communication and management interfaces.
+### すべてのインターフェースで認証を適用する
 
-### Strengthen authentication for high-risk access
+- ユーザーインターフェース、API、デバイスとクラウド間の通信、管理インターフェースを含む、すべてのアクセス経路で認証／認可を強制すること。
 
-- Require stronger authentication for privileged actions and sensitive operations (e.g. MFA, device binding, or cryptographic credentials).
+### 高リスクのアクセスには認証を強化する
 
-### Manage sessions and credentials securely
+- 特権操作や機微な操作には、より強力な認証を求めること（例: MFA、デバイスバインディング (device binding)、暗号的な認証情報）。
 
-- Ensure that sessions are time limited, bound to identity and invalidated on logout or credential change.
-- Rotate, revoke and expire credentials automatically when no longer needed or when compromise is suspected.
+### セッションと認証情報を安全に管理する
 
-## Minimum evidence
+- セッションに有効期限があり、アイデンティティに紐付けられ、ログアウトや認証情報の変更時に無効化されるようにすること。
+- 認証情報は、不要になったとき、または侵害が疑われるときに、自動的にローテーション、失効、期限切れとすること。
 
-- Authoritative identity sources defined: a diagram or table exists showing the identity source for users, devices, services and administrators.
-- No shared identities: identity inventory shows unique identities, no shared production accounts or credentials.
-- Authentication enforced: configuration or test evidence shows that all interfaces enforce authentication or are explicitly defined as public with appropriate protections applied. Network location or reachability alone is not treated as authentication, unless explicitly justified by the product context and risk assessment and supported by appropriate compensating controls.
-- Strong auth for privileged access: policy or configuration shows that MFA or equivalent is enforced for administrative or sensitive actions.
-- Sessions and credentials controlled: configuration or logs show session expiry, revocation on logout or credential change, and credential rotation or expiry in place.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 信頼できるアイデンティティソースが定義されている: ユーザー、デバイス、サービス、管理者それぞれのアイデンティティソースを示す図または表がある。
+- 共有アイデンティティがない: アイデンティティのインベントリに一意のアイデンティティが示され、共有の本番アカウントや認証情報がない。
+- 認証が強制されている: 設定またはテストの証跡により、すべてのインターフェースが認証を強制しているか、または、適切な保護が適用された上で明示的に公開 (public) と定義されていることが示されている。ネットワーク上の位置や到達可能性だけでは認証とはみなされない。ただし、製品の文脈とリスク評価によって明示的に正当化され、適切な補完的対策に裏付けられている場合を除く。
+- 特権アクセスに強力な認証が使われている: ポリシーまたは設定により、管理操作や機微な操作に MFA またはそれと同等のものが強制されていることが示されている。
+- セッションと認証情報が管理されている: 設定またはログにより、セッションの有効期限、ログアウトや認証情報の変更時の失効、認証情報のローテーションまたは期限設定が実施されていることが示されている。
 
-- [ ] Authoritative identity sources defined and documented
-- [ ] Unique identities enforced; no shared production accounts or credentials
-- [ ] Authentication required on all access paths (UI, APIs, device-to-cloud, management interfaces)
-- [ ] Strong authentication enforced for privileged or sensitive actions
-- [ ] Sessions and credentials are time limited, revocable and expire automatically
+## リリースゲート (Release gate)
+
+- [ ] 信頼できるアイデンティティソースが定義され、文書化されている
+- [ ] 一意のアイデンティティが強制され、共有の本番アカウントや認証情報がない
+- [ ] すべてのアクセス経路（UI、API、デバイスとクラウド間、管理インターフェース）で認証が必須となっている
+- [ ] 特権操作や機微な操作に強力な認証が強制されている
+- [ ] セッションと認証情報に有効期限があり、失効可能で、自動的に期限切れとなる
