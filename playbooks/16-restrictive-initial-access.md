@@ -1,50 +1,56 @@
-# Restrictive initial access
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Restrictive initial access」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 制限的な初期アクセス (Restrictive initial access)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Ship systems in the most restrictive access state possible. Eliminate shared or default credentials and require a secure access set-up before any privileged or sensitive operations are allowed.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+システムは、可能な限り最も制限的なアクセス状態で出荷します。共有のまたはデフォルトの認証情報を排除し、特権的または機微な操作を許可する前に、セキュアなアクセスのセットアップを必須とします。
 
-To prevent immediate compromise after deployment by ensuring that attackers cannot gain access through default or weak initial access.
+## 目的 (Objective)
 
-## Checklist
+攻撃者が、デフォルトの、または脆弱な初期アクセスを通じてアクセスを得ることができないようにすることで、デプロイ直後の侵害を防ぎます。
 
-### Eliminate shared default credentials
+## チェックリスト (Checklist)
 
-- Do not ship products with universal usernames or passwords (e.g. ‘admin/admin’ or ‘root/root’).
+### 共有のデフォルト認証情報を排除する
 
-### Require unique credentials for each device or instance
+- 汎用のユーザー名やパスワード（例: 「admin/admin」や「root/root」）を持つ製品を出荷しないこと。
 
-- Ensure that each device or instance has unique credentials generated at manufacture, provisioning or first boot.
+### デバイスまたはインスタンスごとに一意の認証情報を必須とする
 
-### Enforce a secure initial set-up
+- 各デバイスまたはインスタンスが、製造時、プロビジョニング時、または初回起動時に生成された一意の認証情報を持つようにすること。
 
-- Require a credential change, key provisioning or account creation before allowing privileged or sensitive access.
+### セキュアな初期セットアップを強制する
 
-### Restrict initial permissions
+- 特権的または機微なアクセスを許可する前に、認証情報の変更、鍵のプロビジョニング、またはアカウントの作成を必須とすること。
 
-- Grant the minimum permissions required for initial operation.
-- Avoid granting full administrative access by default.
+### 初期の権限を制限する
 
-### Protect initial access paths
+- 初期の運用に必要な最小限の権限を付与すること。
+- デフォルトで完全な管理者アクセスを付与することを避けること。
 
-- Ensure that first-boot, onboarding and recovery interfaces are authenticated and not unnecessarily exposed.
+### 初期アクセスの経路を保護する
 
-## Minimum evidence
+- 初回起動、オンボーディング、復旧のインターフェースが認証されており、不必要に公開されていないことを確保すること。
 
-- No default credentials shipped: build configuration or documentation confirms that no shared or hard-coded credentials exist.
-- Unique credentials enforced: provisioning records, configuration or device inventory shows per-device or per-instance credentials.
-- Secure set-up required: configuration or test evidence shows credential change or secure set-up is mandatory before privileged or sensitive access.
-- Initial permissions restricted: access model or configuration shows limited permissions at first use.
-- Initial access paths controlled: configuration or test evidence shows that onboarding and recovery interfaces are protected.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- デフォルトの認証情報が出荷されていない: ビルド設定またはドキュメントにより、共有のまたはハードコードされた認証情報が存在しないことが確認できる。
+- 一意の認証情報が強制されている: プロビジョニングの記録、設定、またはデバイスのインベントリにより、デバイスごと／インスタンスごとの認証情報が示されている。
+- セキュアなセットアップが必須である: 設定またはテストの証跡により、特権的または機微なアクセスの前に、認証情報の変更またはセキュアなセットアップが必須であることが示されている。
+- 初期の権限が制限されている: アクセスモデルまたは設定により、初回使用時の権限が限定されていることが示されている。
+- 初期アクセスの経路が管理されている: 設定またはテストの証跡により、オンボーディングと復旧のインターフェースが保護されていることが示されている。
 
-- [ ] No shared or default credentials present in production builds
-- [ ] Unique credentials generated for each device or instance
-- [ ] Secure set-up enforced before privileged or sensitive access
-- [ ] Initial permissions are restrictive by default
-- [ ] Initial access and onboarding paths are protected and reviewed
+## リリースゲート (Release gate)
+
+- [ ] 本番ビルドに、共有のまたはデフォルトの認証情報が存在しない
+- [ ] デバイスまたはインスタンスごとに、一意の認証情報が生成されている
+- [ ] 特権的または機微なアクセスの前に、セキュアなセットアップが強制されている
+- [ ] 初期の権限が、デフォルトで制限的である
+- [ ] 初期アクセスとオンボーディングの経路が保護され、レビューされている
