@@ -1,58 +1,64 @@
-# Secure communication by default
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Secure communication by default」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# デフォルトでのセキュアな通信 (Secure communication by default)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Enforce secure communication from the start. All external communications must be encrypted and authenticated by default, with no support for insecure or plain-text protocols for convenience.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+最初からセキュアな通信を強制します。すべての外部通信は、デフォルトで暗号化され認証されなければならず、利便性のために安全でないプロトコルや平文のプロトコルをサポートしてはなりません。
 
-Protect data in transit and prevent interception, tampering or impersonation by ensuring that communications are always secure, without relying on user configuration or later hardening.
+## 目的 (Objective)
 
-## Checklist
+ユーザーの設定や後からのハードニングに頼らず、通信が常に安全であることを確保することで、転送中のデータを保護し、傍受、改ざん、なりすましを防ぎます。
 
-### Protect external communications by default
+## チェックリスト (Checklist)
 
-- Require encrypted communication for all external interfaces from first use.
-- Where data or commands pass through intermediaries, assess whether transport protection alone is sufficient or whether additional end-to-end authenticity, integrity and freshness controls are required.
+### 外部通信をデフォルトで保護する
 
-### Disable insecure and plain-text protocols
+- 初回の使用から、すべての外部インターフェースで暗号化通信を必須とすること。
+- データやコマンドが仲介者を経由する場合は、トランスポートの保護だけで十分か、それともエンドツーエンドの真正性、完全性、鮮度の追加対策が必要かを評価すること。
 
-- Do not allow unencrypted or weak protocols (e.g. HTTP or Telnet) to be used by default or even as fallbacks.
+### 安全でないプロトコルと平文のプロトコルを無効にする
 
-### Authenticate communicating endpoints
+- 暗号化されていない、または脆弱なプロトコル（例: HTTP や Telnet）を、デフォルトでも、フォールバックとしても使用させないこと。
 
-- Ensure that external endpoints authenticate each other where appropriate, for example for device-to-cloud, service-to-service and administrative access.
+### 通信するエンドポイントを認証する
 
-### Enforce secure protocol versions and configurations
+- 該当する場合（例: デバイスとクラウド間、サービス間、管理アクセス）、外部のエンドポイントが相互に認証するようにすること。
 
-- Use modern, secure protocol versions and configurations by default.
-- Explicitly disable weak ciphers, legacy versions and insecure negotiation modes.
+### セキュアなプロトコルバージョンと構成を強制する
 
-### Fail securely on connection errors
+- 最新でセキュアなプロトコルバージョンと構成を、デフォルトで使用すること。
+- 脆弱な暗号スイート、レガシーなバージョン、安全でないネゴシエーションモードを明示的に無効にすること。
 
-- Ensure that communication failures result in denied connections rather than downgrading to insecure protocols or configurations.
+### 接続エラー時に安全に失敗させる
 
-### Plan for cryptographic change
+- 通信の失敗が、安全でないプロトコルや構成へのダウングレードではなく、接続の拒否という結果になるようにすること。
 
-- Design cryptographic mechanisms so that algorithms, keys, certificates and trust anchors can be replaced or migrated without substantially redesigning the product, where feasible.
-- Assess whether the product’s support lifetime, data confidentiality requirements and deployment constraints require preparation for migration to post-quantum cryptography.
+### 暗号の変更に備える
 
-## Minimum evidence
+- 可能な場合は、製品を大幅に再設計することなく、アルゴリズム、鍵、証明書、トラストアンカー (trust anchor) を置き換えたり移行したりできるように、暗号の仕組みを設計すること。
+- 製品のサポート期間、データの機密性の要件、デプロイ上の制約から、ポスト量子暗号への移行の準備が必要かどうかを評価すること。
 
-- Secure protocols enforced by default: configuration or test evidence shows that encrypted and authenticated communication is required from first connection.
-- Insecure protocols disabled: configuration confirms that plain-text or legacy protocols are not enabled or available.
-- Endpoint authentication in place: configuration or test evidence shows that mutual or appropriate endpoint authentication takes place for external communications.
-- Strong protocol configuration applied: configuration shows that only approved protocol versions and cryptographic settings are enabled.
-- No insecure fallback: test evidence shows that connection attempts fail securely rather than downgrading security.
-- Cryptographic migration note: identification of critical cryptographic mechanisms and how algorithms, keys, certificates and trust anchors are to be updated or replaced.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- セキュアなプロトコルがデフォルトで強制されている: 設定またはテストの証跡により、最初の接続から暗号化され認証された通信が必須であることが示されている。
+- 安全でないプロトコルが無効になっている: 設定により、平文またはレガシーなプロトコルが有効でも利用可能でもないことが確認できる。
+- エンドポイント認証が行われている: 設定またはテストの証跡により、外部通信で相互の、または適切なエンドポイント認証が行われることが示されている。
+- 強力なプロトコル構成が適用されている: 設定により、承認されたプロトコルバージョンと暗号設定のみが有効であることが示されている。
+- 安全でないフォールバックがない: テストの証跡により、接続の試行が、セキュリティを下げずに安全に失敗することが示されている。
+- 暗号の移行に関するメモ: 重要な暗号の仕組みの特定と、アルゴリズム、鍵、証明書、トラストアンカーをどのように更新または置き換えるか。
 
-- [ ] External communications are encrypted and authenticated from first connection
-- [ ] Insecure or plain-text protocols are disabled and unavailable
-- [ ] Only approved secure protocol versions and configurations are enabled
-- [ ] Endpoint authentication enforced where required
-- [ ] Connection failures do not result in insecure fallback
-- [ ] Cryptographic mechanisms can be replaced or migrated where required by the product’s risk assessment and support lifetime.
+## リリースゲート (Release gate)
+
+- [ ] 外部通信が、最初の接続から暗号化され認証されている
+- [ ] 安全でないプロトコルや平文のプロトコルが無効であり、利用できない
+- [ ] 承認されたセキュアなプロトコルバージョンと構成のみが有効である
+- [ ] 必要な場合にエンドポイント認証が強制されている
+- [ ] 接続の失敗が、安全でないフォールバックにつながらない
+- [ ] 製品のリスクアセスメントとサポート期間から必要とされる場合に、暗号の仕組みを置き換えまたは移行できる。
