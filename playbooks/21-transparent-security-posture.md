@@ -1,50 +1,56 @@
-# Transparent security posture
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Transparent security posture」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 透明性のあるセキュリティ態勢 (Transparent security posture)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Make the system’s security posture visible and understandable. Clearly inform users when security protections are weakened and provide a simple path to return to a secure baseline.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+システムのセキュリティ態勢 (security posture) を、可視化し、理解しやすくします。セキュリティ保護が弱められるときは、ユーザーにはっきりと知らせ、セキュアなベースラインに戻るための簡単な手段を提供します。
 
-Reduce risk arising from accidental or uninformed misconfiguration by ensuring that users understand the security state of the system and can easily correct insecure settings.
+## 目的 (Objective)
 
-## Checklist
+ユーザーがシステムのセキュリティ状態を理解し、安全でない設定を簡単に修正できるようにすることで、偶発的な、または十分な情報に基づかない設定ミスから生じるリスクを低減します。
 
-### Define security states and baseline
+## チェックリスト (Checklist)
 
-- Define the secure baseline and any degraded or unsupported security states.
-- Document which configurations cause a transition between states.
+### セキュリティの状態とベースラインを定義する
 
-### Expose current security status
+- セキュアなベースラインと、劣化した状態、またはサポート対象外のセキュリティ状態を定義すること。
+- どの構成が状態間の遷移を引き起こすかを文書化すること。
 
-- Indicate clearly whether the system is operating in a secure or degraded security state.
+### 現在のセキュリティの状態を示す
 
-### Warn on changes that reduce security
+- システムが、セキュアな状態で動作しているか、劣化したセキュリティ状態で動作しているかを、明確に示すこと。
 
-- Show clear warnings when users disable security features or apply configurations that increase risk.
+### セキュリティを低下させる変更について警告する
 
-### Explain impact in plain language
+- ユーザーがセキュリティ機能を無効にしたり、リスクを高める構成を適用したりするときは、明確な警告を表示すること。
 
-- Explain to the user the security implications of a change in non-technical terms.
+### 影響を平易な言葉で説明する
 
-### Provide a simple path to recovery
+- 変更によるセキュリティ上の影響を、専門的でない言葉でユーザーに説明すること。
 
-- Offer the user a simple interaction path to return to the secure baseline.
+### 復旧への簡単な経路を提供する
 
-## Minimum evidence
+- セキュアなベースラインに戻るための、簡単な操作の経路をユーザーに提供すること。
 
-- Security states defined: documentation identifies the secure baseline and degraded or insecure states, including the configuration changes that trigger such states.
-- Security status visible: screenshot, CLI output or documentation clearly shows the current security state.
-- Warnings triggered on risk increase: screenshots, prompts or test evidence shows warnings when users apply security-reducing changes.
-- Impact explained clearly: warning messages, screenshots or documentation demonstrates that security implications are described in plain, non-technical language.
-- Baseline restore available: screenshots, commands or configuration shows a simple action exists to return to the secure baseline.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- セキュリティの状態が定義されている: ドキュメントにより、セキュアなベースラインと、劣化した状態または安全でない状態、およびそれらの状態を引き起こす構成変更が特定されている。
+- セキュリティの状態が可視である: スクリーンショット、CLI の出力、またはドキュメントにより、現在のセキュリティ状態が明確に示されている。
+- リスクが高まるときに警告が発せられる: スクリーンショット、プロンプト、またはテストの証跡により、ユーザーがセキュリティを低下させる変更を適用したときに警告が出ることが示されている。
+- 影響が明確に説明されている: 警告メッセージ、スクリーンショット、またはドキュメントにより、セキュリティ上の影響が、平易で専門的でない言葉で記述されていることが示されている。
+- ベースラインの復元が可能である: スクリーンショット、コマンド、または設定により、セキュアなベースラインに戻るための簡単な操作が存在することが示されている。
 
-- [ ] Secure baseline and degraded security states are defined and documented
-- [ ] Current security state is clearly visible to the user
-- [ ] Users are warned when security protections are reduced
-- [ ] Security impact is explained in clear, non-technical language
-- [ ] A simple action can be taken to restore the secure baseline
+## リリースゲート (Release gate)
+
+- [ ] セキュアなベースラインと、劣化したセキュリティ状態が定義され、文書化されている
+- [ ] 現在のセキュリティ状態が、ユーザーに明確に見える
+- [ ] セキュリティ保護が低下するときに、ユーザーに警告される
+- [ ] セキュリティ上の影響が、明確で専門的でない言葉で説明されている
+- [ ] セキュアなベースラインを復元するための簡単な操作が可能である
