@@ -1,49 +1,55 @@
-# Unique device identity and secrets by default
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Unique device identity and secrets by default」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# デフォルトでの一意のデバイスアイデンティティとシークレット (Unique device identity and secrets by default)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Ship each product instance with a unique cryptographic identity and secrets by default if it uses any private/secret value. Do not use shared credentials, keys or certificates across devices or installations.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+製品が何らかの非公開／秘密の値を使用する場合は、製品の各インスタンスを、一意の暗号的アイデンティティとシークレットを備えた状態で、デフォルトで出荷します。複数のデバイスやインストールにわたって、共有の認証情報、鍵、証明書を使用しないこと。
 
-Prevent large-scale compromise by ensuring that a breach of one device or a leaked secret cannot be reused to attack other devices, customers or the wider installed base.
+## 目的 (Objective)
 
-## Checklist
+1台のデバイスの侵害や漏えいしたシークレットが、他のデバイス、顧客、より広い導入基盤への攻撃に再利用できないようにすることで、大規模な侵害を防ぎます。
 
-### Generate unique identities per device or instance
+## チェックリスト (Checklist)
 
-- Assign a unique device identity (e.g. key pair or certificate) to every device or installation.
+### デバイスまたはインスタンスごとに一意のアイデンティティを生成する
 
-### Eliminate shared or hard-coded secrets
+- すべてのデバイスまたはインストールに、一意のデバイスアイデンティティ（例: 鍵ペアや証明書）を割り当てること。
 
-- Do not use shared credentials, default keys or embedded secrets across products.
+### 共有のシークレットやハードコードされたシークレットを排除する
 
-### Protect secrets against extraction
+- 複数の製品にわたって、共有の認証情報、デフォルトの鍵、埋め込まれたシークレットを使用しないこと。
 
-- Store device identities and per-device secrets using platform-appropriate controls that protect against extraction, tampering or unauthorised replacement (e.g. secure storage, hardware-backed protection or restricted access).
+### シークレットを抽出から保護する
 
-### Use unique secrets for security-critical functions
+- デバイスアイデンティティとデバイスごとのシークレットを、抽出、改ざん、または不正な置き換えから保護する、プラットフォームに適した対策（例: セキュアストレージ、ハードウェアに裏付けられた保護、アクセス制限）を用いて保存すること。
 
-- Ensure that security-critical functions like authentication, secure communications and update verification rely on per-device secrets, not shared material.
+### セキュリティ上重要な機能に一意のシークレットを使用する
 
-### Support revocation and replacement
+- 認証、セキュアな通信、アップデートの検証といったセキュリティ上重要な機能が、共有の素材ではなく、デバイスごとのシークレットに依存するようにすること。
 
-- Ensure that device identities and secrets can be revoked and rotated if compromise is suspected.
+### 失効と置き換えをサポートする
 
-## Minimum evidence
+- 侵害が疑われる場合に、デバイスアイデンティティとシークレットを失効させ、ローテーションできるようにすること。
 
-- Unique device identities issued: device inventory or provisioning records show a unique identity (e.g. key pair or certificate) for each device or instance.
-- No shared secrets present: build artefacts or configuration confirms that no shared credentials or hard-coded secrets exist.
-- Secrets protected at rest: documentation or configuration shows that secrets are stored using appropriate protection mechanisms.
-- Security functions use unique secrets: configuration or design notes show that authentication, communication and update processes rely on per-device secrets.
-- Revocation supported: documentation or configuration shows that device identities or secrets can be revoked or replaced.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 一意のデバイスアイデンティティが発行されている: デバイスのインベントリまたはプロビジョニングの記録により、各デバイスまたはインスタンスに一意のアイデンティティ（例: 鍵ペアや証明書）があることが示されている。
+- 共有のシークレットが存在しない: ビルドの成果物または設定により、共有の認証情報やハードコードされたシークレットが存在しないことが確認できる。
+- 保存時にシークレットが保護されている: ドキュメントまたは設定により、シークレットが適切な保護の仕組みを用いて保存されていることが示されている。
+- セキュリティ機能が一意のシークレットを使用している: 設定または設計ノートにより、認証、通信、アップデートの各プロセスが、デバイスごとのシークレットに依存していることが示されている。
+- 失効がサポートされている: ドキュメントまたは設定により、デバイスアイデンティティやシークレットを失効または置き換えできることが示されている。
 
-- [ ] Unique cryptographic identity generated for each device or instance
-- [ ] No shared or default secrets present in production builds
-- [ ] Secrets are protected against extraction
-- [ ] Security-critical functions use per-device secrets
-- [ ] Identity and secret revocation or replacement is supported
+## リリースゲート (Release gate)
+
+- [ ] 各デバイスまたはインスタンスに、一意の暗号的アイデンティティが生成されている
+- [ ] 本番ビルドに、共有のまたはデフォルトのシークレットが存在しない
+- [ ] シークレットが抽出から保護されている
+- [ ] セキュリティ上重要な機能が、デバイスごとのシークレットを使用している
+- [ ] アイデンティティとシークレットの失効または置き換えがサポートされている
