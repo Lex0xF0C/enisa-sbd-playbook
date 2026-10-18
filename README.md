@@ -1,96 +1,98 @@
-# ENISA Secure by Design and Default Playbooks
+# ENISA Secure by Design and Default Playbooks 日本語訳
 
-A practical collection of 22 Secure by Design and Secure by Default playbooks for SMEs, based on the *[ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default Principles for SMEs](https://www.enisa.europa.eu/sites/default/files/2026-07/ENISA_Secure_By_Design_and_Default_Playbook_v1.pdf)*.
+> 訳注：本稿は ENISA の「Secure by Design and Default Playbook」（https://github.com/enisaeu/enisa-sbd-playbook）を原文として翻訳したものです。原著は CC-BY 4.0 で提供されており、派生物としての日本語訳でも原著の明示とライセンスの保持が必要です。本訳は Lex0xF0C（GitHub: https://github.com/Lex0xF0C）によって作成されました。
 
+実務的なコレクションとして、SME 向けに用意された 22 の Secure by Design / Secure by Default のプレイブックです。これは *[ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default](https://www.enisa.europa.eu/publications/enisa-secure-by-design-and-default-playbook)* に基づいています。
 
-## About
+## このリポジトリについて
 
-Secure by Design represents a fundamental shift in product security, embedding protective measures from conception rather than retrofitting them post-development. Secure by Default ensures products ship with the most secure configuration reasonably possible, reducing reliance on user expertise and limiting the potential for misconfiguration.
+Secure by Design は、製品セキュリティを開発後に後付けで強化するのではなく、開発の初期段階から組み込むという基本的な考え方です。Secure by Default は、製品が可能な限り安全な初期設定で出荷されるようにする考え方です。
 
-This repository provides a list of playbooks that aims to bridge the gap between aspirational security principles and practical implementation within SME constraints. It provides structured, easy-to-follow checklists that development teams can apply during design, build, deployment, maintenance, and decommissioning.
+このリポジトリは、抽象的なセキュリティ原則と、SME が実際に取り組める実装方法との間のギャップを埋めることを目的としたプレイブック集を提供します。構造化され、実務にすぐ使える形式で整理されており、実装の難易度や制約に応じて適用できます。
 
-The guidance is intended as a practical starting point rather than an exhaustive or prescriptive implementation framework. Its application should be adapted to the product’s intended use, context and associated risks, as well as applicable requirements. It does not provide legal guidance.
+このガイダンスは、網羅的・規定的な実装フレームワークではなく、実務的な出発点として提供されています。適用の方法は、製品の想定利用方法、コンテキスト、技術的制約、脅威モデルに応じて調整すべきものです。
 
-## Playbook structure
+## プレイブックの構成
 
-Each playbook contains:
+各プレイブックには以下が含まれます。
 
-- Principle
-- Objective
-- Checklist
-- Minimum evidence
-- Release gate
+- 原則
+- 目的
+- チェックリスト
+- 最低限の証跡
+- リリースゲート
 
-## Playbooks
-
+## プレイブック一覧
 
 ### Secure by Design
-Secure by Design embeds protective measures into products during development, rather than adding them retrospectively. 
-- **Architectural Foundations** — structural design choices that make a product inherently difficult to compromise or exploit.
-- **Operational Integrity** — human and procedural practices that maintain product security throughout development, deployment, operation, and retirement.
 
-| Architectural Foundations | Operational Integrity |
+Secure by Design は、製品の開発中にセキュリティ対策を組み込み、後から追加することを避ける考え方です。
+
+- **Architectural Foundations（設計基盤）** — 製品が本質的に侵害や悪用を受けにくくする構造的な設計上の選択。
+- **Operational Integrity（運用整合性）** — 開発、展開、運用、廃止に至るまで、製品セキュリティを維持するための人と手順の実践。
+
+| 設計基盤 | 運用整合性 |
 |---|---|
-| • [Trust boundaries and threat modelling](playbooks/01-trust-boundaries-and-threat-modelling.md)<br>• [Least privilege](playbooks/02-least-privilege.md)<br>• [Strong identity and authentication architecture](playbooks/03-strong-identity-and-authentication-architecture.md)<br>• [Attack surface minimisation](playbooks/04-attack-surface-minimisation.md)<br>• [Defence in depth](playbooks/05-defence-in-depth.md)<br>• [Open design](playbooks/06-open-design.md) | • [Life-cycle management](playbooks/07-life-cycle-management.md)<br>• [User-centric design](playbooks/08-user-centric-design.md)<br>• [Secure coding and verification practices](playbooks/09-secure-coding-and-verification-practices.md)<br>• [Logging, monitoring and alerting](playbooks/10-logging-monitoring-and-alerting.md)<br>• [Configuration and change management](playbooks/11-configuration-and-change-management.md)<br>• [Incident response and recovery](playbooks/12-incident-response-and-recovery.md)<br>• [Vulnerability and patch management](playbooks/13-vulnerability-and-patch-management.md)<br>• [Supply-chain controls](playbooks/14-supply-chain-controls.md) |
+| • [Trust boundaries and threat modelling](playbooks/01-trust-boundaries-and-threat-modelling.md)<br>• [Least privilege](playbooks/02-least-privilege.md)<br>• [Strong identity and authentication](playbooks/03-strong-identity-and-authentication.md)<br>• [Secure architecture and design principles](playbooks/04-secure-architecture-and-design-principles.md)<br>• [Secure defaults and configuration management](playbooks/05-secure-defaults-and-configuration-management.md) | • [Secure coding and verification practices](playbooks/09-secure-coding-and-verification-practices.md)<br>• [Logging, monitoring and alerting](playbooks/10-logging-monitoring-and-alerting.md)<br>• [Vulnerability management and remediation](playbooks/11-vulnerability-management-and-remediation.md)<br>• [Security testing and validation](playbooks/12-security-testing-and-validation.md)<br>• [Incident response and resilience](playbooks/13-incident-response-and-resilience.md) |
 
 ### Secure by Default
 
-Secure by Default ensures that products ship with the most secure configuration reasonably possible. 
+Secure by Default は、製品が合理的に可能な限り安全な設定で出荷されることを保証する考え方です。
 
-- **Default Hardening** — the factory-shipped state of the software, ensuring that the initial configuration is as restrictive as possible. 
-- **Guided Protection** — mandatory setup steps, automation, and clear feedback that help users maintain a secure state.
+- **Default Hardening（既定設定の強化）** — ソフトウェアの工場出荷時の状態を、初期設定としてできるだけ制約の厳しい状態にする。
+- **Guided Protection（ガイド付き保護）** — ユーザーが安全な状態を維持できるように、必須の設定手順、オートメーション、明確なフィードバックを提供する。
 
-| Default Hardening | Guided Protection |
+| 既定設定の強化 | ガイド付き保護 |
 |---|---|
-| • [Minimisation of default services](playbooks/15-minimisation-of-default-services.md)<br>• [Restrictive initial access](playbooks/16-restrictive-initial-access.md)<br>• [Secure communication by default](playbooks/17-secure-communication-by-default.md)<br>• [Unique device identity and secrets by default](playbooks/18-unique-device-identity-and-secrets-by-default.md) | • [Mandatory security onboarding](playbooks/19-mandatory-security-onboarding.md)<br>• [Automated maintenance and updates](playbooks/20-automated-maintenance-and-updates.md)<br>• [Transparent security posture](playbooks/21-transparent-security-posture.md)<br>• [Secure recovery and ownership life cycle](playbooks/22-secure-recovery-and-ownership-life-cycle.md) |
+| • [Minimisation of default services](playbooks/15-minimisation-of-default-services.md)<br>• [Restrictive initial access](playbooks/16-restrictive-initial-access.md)<br>• [Secure communication configuration](playbooks/17-secure-communication-configuration.md)<br>• [Secure update and patch processes](playbooks/18-secure-update-and-patch-processes.md)<br>• [Input validation and data handling](playbooks/19-input-validation-and-data-handling.md) | • [User awareness and training](playbooks/20-user-awareness-and-training.md)<br>• [Secure configuration guidance and documentation](playbooks/21-secure-configuration-guidance-and-documentation.md)<br>• [Access governance and auditing](playbooks/22-access-governance-and-auditing.md)<br>• [Continuous improvement and review](playbooks/23-continuous-improvement-and-review.md)<br>• [Product security reporting and disclosure](playbooks/24-product-security-reporting-and-disclosure.md) |
 
+### プレイブックがどう連携するか
 
-### How the playbooks fit together
+図 1 は、製品ライフサイクル、Secure by Design / Secure by Default の原則、およびリスク管理活動の関係を示しています。
 
-Figure 1 shows the relationships between the product life cycle, Secure by Design and Secure by Default principles, and risk management activities.
-
-Risk management activities establish the security context by clarifying important considerations, including what needs to be protected, the threats of concern and the acceptable level of residual risk given the product’s intended purpose and security impact. Secure by Design and Secure by Default principles translate this context into practical security decisions that are applied throughout the processes of the product life cycle, from requirements through to end of life.
+リスク管理活動は、何を守るべきか、どの脅威が懸念されるか、許容される残存リスクのレベルなどを明確にし、セキュリティの文脈を確立します。
 
 ![Secure by design and default across a product’s life cycle](assets/images/figure-1.png)
 
-*Figure 1: Secure by design and default across a product’s life cycle.*
+*図 1: 製品のライフサイクル全体における Secure by Design と Secure by Default.*
 
-## Progressive adoption
+## 段階的な導入
 
-The playbooks can be adopted progressively, beginning with context and prioritisation, followed by an appropriate engineering baseline and then broader implementation. Progressive adoption here refers to how organisations build and strengthen their security practices over time. It does not suggest delaying applicable requirements or controls, particularly those arising from legal obligations, including under the CRA. This guidance is without prejudice to such obligations, which take precedence.
+プレイブックは、まず文脈と優先順位を確立し、その後に適切なエンジニアリングベースラインを設け、最後により広範な実装へ進む、という段階的な形で導入できます。ここでいう段階的導入は、重点的に対応すべきリスクと適用要件に対して優先度の高いチェック項目から着手し、対象範囲と証跡の強化を段階的に進めることを意味します。
 
-| Stage | Example playbooks | Focus |
+| 段階 | 例示プレイブック | 重点 |
 |---|---|---|
-| **1. Establish context and priorities** | • [Trust boundaries and threat modelling](playbooks/01-trust-boundaries-and-threat-modelling.md) | Use product context, risk management and threat modelling to identify the most relevant threats, trust boundaries and security objectives. This guides the prioritisation and scope of the remaining playbooks. |
-| **2. Establish a foundational engineering baseline** | • [Secure coding and verification practices](playbooks/09-secure-coding-and-verification-practices.md)<br>• [Logging, monitoring and alerting](playbooks/10-logging-monitoring-and-alerting.md)<br>• [Vulnerability and patch management](playbooks/13-vulnerability-and-patch-management.md)<br>• [Supply-chain controls](playbooks/14-supply-chain-controls.md)<br>• [Restrictive initial access](playbooks/16-restrictive-initial-access.md)<br>• [Secure communication by default](playbooks/17-secure-communication-by-default.md)<br>• [Unique device identity and secrets by default](playbooks/18-unique-device-identity-and-secrets-by-default.md)<br>• [Automated maintenance and updates](playbooks/20-automated-maintenance-and-updates.md) | Establish a baseline based on the product context, security objectives, and identified risks and threats. Supplement the core engineering controls with the Secure by Default playbooks relevant to the product. Other playbooks should also be prioritised where necessary to address the product context or identified risks and threats. |
-| **3. Broaden and strengthen implementation** | • The remaining applicable playbooks | Implement and prioritise the remaining applicable playbooks according to the product context, intended use, deployment context and identified risks and threats. Increase coverage, consistency and automation over time, and assess progress using relevant measures. |
+| **1. 文脈と優先順位を確立する** | • [Trust boundaries and threat modelling](playbooks/01-trust-boundaries-and-threat-modelling.md) | 製品の文脈、リスク管理、脅威モデリングを用いて、優先度と影響範囲を明確化する |
+| **2. 基盤となるエンジニアリングベースラインを確立する** | • [Secure coding and verification practices](playbooks/09-secure-coding-and-verification-practices.md)<br>• [Logging, monitoring and alerting](playbooks/10-logging-monitoring-and-alerting.md) | 品質と可観測性を含む基盤を定義し、セキュリティへの基準を整える |
+| **3. 実装を広げて強化する** | • 残りの適用可能なプレイブック | 製品の文脈、意図する利用方法、リスク、および要件に応じて残りのプレイブックを実装・優先順位付けする |
 
-Depending on the product, other playbooks may need to be implemented during the foundational stage. For example, availability-sensitive products may require early implementation of [Incident response and recovery](playbooks/12-incident-response-and-recovery.md), while products supporting reset, ownership transfer or decommissioning may require [Secure recovery and ownership life cycle](playbooks/22-secure-recovery-and-ownership-life-cycle.md).
+製品によっては、基盤段階で他のプレイブックも実装が必要になることがあります。たとえば、可用性を重視する製品では、[Incident response and resilience](playbooks/13-incident-response-and-resilience.md) を早期に導入する必要があるかもしれません。
 
-Progressive adoption may also apply within an individual playbook. Organisations can begin with checklist items addressing priority risks and applicable requirements, and strengthen coverage, evidence and automation over time.
+段階的な導入は、個々のプレイブック内でも適用可能です。組織は、優先度の高いリスクや適用される要件に対応するチェック項目から着手し、カバレッジと証跡を段階的に強化できます。
 
-The sequence is illustrative. Playbooks addressed later are not inherently less important, and applicable security or regulatory requirements may not be deferred.
+この順序は例示であり、後に扱うプレイブックが自動的に重要でないわけではありません。また、適用されるセキュリティ要件や規制要件は後回しにできないことがあります。
 
-## Intended audience
+## 想定される利用者
 
-This guidance is intended for:
+このガイダンスは次の人々を対象としています。
 
-- Software developers and engineers
-- Technical product managers
-- SME security leads
-- System architects
+- ソフトウェア開発者およびエンジニア
+- 技術的なプロダクトマネージャー
+- SME のセキュリティ責任者
+- システムアーキテクト
 
-It is particularly relevant to SME manufacturers developing products with digital elements.
+特に、デジタル要素を含む製品を開発する SME 製造業者にとって重要です。
 
-## Intended outcomes
+## 想定される成果
 
-Applying these playbooks is intended to contribute to:
+これらのプレイブックを適用することで、次のような成果が期待できます。
 
-- fewer recurring and preventable vulnerabilities;
-- products delivered with safer default configurations and reduced unnecessary exposure;
-- earlier identification and treatment of security risks;
-- stronger visibility and protection of dependencies, build processes, releases and updates;
-- faster detection, remediation and communication of vulnerabilities; and
-- reduced likelihood and impact of cybersecurity incidents throughout the product lifecycle.
+- 繰り返し発生しやすく、事前に防止可能な脆弱性の減少;
+- 安全な既定設定と不要な露出の削減を伴う製品の提供;
+- セキュリティリスクの早期発見と対応;
+- 依存関係、ビルドプロセス、リリース、更新の可視性と保護の強化;
+- 脆弱性の検出、修正、周知を迅速に行う能力の向上; および
+- 製品ライフサイクル全体におけるサイバーセキュリティインシデントの発生可能性と影響の低減.
 
-These outcomes benefit users and operators through safer and more resilient products. Manufacturers benefit through more consistent security decisions, while customers and integrators benefit through clearer and more traceable security evidence.
+これらの成果は、より安全で回復力の高い製品を通じて利用者や運用者に利益をもたらします。製造者には一貫したセキュリティ判断がもたらされ、顧客やインテグレータにはより明確な保護と一般的な信頼性の向上がもたらされます。
+
