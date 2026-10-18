@@ -1,51 +1,57 @@
-# Defence in depth
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Defence in depth」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 多層防御 (Defence in depth)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Apply multiple layers of security so that the failure or bypass of a single control does not result in full compromise.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+複数のセキュリティ層を適用し、単一の対策が失敗またはバイパスされても、全面的な侵害に至らないようにします。
 
-Reduce the impact of security failures by layering independent controls that slow attackers, increase detection and prevent single points of compromise.
+## 目的 (Objective)
 
-## Checklist
+攻撃者を遅らせ、検知を高め、単一の侵害ポイントを防ぐ、独立した対策を重ねることで、セキュリティ障害の影響を低減します。
 
-### Layer controls around critical assets
+## チェックリスト (Checklist)
 
-- Identify the most sensitive assets (e.g. credentials, control functions, customer data).
-- Ensure that more than one independent control protects each asset.
-- Where critical data or commands cross trust boundaries, consider integrity and freshness controls that remain effective if another protection layer, such as transport security, is bypassed.
+### 重要資産の周囲に対策を重ねる
 
-### Assume control failure and design for containment
+- 最も機微な資産（例: 認証情報、制御機能、顧客データ）を特定すること。
+- 各資産を、複数の独立した対策で保護すること。
+- 重要なデータやコマンドが信頼境界を越える場合は、トランスポートセキュリティなど他の保護層がバイパスされても有効であり続ける、完全性と鮮度 (freshness) の対策を検討すること。
 
-- Design systems so that bypass of one control does not grant unrestricted access.
+### 対策の失敗を前提とし、封じ込めを考慮して設計する
 
-### Enable detection at multiple layers
+- 1つの対策がバイパスされても、無制限のアクセスが許可されないようにシステムを設計すること。
 
-- Generate security-relevant logs at key layers (identity, network, application, data).
-- Ensure that failed and suspicious actions raise alerts and are not silently blocked.
+### 複数の層で検知を可能にする
 
-### Use diverse and independent controls
+- 主要な層（アイデンティティ、ネットワーク、アプリケーション、データ）で、セキュリティに関連するログを生成すること。
+- 失敗した操作や不審な操作がアラートを上げ、黙って遮断されるだけにならないようにすること。
 
-- Avoid relying on multiple controls that share the same technology, identity source or trust assumption.
+### 多様で独立した対策を使う
 
-### Slow attackers and enable response
+- 同じ技術、アイデンティティソース、信頼の前提を共有する複数の対策に依存することを避けること。
 
-- Apply controls that increase attacker effort and time (rate limits, step-up authentication, staged access).
-- Ensure that response mechanisms exist to contain or isolate compromised components when alerts are triggered.
+### 攻撃者を遅らせ、対応を可能にする
 
-## Minimum evidence
+- 攻撃者の労力と時間を増やす対策を適用すること（レート制限、ステップアップ認証 (step-up authentication)、段階的なアクセス）。
+- アラートが発報されたときに、侵害されたコンポーネントを封じ込めまたは隔離する対応の仕組みを用意すること。
 
-- Layered protection mapped: a simple table or diagram showing critical assets and the multiple security controls protecting each (stored in repo/wiki).
-- Independent controls confirmed: configuration or design notes showing that layered controls do not rely on the same identity source or enforcement point.
-- Multilayer logging enabled: log configuration or sample logs showing security events recorded across controls.
-- Alerts and response defined: alert rules or playbook reference showing how suspicious activity is detected and the associated containment or response action.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 層状の保護が対応付けられている: 重要資産と、それぞれを保護する複数のセキュリティ対策を示した簡単な表または図がある（リポジトリ／wiki に保管）。
+- 独立した対策が確認されている: 設定または設計ノートにより、層状の対策が同じアイデンティティソースや強制ポイントに依存していないことが示されている。
+- 多層のロギングが有効になっている: ログ設定またはサンプルログにより、各対策にわたってセキュリティイベントが記録されていることが示されている。
+- アラートと対応が定義されている: アラートルールまたはプレイブックの参照により、不審な活動をどう検知するか、および関連する封じ込め／対応アクションが示されている。
 
-- [ ] Critical assets have more than one security control applied and the layering is documented.
-- [ ] Layered controls are independent; no single identity source or enforcement point is a single point of failure.
-- [ ] Security-relevant events are logged at multiple layers
-- [ ] Alerts are in place for suspicious activity and a response action exists
+## リリースゲート (Release gate)
+
+- [ ] 重要資産に複数のセキュリティ対策が適用されており、その層構造が文書化されている。
+- [ ] 層状の対策が独立しており、単一のアイデンティティソースや強制ポイントが単一障害点 (single point of failure) になっていない。
+- [ ] セキュリティに関連するイベントが複数の層でログに記録されている
+- [ ] 不審な活動に対するアラートが設定され、対応アクションが存在する
