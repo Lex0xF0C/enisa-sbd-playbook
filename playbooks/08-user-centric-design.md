@@ -1,56 +1,62 @@
-# User-centric design
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「User-centric design」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# ユーザー中心設計 (User-centric design)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Security mechanisms must be usable and understandable even for everyday users.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+セキュリティの仕組みは、日常的なユーザーにとっても使いやすく、理解しやすいものでなければなりません。
 
-Ensure that security controls and secure defaults are usable, understandable and aligned with real user workflows, so that security outcomes do not depend on expert behaviour.
+## 目的 (Objective)
 
-## Checklist
+セキュリティ対策とセキュアなデフォルトが、使いやすく、理解しやすく、実際のユーザーのワークフローに沿ったものであることを確保し、セキュリティ上の成果が専門家の行動に依存しないようにします。
 
-### Design secure defaults that require minimal user action
+## チェックリスト (Checklist)
 
-- Ship with the safest practical settings enabled (e.g. least exposure, secure communications, logging enabled).
-- Avoid optional security for critical protections; make insecure modes explicit and gated.
+### ユーザーの操作が最小限で済むセキュアなデフォルトを設計する
 
-### Make set-up and onboarding safe and simple
+- 現実的に最も安全な設定を有効にして出荷すること（例: 露出の最小化、セキュアな通信、ログ記録の有効化）。
+- 重要な保護をオプションにしないこと。安全でないモードは明示的にし、ゲートで制御すること。
 
-- Provide a guided first-run experience with clear security steps (e.g. change initial credentials, pair securely, enable updates).
-- Minimise manual configuration for sensitive settings; prefer automated secure provisioning.
+### セットアップとオンボーディングを安全かつ簡単にする
 
-### Use clear, actionable security messaging
+- 明確なセキュリティ手順（例: 初期認証情報の変更、安全なペアリング、アップデートの有効化）を含む、ガイド付きの初回起動体験を提供すること。
+- 機微な設定の手動構成を最小限にし、自動化されたセキュアなプロビジョニングを優先すること。
 
-- Write user-facing warnings and error messages that explain what happened, the impact and what to do next.
-- Avoid vague messages (‘failed’) or blame-the-user language; include remediation steps.
+### 明確で実行可能なセキュリティメッセージを用いる
 
-### Provide least-friction access management
+- ユーザー向けの警告やエラーメッセージには、何が起きたか、その影響、次に何をすべきかを説明すること。
+- 曖昧なメッセージ（「失敗しました」）や、ユーザーを責める表現を避け、是正手順を含めること。
 
-- Prefer role-based access and simple permission models that match user roles (e.g. admin, operator, viewer).
-- Support safer auth options where feasible (e.g. MFA for admins, device identity, short-lived tokens).
-- Remove/limit insecure recovery paths; make account recovery robust.
+### 摩擦の少ないアクセス管理を提供する
 
-### Validate usability to prevent insecure workarounds
+- ユーザーのロール（例: 管理者、オペレーター、閲覧者）に合った、ロールベースのアクセスとシンプルな権限モデルを優先すること。
+- 可能な場合は、より安全な認証オプションをサポートすること（例: 管理者向けの MFA、デバイスアイデンティティ、短命のトークン）。
+- 安全でない復旧経路を削除／制限し、アカウント復旧を堅牢にすること。
 
-- Run quick usability checks on key security flows (onboarding, password reset, admin tasks, updates).
-- Use support tickets and pseudonymised telemetry (where appropriate) to detect confusion and misconfiguration trends.
+### 安全でない回避策を防ぐため、ユーザビリティを検証する
 
-## Minimum evidence
+- 主要なセキュリティフロー（オンボーディング、パスワードリセット、管理者タスク、アップデート）について、簡易なユーザビリティチェックを実施すること。
+- サポートチケットや（適切な場合は）仮名化したテレメトリを用いて、混乱や設定ミスの傾向を検出すること。
 
-- Secure defaults list (what ships enabled and disabled, with rationale)
-- Onboarding / security set-up guide (short, step-by-step, including credentials and update steps)
-- Roles/permissions model (roles defined + what each can do)
-- User-facing security message catalogue (examples of warnings / error messages and text outlining required remediation measures)
-- Usability validation notes (at least three to five users or internal proxies) covering the top security flows, plus resulting fixes
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- セキュアなデフォルトの一覧（何が有効／無効で出荷されるか、その根拠とともに）
+- オンボーディング／セキュリティセットアップのガイド（簡潔で段階的なもの。認証情報とアップデートの手順を含む）
+- ロール／権限モデル（定義されたロールと、それぞれにできること）
+- ユーザー向けセキュリティメッセージのカタログ（警告／エラーメッセージの例と、必要な是正措置を示す文言）
+- ユーザビリティ検証のメモ（少なくとも3～5人のユーザーまたは社内の代理）。主要なセキュリティフローを対象とし、その結果の修正を含む
 
-- [ ] Secure defaults reviewed and validated (no critical protections disabled by default)
-- [ ] No default admin credentials active; onboarding enforces safe initial set-up
-- [ ] Admin/security-critical actions have clear UX (confirmations, guidance and safe recovery paths)
-- [ ] Roles and permissions match real user workflows; privilege escalation is explicit and auditable
-- [ ] Security warnings / error messages are actionable (what, why, how to fix) and documented
-- [ ] Basic usability check completed for key security flows (onboarding, admin tasks, recovery, updates); issues tracked/fixed or accepted with owner + date
+## リリースゲート (Release gate)
+
+- [ ] セキュアなデフォルトがレビューされ、検証されている（重要な保護がデフォルトで無効になっていない）
+- [ ] デフォルトの管理者認証情報が有効になっておらず、オンボーディングで安全な初期セットアップが強制される
+- [ ] 管理者／セキュリティ上重要な操作に、明確な UX（確認、ガイダンス、安全な復旧経路）がある
+- [ ] ロールと権限が実際のユーザーのワークフローに合致しており、権限昇格は明示的で監査可能である
+- [ ] セキュリティの警告／エラーメッセージが実行可能（何が、なぜ、どう直すか）であり、文書化されている
+- [ ] 主要なセキュリティフロー（オンボーディング、管理者タスク、復旧、アップデート）について基本的なユーザビリティチェックが完了している。問題は追跡／修正されているか、担当者と日付を付けて受容されている
