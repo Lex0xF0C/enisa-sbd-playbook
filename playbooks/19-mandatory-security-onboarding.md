@@ -1,51 +1,57 @@
-# Mandatory security onboarding
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Mandatory security onboarding」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 必須のセキュリティオンボーディング (Mandatory security onboarding)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Require critical security controls to be configured during initial set-up. Do not allow products to enter an operational state until essential security steps are completed.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+重要なセキュリティ対策を、初期セットアップの間に設定することを必須とします。不可欠なセキュリティ手順が完了するまで、製品が運用状態に入ることを許可しないこと。
 
-Ensure that systems start in a secure state by preventing or limiting use before baseline security controls, such as strong authentication or encryption, are configured.
+## 目的 (Objective)
 
-## Checklist
+強力な認証や暗号化といったベースラインのセキュリティ対策が設定されるまで、使用を防止または制限することで、システムがセキュアな状態で起動するようにします。
 
-### Identify mandatory security steps
+## チェックリスト (Checklist)
 
-- Define the minimum security controls required before the product can be used (e.g. MFA, encryption keys, admin account set-up).
+### 必須のセキュリティ手順を特定する
 
-### Enforce security set-up during first use
+- 製品を使用する前に必要な、最小限のセキュリティ対策を定義すること（例: MFA、暗号鍵、管理者アカウントのセットアップ）。
 
-- Integrate mandatory security steps into the initial set-up or onboarding flow.
-- Do not allow users to skip or defer required security configuration.
+### 初回使用時にセキュリティのセットアップを強制する
 
-### Block operation until onboarding is complete
+- 必須のセキュリティ手順を、初期セットアップまたはオンボーディングのフローに組み込むこと。
+- 必須のセキュリティ設定を、ユーザーがスキップしたり先延ばししたりできないようにすること。
 
-- Prevent normal operation, privileged actions and external connectivity until mandatory security steps are completed.
+### オンボーディングが完了するまで運用をブロックする
 
-### Provide clear, guided configuration
+- 必須のセキュリティ手順が完了するまで、通常の運用、特権的な操作、外部接続を防止すること。
 
-- Guide users through security set-up with clear instructions and sensible defaults.
-- Avoid requiring expert knowledge to complete onboarding securely.
+### 明確でガイド付きの設定を提供する
 
-### Re-trigger onboarding when security is incomplete
+- 明確な手順と妥当なデフォルトで、ユーザーをセキュリティのセットアップに導くこと。
+- オンボーディングを安全に完了するために、専門知識を必要としないようにすること。
 
-- Re-enforce onboarding if critical security settings are removed, reset or left unconfigured.
+### セキュリティが不完全な場合にオンボーディングを再度発動する
 
-## Minimum evidence
+- 重要なセキュリティ設定が削除、リセット、または未設定のままになった場合は、オンボーディングを再度強制すること。
 
-- Mandatory security steps defined: documentation identifies which security controls must be completed during onboarding.
-- Onboarding enforces a security set-up: configuration, screenshots or test evidence shows that critical security steps cannot be skipped.
-- Operation blocked pre-onboarding: configuration, screenshots or test evidence shows that the product cannot enter normal operation before onboarding is complete.
-- Guided set-up is provided: screenshots, configuration flows or documentation shows that clear user guidance is provided on security set-up.
-- Onboarding is re-enforced on incomplete security configuration: configuration, screenshots or test evidence shows that onboarding is re-triggered if required security settings are missing.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 必須のセキュリティ手順が定義されている: ドキュメントにより、オンボーディング中に完了しなければならないセキュリティ対策が特定されている。
+- オンボーディングがセキュリティのセットアップを強制している: 設定、スクリーンショット、またはテストの証跡により、重要なセキュリティ手順をスキップできないことが示されている。
+- オンボーディング前は運用がブロックされている: 設定、スクリーンショット、またはテストの証跡により、オンボーディングが完了する前は、製品が通常の運用に入れないことが示されている。
+- ガイド付きのセットアップが提供されている: スクリーンショット、設定フロー、またはドキュメントにより、セキュリティのセットアップについて明確なユーザーガイダンスが提供されていることが示されている。
+- セキュリティ設定が不完全な場合にオンボーディングが再度強制される: 設定、スクリーンショット、またはテストの証跡により、必要なセキュリティ設定が欠けている場合にオンボーディングが再度発動されることが示されている。
 
-- [ ] Mandatory security steps are defined and enforced during initial set-up
-- [ ] Users cannot bypass or skip critical security configuration
-- [ ] Product cannot enter normal operation before onboarding completion
-- [ ] Security onboarding provides clear guidance and secure defaults
-- [ ] Onboarding is re-enforced if critical security settings are removed
+## リリースゲート (Release gate)
+
+- [ ] 必須のセキュリティ手順が定義され、初期セットアップ中に強制されている
+- [ ] ユーザーが、重要なセキュリティ設定をバイパスしたりスキップしたりできない
+- [ ] オンボーディングが完了する前に、製品が通常の運用に入れない
+- [ ] セキュリティオンボーディングが、明確なガイダンスとセキュアなデフォルトを提供している
+- [ ] 重要なセキュリティ設定が削除された場合に、オンボーディングが再度強制される
