@@ -1,56 +1,62 @@
-# Open design
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Open design」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# オープン設計 (Open design)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Systems should not depend on secrecy of design or hidden behaviour for protection. Security controls should remain effective even if an adversary understands how the system operates.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+システムは、保護のために設計の秘密や隠れた挙動に依存すべきではありません。セキュリティ対策は、攻撃者がシステムの動作を理解していても有効であり続けるべきです。
 
-Ensure that the product’s security does not depend on the secrecy of its design or implementation details (‘security through obscurity’). Open design makes security properties reviewable, testable and maintainable.
+## 目的 (Objective)
 
-## Checklist
+製品のセキュリティが、設計や実装の詳細の秘密（「隠蔽によるセキュリティ / security through obscurity」）に依存しないようにします。オープン設計により、セキュリティ特性をレビュー可能、テスト可能、保守可能にします。
 
-### Document security-relevant design decisions
+## チェックリスト (Checklist)
 
-- Keep a short security design note covering trust boundaries, auth model, cryptographic usage, update mechanism, logging/audit approach and secure defaults.
-- Record the rationale for ‘why this control/protocol/library’.
+### セキュリティに関わる設計判断を文書化する
 
-### Prefer open standards and proven building blocks
+- 信頼境界、認証モデル、暗号の利用、アップデートの仕組み、ログ／監査の方針、セキュアなデフォルトを網羅した、簡潔なセキュリティ設計ノートを維持すること。
+- 「なぜこの対策／プロトコル／ライブラリなのか」という根拠を記録すること。
 
-- Use standard, widely reviewed protocols and libraries (e.g. TLS, OAuth/OIDC, JWT with clear constraints, signed updates).
-- Avoid proprietary crypto, “home-grown” protocols, and undocumented encodings for security-critical flows.
+### オープンスタンダードと実績のある構成要素を優先する
 
-### Make interfaces and security expectations explicit
+- 標準的で広くレビューされているプロトコルやライブラリを使用すること（例: TLS、OAuth/OIDC、制約が明確な JWT、署名付きアップデート）。
+- セキュリティ上重要なフローに、独自仕様の暗号、「自前」のプロトコル、文書化されていないエンコーディングを使うことを避けること。
 
-- Document APIs, authentication/authorisation requirements, error handling, rate limits and supported configurations.
-- Provide a secure configuration guide (outlining what must be enabled and disabled in production).
+### インターフェースとセキュリティ上の期待事項を明示する
 
-### Enable review and disclosure
+- API、認証／認可の要件、エラー処理、レート制限、サポートされる構成を文書化すること。
+- セキュアな構成ガイドを提供すること（本番環境で何を有効化し、何を無効化しなければならないかを示す）。
 
-- Establish a vulnerability disclosure channel (security contact, intake process, basic triage/response targets).
-- Encourage internal peer review for security-sensitive changes (to auth, updates, crypto, boundary-crossing interfaces).
+### レビューと開示を可能にする
 
-### Maintain transparency of components and changes
+- 脆弱性の開示窓口を設けること（セキュリティ連絡先、受付プロセス、基本的なトリアージ／対応の目標）。
+- セキュリティ上重要な変更（認証、アップデート、暗号、境界を越えるインターフェースへの変更）について、社内のピアレビューを奨励すること。
 
-- Maintain, publish and sign an SBOM (at least for customer-facing builds) and track third-party components.
-- Keep a security changelog / release notes for security-impacting fixes and default-setting changes.
+### 構成要素と変更の透明性を維持する
 
-## Minimum evidence
+- SBOM を維持・公開・署名し（少なくとも顧客向けビルドについて）、サードパーティのコンポーネントを追跡すること。
+- セキュリティに影響する修正やデフォルト設定の変更について、セキュリティ変更履歴／リリースノートを保持すること。
 
-- Security design note (1–3 pages), covering boundaries, auth, crypto choices, update path, logging, secure defaults
-- API + security requirements documentation (authn/authz, rate limits, data-handling expectations)
-- Secure configuration guide (production hardening defaults, required settings)
-- Vulnerability disclosure process (public email / web page or customer-facing channel; triage ownership defined)
-- SBOM (exported file or tool output) + dependency -tracking approach
-- Security-sensitive PR review rule (CODEOWNERS file, repo policy or checklist evidence)
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- セキュリティ設計ノート（1～3ページ）。境界、認証、暗号の選択、アップデート経路、ロギング、セキュアなデフォルトを網羅していること
+- API とセキュリティ要件のドキュメント（認証／認可、レート制限、データの取り扱いに関する期待事項）
+- セキュアな構成ガイド（本番環境のハードニングのデフォルト、必須設定）
+- 脆弱性開示プロセス（公開のメール／Web ページ、または顧客向けの窓口。トリアージの担当が定義されていること）
+- SBOM（エクスポートしたファイルまたはツールの出力）と、依存関係の追跡方法
+- セキュリティ上重要な PR のレビュールール（CODEOWNERS ファイル、リポジトリポリシー、またはチェックリストの証跡）
 
-- [ ] Security design note updated for any architectural/security-relevant change (auth, crypto, update path, trust boundaries)
-- [ ] No custom/proprietary crypto or undocumented security-critical protocols introduced
-- [ ] API/security documentation updated (auth requirements, scopes/roles, rate limits, secure defaults)
-- [ ] Secure configuration guide updated; defaults validated for new/exposed interfaces
-- [ ] SBOM generated for the release and stored/published per policy
-- [ ] Vulnerability disclosure channel tested (contact works) and ownership/triage defined
+## リリースゲート (Release gate)
+
+- [ ] アーキテクチャ／セキュリティに関わる変更（認証、暗号、アップデート経路、信頼境界）があれば、セキュリティ設計ノートが更新されている
+- [ ] 独自仕様の暗号や、文書化されていないセキュリティ上重要なプロトコルが導入されていない
+- [ ] API／セキュリティのドキュメントが更新されている（認証要件、スコープ／ロール、レート制限、セキュアなデフォルト）
+- [ ] セキュアな構成ガイドが更新され、新規／公開されるインターフェースについてデフォルトが検証されている
+- [ ] 今回のリリースの SBOM が生成され、ポリシーに従って保管／公開されている
+- [ ] 脆弱性開示窓口がテストされ（連絡先が機能する）、担当とトリアージが定義されている
