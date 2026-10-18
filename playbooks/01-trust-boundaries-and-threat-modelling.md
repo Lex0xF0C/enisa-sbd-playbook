@@ -1,54 +1,60 @@
-# Trust boundaries and threat modelling
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ機関）が公開した英語原文「Trust boundaries and threat modelling」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 信頼境界と脅威モデリング (Trust boundaries and threat modelling)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Secure architectures make trust explicit rather than assumed. Trust boundaries define where data, identities and execution contexts cross from a more trusted domain to a less trusted one (or vice versa).
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+セキュアなアーキテクチャは、信頼を暗黙の前提とせず、明示的なものとします。信頼境界 (trust boundary) とは、データ、アイデンティティ、実行コンテキストが、より信頼できるドメインからより信頼できないドメインへ（またはその逆へ）越える場所を定義するものです。
 
-Ensure that the system’s architecture and data flows are understood, trust assumptions are explicit and the highest-risk attack paths are identified early, so that security controls and secure defaults are designed in, not retrofitted.
+## 目的 (Objective)
 
-## Checklist
+システムのアーキテクチャとデータフローを理解し、信頼の前提を明示し、最もリスクの高い攻撃経路を早期に特定することで、セキュリティ対策とセキュアなデフォルトを後付けではなく設計に組み込めるようにします。
 
-### Draw the system (one diagram)
+## チェックリスト (Checklist)
 
-- Include users/admins, device/app, back-end services, APIs, data stores, third parties.
-- Show key data flows and entry points (APIs, admin UI, OTA/update channel, local ports).
+### システムを描く（図を1枚）
 
-### Mark trust boundaries and privileged paths
+- ユーザー／管理者、デバイス／アプリ、バックエンドサービス、API、データストア、サードパーティを含めること。
+- 主要なデータフローと入口（API、管理UI、OTA／アップデートチャネル、ローカルポート）を示すこと。
 
-- Identify where trust changes (internet–back end, tenant–tenant, device–cloud, user–admin).
-- Highlight high-privilege flows (auth, key management, updates, admin actions).
+### 信頼境界と特権パスを明示する
 
-### List critical assets
+- 信頼が変化する箇所を特定すること（インターネット～バックエンド、テナント～テナント、デバイス～クラウド、ユーザー～管理者）。
+- 高権限のフロー（認証、鍵管理、アップデート、管理者操作）を強調すること。
 
-- For instance, list credentials/keys, customer / personally identifiable information, payment tokens, device control functions, availability, audit logs, data, source code and the IDE.
+### 重要資産を列挙する
 
-### Identify and prioritise top threats
+- 例として、認証情報／鍵、顧客情報／個人を特定できる情報 (PII)、決済トークン、デバイス制御機能、可用性、監査ログ、データ、ソースコード、IDE を列挙すること。
 
-- Map threats to the relevant entry/exit points, data flows, assets and trust boundaries, for example account takeover, malicious updates, API authorisation bypass, man-in-the-middle attacks and the tampering with, replay of or injection of fabricated or stale data and commands.
-- Assign a high, medium or low priority using a documented method appropriate to the product, such as assessing impact, likelihood, plausibility, exploitability and exposure.
+### 主要な脅威を特定し、優先順位を付ける
 
-### Define mitigations, secure defaults and verification
+- 脅威を、関連する入口／出口、データフロー、資産、信頼境界に対応付けること。例: アカウント乗っ取り、悪意あるアップデート、API の認可バイパス、中間者攻撃 (man-in-the-middle attack)、偽造された、または古いデータやコマンドの改ざん・リプレイ・注入。
+- 製品に適した文書化された手法（影響、可能性、もっともらしさ、悪用可能性、露出度の評価など）を用いて、高・中・低の優先度を割り当てること。
 
-- For each top threat: required controls and default configuration (deny by default, authn/authz, segmentation, signed updates, rate limits).
-- Map each control to a verification method (tests, CI checks, config validation).
-- Define refresh triggers (new interface, auth change, new sensitive data, new critical dependency, major architecture change).
+### 緩和策、セキュアなデフォルト、検証方法を定義する
 
-## Minimum evidence
+- 主要な脅威ごとに、必要な対策とデフォルト設定（デフォルト拒否、認証／認可、セグメンテーション、署名付きアップデート、レート制限）を定めること。
+- 各対策を検証方法（テスト、CI チェック、設定検証）に対応付けること。
+- 見直しのトリガーを定義すること（新しいインターフェース、認証の変更、新たな機微データ、新たな重要な依存関係、大規模なアーキテクチャ変更）。
 
-- One architecture/data-flow diagram with trust boundaries and entry points (stored in repo/wiki)
-- Top threats list (e.g. the top 5 to 10 threat scenarios) with H/M/L priority and owners
-- Control/default mapping for each top threat (what control, where enforced, how verified)
-- Verification evidence: CI outputs or test results for key negative tests (unauthorised calls fail)
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 信頼境界と入口を示したアーキテクチャ／データフロー図が1枚あること（リポジトリ／wiki に保管）
+- 優先度（高・中・低）と担当者を付した、主要な脅威の一覧（例: 上位5～10件の脅威シナリオ）
+- 主要な脅威ごとの対策／デフォルトの対応表（どの対策か、どこで強制されるか、どう検証されるか）
+- 検証の証跡: 主要なネガティブテスト（認可されていない呼び出しが失敗すること）の CI 出力またはテスト結果
 
-- [ ] Diagram updated for this release (components, flows, dependencies reflect reality)
-- [ ] Trust boundaries and privileged paths clearly marked
-- [ ] Top threat scenarios reviewed; high risks have mitigations or documented exceptions
-- [ ] Secure defaults confirmed for new/exposed interfaces (deny by default, least privilege)
-- [ ] Verification in place: at least one negative test per critical boundary / privileged path (unauthorised access is denied)
-- [ ] Threat model refresh triggered if any of the following are relevant: new API/interface, auth model change, new sensitive data, major dependency/supplier change, OTA/update changes, major architecture change.
+## リリースゲート (Release gate)
+
+- [ ] 今回のリリースに合わせて図が更新されている（コンポーネント、フロー、依存関係が実態を反映している）
+- [ ] 信頼境界と特権パスが明確に示されている
+- [ ] 主要な脅威シナリオがレビューされ、高リスクのものには緩和策または文書化された例外がある
+- [ ] 新規／公開されるインターフェースでセキュアなデフォルトが確認されている（デフォルト拒否、最小権限）
+- [ ] 検証体制がある: 重要な境界／特権パスごとに少なくとも1件のネガティブテストがある（認可されていないアクセスが拒否される）
+- [ ] 次のいずれかに該当する場合、脅威モデルの見直しが実施されている: 新しい API／インターフェース、認証モデルの変更、新たな機微データ、主要な依存関係／サプライヤーの変更、OTA／アップデートの変更、大規模なアーキテクチャ変更。
