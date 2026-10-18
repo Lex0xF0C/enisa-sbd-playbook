@@ -1,60 +1,66 @@
-# Supply-chain controls
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Supply-chain controls」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# サプライチェーンの管理策 (Supply-chain controls)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Developers should protect product integrity without excessive process overhead, focusing on the points where a compromise would have the largest impact: code repositories, build systems, signing keys and the channels used to distribute updates.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+開発者は、過度なプロセスの負担をかけずに製品の完全性を守るべきです。その際は、侵害されたときの影響が最も大きい箇所、すなわちコードリポジトリ、ビルドシステム、署名鍵、アップデートの配布に使うチャネルに焦点を当てます。
 
-Reduce the risk of compromise through third parties (software components, libraries, build tools, CI/CD, contractors, hosting providers and hardware/firmware suppliers) by establishing minimum, repeatable controls that improve visibility, integrity and accountability across what you buy, build and ship.
+## 目的 (Objective)
 
-## Checklist
+調達し、構築し、出荷するものについて、可視性、完全性、説明責任を高める最小限で反復可能な管理策を確立することで、サードパーティ（ソフトウェアコンポーネント、ライブラリ、ビルドツール、CI/CD、委託先、ホスティング事業者、ハードウェア／ファームウェアのサプライヤー）を通じた侵害のリスクを低減します。
 
-### Know what you depend on (inventory + SBOM)
+## チェックリスト (Checklist)
 
-- Maintain an inventory of critical suppliers and third-party components, including externally sourced AI/ML models where relevant.
-- Generate an SBOM per release (or minimum: dependency manifest snapshot) to improve visibility and response speed.
+### 依存しているものを把握する（インベントリ + SBOM）
 
-### Control what enters your codebase
+- 重要なサプライヤーとサードパーティコンポーネントのインベントリを維持すること。該当する場合は、外部から調達した AI/ML モデルも含める。
+- リリースごとに SBOM（最低限は、依存関係マニフェストのスナップショット）を生成し、可視性と対応速度を高めること。
 
-- Pin dependency versions; require review for new dependencies and major upgrades. Pinning and lock files improve build repeatability but do not establish that the pinned component is trustworthy. New and updated dependencies still require appropriate review and security checks.
-- Run dependency scanning in CI; block builds on critical- or high where feasible (or require explicit exception).
-- Where proportionate, obtain dependencies through approved repositories or controlled registries and apply integrity, malware and policy checks before use.
-- For externally sourced AI/ML models, record their source and version, verify their integrity and provenance, and assess relevant security risks before integration.
+### コードベースに入るものを管理する
 
-### Harden the build and release pipeline (integrity of artefacts)
+- 依存関係のバージョンをピン留めし、新しい依存関係とメジャーアップグレードにはレビューを必須とすること。ピン留めとロックファイルはビルドの再現性を高めるが、ピン留めされたコンポーネントが信頼できることを立証するものではない。新規および更新された依存関係には、依然として適切なレビューとセキュリティチェックが必要である。
+- CI で依存関係スキャンを実行すること。可能な場合は重大または高のものでビルドをブロックする（または明示的な例外を必須とする）。
+- 妥当な場合は、承認されたリポジトリや管理されたレジストリを通じて依存関係を取得し、使用前に完全性、マルウェア、ポリシーのチェックを適用すること。
+- 外部から調達した AI/ML モデルについては、出所とバージョンを記録し、完全性と来歴 (provenance) を検証し、組み込む前に関連するセキュリティリスクを評価すること。
 
-- Restrict CI/CD permissions (least privilege), protect secrets and separate build and deploy roles.
-- Sign release artefacts and, where proportionate, generate verifiable provenance describing how and from which inputs they were built.
-- For higher-risk products, use isolated and ephemeral build environments, consider restricting build-time network access to approved sources and consider hermetic builds where feasible.
+### ビルドとリリースのパイプラインを強化する（成果物の完全性）
 
-### Set minimum supplier expectations (lightweight due diligence)
+- CI/CD の権限を制限し（最小権限）、シークレットを保護し、ビルドとデプロイのロールを分離すること。
+- リリース成果物に署名し、妥当な場合は、どの入力からどのようにビルドされたかを記述する検証可能な来歴を生成すること。
+- よりリスクの高い製品では、隔離された一時的 (ephemeral) なビルド環境を使用し、ビルド時のネットワークアクセスを承認された情報源に制限することを検討し、可能であればハーメティックビルド (hermetic build) を検討すること。
 
-- For critical suppliers, require a security contact / VDP, patch timelines and confirmation of secure development practices.
-- Use a short questionnaire aligned with a recognised baseline (e.g. OWASP SCVS) rather than bespoke questions.
+### サプライヤーへの最低限の期待事項を設定する（軽量なデューデリジェンス）
 
-### Plan for supplier failure
+- 重要なサプライヤーには、セキュリティ連絡先／VDP、パッチの期限、セキュアな開発プラクティスの確認を求めること。
+- 独自の質問ではなく、認知されたベースライン（例: OWASP SCVS）に沿った短い質問票を使用すること。
 
-- Identify single points of failure (key providers/components) and define fallbacks (alternate package source, vendor substitution plan, rapid disable/mitigation).
-- Ensure that contracts and SLAs cover vulnerability notification and support windows (where possible).
+### サプライヤーの障害に備える
 
-## Minimum evidence
+- 単一障害点（主要なプロバイダー／コンポーネント）を特定し、フォールバック（代替のパッケージ供給元、ベンダー代替計画、迅速な無効化／緩和）を定義すること。
+- 契約と SLA が、脆弱性の通知とサポート期間をカバーするようにすること（可能な場合）。
 
-- Supplier + component inventory (top vendors, critical libraries/tools, hosting/build services), including externally sourced AI/ML models where relevant
-- SBOM (or dependency inventory) per release, stored with the release artefacts
-- CI results showing dependency scanning (and ideally secret scanning) executed on PRs/releases
-- Release integrity evidence: artefact signing and restricted CI/CD access (configs/screenshots/logs)
-- Supplier baseline checks for critical suppliers (a completed questionnaire or SCVS-aligned checklist)
-- Exception log for accepted supply-chain risks (with owners and expiry dates)
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- サプライヤーとコンポーネントのインベントリ（主要ベンダー、重要なライブラリ／ツール、ホスティング／ビルドサービス）。該当する場合は、外部から調達した AI/ML モデルを含む
+- リリースごとの SBOM（または依存関係のインベントリ）。リリース成果物とともに保管
+- PR／リリースで依存関係スキャン（できればシークレットスキャンも）が実行されたことを示す CI の結果
+- リリースの完全性の証跡: 成果物の署名と、制限された CI/CD アクセス（設定／スクリーンショット／ログ）
+- 重要なサプライヤーに対するベースラインチェック（記入済みの質問票または SCVS に沿ったチェックリスト）
+- 受容されたサプライチェーンのリスクの例外ログ（担当者と有効期限付き）
 
-- [ ] SBOM (or dependency inventory) generated and stored for this release
-- [ ] Dependency scanning executed; critical- or high-severity issues fixed or covered by a documented exception (with owner and expiry date)
-- [ ] New dependencies/suppliers reviewed and approved (recorded in PR/ticket)
-- [ ] CI/CD and build secrets are protected; build/deploy permissions are least privilege and attributable
-- [ ] Release artefacts signed (and provenance captured where feasible / per chosen SLSA  target)
-- [ ] Critical suppliers meet baseline expectations (security contact, vulnerability notification, support/patch commitments)
-- [ ] Supply-chain risk exceptions recorded, with owner and review/expiry date
+## リリースゲート (Release gate)
+
+- [ ] SBOM（または依存関係のインベントリ）が生成され、今回のリリース用に保管されている
+- [ ] 依存関係スキャンが実行されている。重大または高の深刻度の問題は修正されているか、文書化された例外（担当者と有効期限付き）がある
+- [ ] 新しい依存関係／サプライヤーがレビューされ承認されている（PR／チケットに記録）
+- [ ] CI/CD とビルドのシークレットが保護されている。ビルド／デプロイの権限は最小権限であり、帰属が明確である
+- [ ] リリース成果物に署名されている（実現可能な場合、または選択した SLSA のターゲットに応じて、来歴も取得されている）
+- [ ] 重要なサプライヤーがベースラインの期待事項を満たしている（セキュリティ連絡先、脆弱性の通知、サポート／パッチへのコミットメント）
+- [ ] サプライチェーンのリスクの例外が、担当者とレビュー／有効期限の日付とともに記録されている
