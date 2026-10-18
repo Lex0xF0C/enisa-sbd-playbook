@@ -1,50 +1,56 @@
-# Secure recovery and ownership life cycle
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Secure recovery and ownership life cycle」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# セキュアな復旧とオーナーシップのライフサイクル (Secure recovery and ownership life cycle)
 
-**(secure by default)**
+## 原則 (Principle)
 
-Provide secure, guided recovery and ownership transfer mechanisms by default. Recovery, reset and transfer processes must be easy for users, operators and administrators to follow, while remaining resistant to abuse, account takeover and social engineering.
+**(セキュア・バイ・デフォルト / secure by default)**
 
-## Objective
+セキュアでガイド付きの復旧とオーナーシップ移転の仕組みを、デフォルトで提供します。復旧、リセット、移転のプロセスは、ユーザー、オペレーター、管理者が簡単に従えるものでなければならない一方で、悪用、アカウント乗っ取り、ソーシャルエンジニアリングに耐性がなければなりません。
 
-To enable users and administrators to recover access, reset systems or transfer ownership safely.
+## 目的 (Objective)
 
-## Checklist
+ユーザーと管理者が、アクセスの復旧、システムのリセット、オーナーシップの移転を安全に行えるようにします。
 
-### Define supported recovery and transfer actions
+## チェックリスト (Checklist)
 
-- Identify supported recovery actions such as credential reset, account recovery, secure factory reset and ownership transfer, clearly defining who is allowed to initiate each action and under what conditions
+### サポートする復旧と移転の操作を定義する
 
-### Verify identity before recovery or transfer
+- 認証情報のリセット、アカウントの復旧、セキュアな工場出荷時リセット、オーナーシップの移転など、サポートする復旧の操作を特定し、それぞれを誰がどのような条件で開始できるかを明確に定義すること。
 
-- Require strong identity verification before allowing recovery, reset or ownership transfer actions.
+### 復旧または移転の前にアイデンティティを確認する
 
-### Protect recovery paths from abuse
+- 復旧、リセット、オーナーシップ移転の操作を許可する前に、強力なアイデンティティの確認を必須とすること。
 
-- Ensure that recovery mechanisms cannot be used to bypass normal authentication or authorisation controls.
-- Apply monitoring and rate limiting to recovery and reset workflows.
+### 復旧の経路を悪用から保護する
 
-### Ensure secure reset and ownership transfer
+- 復旧の仕組みが、通常の認証や認可の管理をバイパスするために使えないようにすること。
+- 復旧とリセットのワークフローに、監視とレート制限を適用すること。
 
-- Ensure that factory reset and ownership transfer fully remove previous user access, credentials and secrets.
+### セキュアなリセットとオーナーシップ移転を確保する
 
-### Provide guided, secure workflows
+- 工場出荷時リセットとオーナーシップ移転によって、以前のユーザーのアクセス、認証情報、シークレットが完全に削除されることを確保すること。
 
-- Offer clear recovery and transfer processes that reduce user error
+### ガイド付きでセキュアなワークフローを提供する
 
-## Minimum evidence
+- ユーザーのミスを減らす、明確な復旧と移転のプロセスを提供すること。
 
-- Recovery and transfer actions are defined: documentation identifies supported recovery, reset and ownership transfer processes.
-- Strong verification is enforced: configuration or test evidence shows that recovery and transfer actions require a verified identity.
-- Abuse protections are applied: configuration, logs or test evidence shows that rate limiting and monitoring of recovery workflows are in place.
-- Secure reset and transfer is verified: test evidence confirms that factory reset and ownership transfer remove prior credentials and access.
-- Guided workflows are available: screenshots, CLI commands or documentation demonstrates that recovery and transfer processes are guided.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- 復旧と移転の操作が定義されている: ドキュメントにより、サポートされる復旧、リセット、オーナーシップ移転のプロセスが特定されている。
+- 強力な確認が強制されている: 設定またはテストの証跡により、復旧と移転の操作に確認済みのアイデンティティが必要であることが示されている。
+- 悪用への保護が適用されている: 設定、ログ、またはテストの証跡により、復旧ワークフローに対するレート制限と監視が行われていることが示されている。
+- セキュアなリセットと移転が検証されている: テストの証跡により、工場出荷時リセットとオーナーシップ移転によって、以前の認証情報とアクセスが削除されることが確認されている。
+- ガイド付きのワークフローが利用可能である: スクリーンショット、CLI コマンド、またはドキュメントにより、復旧と移転のプロセスがガイド付きであることが示されている。
 
-- [ ] Supported recovery and ownership transfer actions are defined
-- [ ] Recovery and transfer actions require strong identity verification
-- [ ] Recovery mechanisms cannot bypass normal access controls
-- [ ] Factory reset and ownership transfer fully remove prior access
-- [ ] Clear guidance is provided on recovery and transfer workflows
+## リリースゲート (Release gate)
+
+- [ ] サポートされる復旧とオーナーシップ移転の操作が定義されている
+- [ ] 復旧と移転の操作に、強力なアイデンティティの確認が必要である
+- [ ] 復旧の仕組みが、通常のアクセス制御をバイパスできない
+- [ ] 工場出荷時リセットとオーナーシップ移転によって、以前のアクセスが完全に削除される
+- [ ] 復旧と移転のワークフローについて、明確なガイダンスが提供されている
