@@ -1,53 +1,59 @@
-# Least privilege
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Least privilege」の日本語翻訳版です。
+> - 原文は CC BYライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# 最小権限 (Least privilege)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Every user, service and process operates with the feasible minimum permissions needed to do its job – no more and for no longer than necessary.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+すべてのユーザー、サービス、プロセスは、その職務に必要な、実現可能な最小限の権限のみで、かつ必要な期間に限って動作します。
 
-Reduces unauthorised access, limits blast radius, blocks lateral movement and prevents permission creep.
+## 目的 (Objective)
 
-## Checklist
+不正アクセスを減らし、被害範囲 (blast radius) を限定し、ラテラルムーブメント（横展開 / lateral movement）を阻止し、権限の肥大化 (permission creep) を防ぎます。
 
-### Define minimum viable permissions for each role/service
+## チェックリスト (Checklist)
 
-- List key roles (user, support, admin) and key services (API, provisioning, updates).
-- For each, define allowed actions (read/write/admin) and resources (APIs, tables, buckets).
+### ロール／サービスごとに必要最小限の権限を定義する
 
-### Use unique identities (no shared admin)
+- 主要なロール（ユーザー、サポート、管理者）と主要なサービス（API、プロビジョニング、アップデート）を列挙すること。
+- それぞれについて、許可される操作（読み取り／書き込み／管理）とリソース（API、テーブル、バケット）を定義すること。
 
-- One identity per service (service account/workload identity) , applicable to both web services and services running on a device.
-- No shared admin users/keys; separate dev/test/prod identities.
+### 一意のアイデンティティを使う（共有の管理者アカウントは使わない）
 
-### Default-deny and explicit allow lists
+- サービスごとに1つのアイデンティティ（サービスアカウント／ワークロードアイデンティティ）を持たせること。これは Web サービスにも、デバイス上で動作するサービスにも適用されます。
+- 共有の管理者ユーザー／鍵を使わないこと。開発／テスト／本番でアイデンティティを分離すること。
 
-- Deny by default; allow only required API methods, data access and network paths.
-- Restrict service-to-service access to specific interfaces.
+### デフォルト拒否と明示的な許可リスト
 
-### Time-bound admin access (JIT) + attribution
+- デフォルトで拒否し、必要な API メソッド、データアクセス、ネットワーク経路のみを許可すること。
+- サービス間のアクセスを、特定のインターフェースに限定すること。
 
-- Named accounts + MFA for admins (all human users if possible).
-- Temporary elevation for privileged actions; break-glass is separate and monitored.
+### 時間を限定した管理者アクセス（JIT）と帰属の明確化
 
-### Automate privilege hygiene
+- 管理者には記名アカウントと MFA を使うこと（可能であればすべての人間のユーザーに）。
+- 特権操作には一時的な権限昇格を用いること。ブレークグラス（緊急用アクセス / break-glass）は別に用意し、監視すること。
 
-- Monthly (or at each release), flag broad privileges and unused permissions/tokens; remove or time-limit exceptions.
+### 権限の衛生管理を自動化する
 
-## Minimum evidence
+- 毎月（またはリリースごとに）、広範な権限や未使用の権限／トークンを検出し、例外は削除するか期限を設けること。
 
-- Access model exists: for example, a short table “Role/Service, allowed actions, resources” stored in repo/wiki and kept current.
-- No shared admin:  IAM inventory shows unique service identities; no reused production admin keys.
-- Deny works: automated negative tests prove unauthorised API/data access is blocked for each critical service.
-- Admins are accountable: logs show who performed privileged actions; elevation expires automatically.
-- Creep is controlled: recurring report flags unused/broad permissions; removals/exceptions are tracked, with owner and expiry.
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- アクセスモデルが存在する: 例えば、「ロール／サービス、許可される操作、リソース」を示す簡潔な表が、リポジトリ／wiki に保管され、最新の状態に保たれている。
+- 共有管理者がいない: IAM のインベントリに一意のサービスアイデンティティが示され、本番の管理者鍵の使い回しがない。
+- 拒否が機能している: 重要なサービスごとに、認可されていない API／データへのアクセスが遮断されることを、自動化されたネガティブテストが証明している。
+- 管理者の説明責任が果たされている: ログから特権操作の実行者が分かり、権限昇格が自動的に失効する。
+- 肥大化が管理されている: 未使用／広範な権限を検出する定期レポートがあり、削除や例外が、担当者と有効期限とともに追跡されている。
 
-- [ ] Unique service identities; no shared production admin keys
-- [ ] Default-deny posture; only required paths enabled
-- [ ] Admin access uses MFA and is time bound and logged
-- [ ] Automated authorisation tests run verifying correct access restrictions for critical privileged functions
-- [ ] Privilege review run; exceptions owned and time limited
+## リリースゲート (Release gate)
+
+- [ ] サービスアイデンティティが一意であり、共有の本番管理者鍵がない
+- [ ] デフォルト拒否の姿勢が取られ、必要な経路のみが有効になっている
+- [ ] 管理者アクセスは MFA を使用し、時間が限定され、ログに記録されている
+- [ ] 重要な特権機能について、正しいアクセス制限を検証する自動化された認可テストが実行されている
+- [ ] 権限レビューが実施され、例外には担当者がおり、期限が設けられている
