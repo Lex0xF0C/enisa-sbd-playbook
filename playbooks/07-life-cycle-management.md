@@ -1,66 +1,72 @@
-# Life-cycle management
+> **【翻訳版に関するご案内】**
+> 本書は、ENISA（欧州連合サイバーセキュリティ局）が公開した英語原文「Life-cycle management」の日本語翻訳版です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
+> - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
-## Principle
+# ライフサイクル管理 (Life-cycle management)
 
-**(secure by design)**
+## 原則 (Principle)
 
-Security responsibilities extend beyond initial development. Components must be maintained, updated and eventually retired in a controlled manner.
+**(セキュア・バイ・デザイン / secure by design)**
 
-## Objective
+セキュリティ上の責任は、初期開発の後にも及びます。コンポーネントは、管理された方法で保守・更新され、最終的には廃止されなければなりません。
 
-Ensure that security is maintained throughout the product’s full life cycle, from requirements and design through to deployment, maintenance and end of life, so that security does not degrade over time.
+## 目的 (Objective)
 
-## Checklist
+要件定義と設計から、デプロイ、保守、サポート終了 (end of life) に至るまで、製品のライフサイクル全体にわたってセキュリティを維持し、時間の経過とともにセキュリティが劣化しないようにします。
 
-### Define support commitments and life-cycle states
+## チェックリスト (Checklist)
 
-- Publish (internally or externally) life-cycle states: active, maintenance, end of sale, end of support, end of life.
-- Define minimum support windows and internal guidelines for vulnerability triage and patch release timelines (e.g. critical vulnerabilities triaged in 48 hours; fixes released within X days where feasible).
+### サポートに関するコミットメントとライフサイクルの状態を定義する
 
-### Make the product updatable and recoverable
+- ライフサイクルの状態（アクティブ、保守、販売終了、サポート終了、ライフ終了 (end of life)）を（社内または社外に）公開すること。
+- 最低限のサポート期間と、脆弱性のトリアージおよびパッチ公開期限に関する社内ガイドラインを定義すること（例: 重大な脆弱性は48時間以内にトリアージし、可能な場合は X 日以内に修正をリリースする）。
 
-- Implement a secure and transactional update mechanism (authenticated updates, integrity protected, rollback/recovery plan).
-- Ensure safe failure modes (do not brick devices; provide fallback/rollback where practical).
-- During maintenance or recovery modes, restrict functionality and privileges to the minimum necessary to support update and recovery operations.
+### 製品を更新可能かつ復旧可能にする
 
-### Operate vulnerability and patch management
+- セキュアでトランザクション的なアップデートの仕組みを実装すること（認証されたアップデート、完全性の保護、ロールバック／復旧計画）。
+- 安全な障害モードを確保すること（デバイスを文鎮化（brick）させない。現実的な範囲でフォールバック／ロールバックを用意する）。
+- 保守モードや復旧モードでは、アップデートと復旧の操作をサポートするのに必要な最小限の機能と権限に制限すること。
 
-- Track vulnerabilities from third-party components, internal findings and customer reports.
-- Maintain an SBOM (at least for each release) and a dependency update cadence.
-- Triage, prioritise and document risk decisions (fix, mitigate, accept with expiry date).
+### 脆弱性管理とパッチ管理を運用する
 
-### Monitor, log and handle incidents
+- サードパーティコンポーネント、社内での発見事項、顧客からの報告に由来する脆弱性を追跡すること。
+- SBOM（少なくともリリースごと）と、依存関係の更新サイクルを維持すること。
+- リスクに関する判断（修正、緩和、期限付きで受容）をトリアージし、優先順位を付け、文書化すること。
 
-- Enable security-relevant logging (auth events, admin actions, update events, boundary-crossing requests).
-- Define minimum incident response steps, for instance detection, triage, containment, remediation, customer communication
+### 監視、ログ記録、インシデント対応を行う
 
-### Learn from deployed products
+- セキュリティに関連するログ記録（認証イベント、管理者操作、アップデートイベント、境界を越えるリクエスト）を有効にすること。
+- 最低限のインシデント対応手順（例: 検知、トリアージ、封じ込め、是正、顧客への連絡）を定義すること。
 
--	Collect evidence on how products are deployed and used, such as customer feedback, support cases, vulnerability reports, incident findings and privacy-preserving telemetry where appropriate.
--	Review findings, including the results of root-cause analyses where applicable, and update the product context, risk assessment, threat model and secure defaults as necessary.
+### デプロイされた製品から学ぶ
 
-### Plan secure decommissioning and disposal
+- 製品がどのようにデプロイされ使用されているかについての証拠を収集すること。例: 顧客からのフィードバック、サポート事例、脆弱性報告、インシデントの調査結果、必要に応じたプライバシーを保護したテレメトリ。
+- 該当する場合は根本原因分析の結果を含めて調査結果をレビューし、必要に応じて製品のコンテキスト、リスクアセスメント、脅威モデル、セキュアなデフォルトを更新すること。
 
-- Provide data erasure mechanisms and guidance (factory reset, key revocation, account deprovisioning).
-- Revoke credentials/keys when devices/users/services are deactivated.
-- Ensure that end-of-life guidance includes what security updates cease and what customers must do.
+### セキュアな廃止と廃棄を計画する
 
-## Minimum evidence
+- データ消去の仕組みとガイダンス（工場出荷時リセット、鍵の失効、アカウントのデプロビジョニング）を提供すること。
+- デバイス／ユーザー／サービスが無効化されるときは、認証情報／鍵を失効させること。
+- サポート終了時のガイダンスに、どのセキュリティアップデートが終了するか、および顧客が何をしなければならないかを含めること。
 
-- Life-cycle policy: lifecycle states + support window + patch SLAs (1 page).
-- Update/release process: secure update approach and rollback/recovery notes
-- Vulnerability management log: intake, triage, prioritisation, disposition, owner, dates (ticket board or spreadsheet)
-- SBOM: SBOM generated in a machine-readable, widely adopted standard format (e.g. SPDX or CycloneDX) and stored with the release
-- Monitoring and logging: security logging baseline + sample logs showing admin/auth/update events
-- Field feedback record: summary of relevant operational evidence reviewed, deviations from deployment assumptions identified and resulting actions
-- Decommissioning checklist: data wipe/reset, credential/key revocation and customer guidance
+## 最低限の証跡 (Minimum evidence)
 
-## Release gate
+- ライフサイクルポリシー: ライフサイクルの状態、サポート期間、パッチ SLA（1ページ）。
+- アップデート／リリースのプロセス: セキュアなアップデートの方式と、ロールバック／復旧に関するメモ
+- 脆弱性管理ログ: 受付、トリアージ、優先順位付け、処置、担当者、日付（チケットボードまたはスプレッドシート）
+- SBOM: 機械可読で広く採用されている標準形式（例: SPDX や CycloneDX）で生成され、リリースとともに保管された SBOM
+- 監視とログ記録: セキュリティログの基準と、管理者／認証／アップデートのイベントを示すサンプルログ
+- フィールドフィードバックの記録: レビューした関連する運用上の証拠の要約、特定されたデプロイ時の前提からの乖離、およびその結果としての対応
+- 廃止のチェックリスト: データの消去／リセット、認証情報／鍵の失効、顧客向けガイダンス
 
-- [ ] Support status and life-cycle state for this release are clear (active, maintenance, etc.)
-- [ ] Secure update path validated (integrity/authentication checks, rollback/recovery documented)
-- [ ] Vulnerability triage completed for known issues (including third-party dependencies); decisions recorded (fix/mitigate/accept with expiry)
-- [ ] SBOM generated (or dependency inventory updated) and stored for the release
-- [ ] Security logging verified for critical events (authentication, admin actions, updates)
-- [ ] Decommissioning actions defined for components introduced/changed (e.g. reset, wipe, key revocation)
-- [ ] Any accepted residual security risk has an owner and review/expiry date
+## リリースゲート (Release gate)
+
+- [ ] 今回のリリースのサポート状況とライフサイクルの状態が明確である（アクティブ、保守など）
+- [ ] セキュアなアップデート経路が検証されている（完全性／認証のチェック、ロールバック／復旧が文書化されている）
+- [ ] 既知の問題（サードパーティの依存関係を含む）について脆弱性のトリアージが完了し、判断が記録されている（修正／緩和／期限付きで受容）
+- [ ] SBOM が生成され（または依存関係のインベントリが更新され）、リリースとともに保管されている
+- [ ] 重要なイベント（認証、管理者操作、アップデート）についてセキュリティログ記録が検証されている
+- [ ] 導入／変更されたコンポーネントについて、廃止時の対応（例: リセット、消去、鍵の失効）が定義されている
+- [ ] 受容された残存セキュリティリスクには、担当者とレビュー／有効期限の日付がある
