@@ -5,6 +5,8 @@
 > - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。翻訳の正確性について、ENISA は一切関与していません。
 > - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 > - [目次（Index）](/index/index.md)
+> - 翻訳：[Lex0xF0C](https://lex0xf0c.github.io/)
+> - [『ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default Principles for SMEs』（日本語訳版）](ENISA-Secure-by-Design-and-Default-Playbook-ja.md)
 
 # ENISA セキュア・バイ・デザイン／デフォルト プレイブック (ENISA Secure by Design and Default Playbooks)
 
