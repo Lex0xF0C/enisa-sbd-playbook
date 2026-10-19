@@ -10,7 +10,7 @@
 
 ## アーキテクチャの基盤 (Architectural Foundations)
 
-- [1 信頼境界と脅威モデリング (Trust boundaries and threat modelling)](playbooks/01-trust-boundaries-and-threat-modelling.md)
+- [1 信頼境界と脅威モデリング (Trust boundaries and threat modelling)](./playbooks/01-trust-boundaries-and-threat-modelling.md)
 - [2 最小権限 (Least Privilege)](playbooks/02-least-privilege.md)
 - [3 強固なアイデンティティと認証のアーキテクチャ (Strong identity and authentication architecture)](playbooks/03-strong-identity-and-authentication-architecture.md)
 - [4 攻撃対象領域の最小化 (Attack surface minimisation)](playbooks/04-attack-surface-minimisation.md)
