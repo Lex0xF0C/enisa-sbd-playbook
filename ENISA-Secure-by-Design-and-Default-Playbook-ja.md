@@ -1,7 +1,7 @@
 > **【翻訳版に関するご案内】**
 > 本書は、ENISA（欧州連合サイバーセキュリティ局）が2026年7月に公開した報告書『ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default Principles for SMEs』（バージョン1.0、原文: 英語）の日本語翻訳版です。
 > - 原典: <https://www.enisa.europa.eu/sites/default/files/2026-07/ENISA_Secure_By_Design_and_Default_Playbook_v1.pdf>
-> - 原文は © 欧州連合サイバーセキュリティ局 (ENISA), 2026 であり、CC BY 4.0 ライセンスで提供されています。本翻訳版も同ライセンスの下で提供します。原文からの変更点: 日本語への翻訳、PDF から Markdown への変換（ページヘッダー・ページ番号の除去、脚注の Markdown 化、表と図の再構成）、および本注記の追加。
+> - 原文は © 欧州連合サイバーセキュリティ局 (ENISA), 2026 であり、CC BY 4.0 ライセンスで提供されています。本翻訳版も同ライセンスの下で提供します。原文からの変更点: 日本語への翻訳、PDF から Markdown への変換（ページヘッダー・ページ番号の除去、脚注の Markdown 化、表の再構成）、および本注記の追加。また、図については掲載を省略しています。
 > - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。
 > - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 
