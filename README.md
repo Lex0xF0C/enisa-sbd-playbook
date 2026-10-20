@@ -1,7 +1,7 @@
 > **【非公式の日本語翻訳版です】**
 > このリポジトリは、ENISA（欧州連合サイバーセキュリティ局）が公開した下記の文書に基づくプレイブック集（原文: 英語）の、**非公式の日本語翻訳版**を掲載しています。
 > - 原典: [*ENISA Secure by Design and Default Playbook: A Practical Guide to Secure by Design and Default Principles for SMEs*](https://www.enisa.europa.eu/sites/default/files/2026-07/ENISA_Secure_By_Design_and_Default_Playbook_v1.pdf)（ENISA セキュア・バイ・デザイン／デフォルト プレイブック: 中小企業向けセキュア・バイ・デザイン／デフォルトの原則に関する実践ガイド）
-> - 原文は CC BY（クリエイティブ・コモンズ 表示）ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
+> - 原文は CC BY ライセンスで提供されており、本翻訳版も同ライセンスの下で提供します。原文からの変更点は、日本語への翻訳（および本注記の追加）です。
 > - 本翻訳版は ENISA が作成・承認・推奨したものではなく、**ENISA 非公認**の翻訳です。翻訳の正確性について、ENISA は一切関与していません。
 > - 解釈に疑義がある場合は、必ず英語の原文を参照してください。
 > - [目次（Index）](/index/index.md)
